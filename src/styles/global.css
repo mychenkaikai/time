@@ -13,8 +13,6 @@
 html {
   font-size: var(--font-size-base);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -139,9 +137,26 @@ a:active { color: var(--link-color); }
 
 /* Web 1.0 (Portal) Overrides */
 [data-theme="web1"] {
-  /* Restore default font smoothing for serif fonts to prevent thin/broken strokes */
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
+  /* Restore antialiasing for sans-serif fonts on macOS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure article content background is white for readability across all themes */
+.article-window .window-body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  /* Add inset shadow to make it look like a text field in Win98/XP */
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #000, inset -2px -2px 0 #dfdfdf, inset 2px 2px 0 #808080;
+  padding: 20px !important;
+  margin: 8px !important;
+}
+
+/* Remove inset shadow for Web 1.0 theme */
+[data-theme="web1"] .article-window .window-body {
+  box-shadow: none;
+  border: none;
+  margin: 0 !important;
 }
 
 [data-theme="web1"] body {
