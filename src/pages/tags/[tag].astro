@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WindowFrame from '../../components/WindowFrame.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+  
+  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+// Sort posts by date
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={`Tag: ${tag}`}>
+  <WindowFrame title={`🏷️ Tag: ${tag}`}>
+    <ul class="post-list tree-view">
+      {posts.map((post) => (
+        <li>
+          <a href={`/posts/${post.slug}/`}>
+            {post.data.title}
+          </a>
+          <span style="float: right; color: #666;">
+            {post.data.date.toISOString().split('T')[0]}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </WindowFrame>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/tags" class="back-link">← All Tags</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .post-list li {
+    padding: 8px;
+    border-bottom: 1px dotted #808080;
+  }
+  
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .post-list a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .post-list a:hover {
+    text-decoration: underline;
+  }
+</style>

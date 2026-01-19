@@ -1,0 +1,90 @@
+---
+/**
+ * CRTOverlay - CRT 显示器滤镜效果
+ * 包含扫描线、暗角和微弱闪烁
+ */
+---
+
+<div id="crt-overlay" class="crt-overlay" style="display: none;">
+  <div class="scanlines"></div>
+</div>
+
+<script>
+  // Check if CRT is enabled in localStorage
+  const overlay = document.getElementById('crt-overlay');
+  if (overlay) {
+    const enabled = localStorage.getItem('crt_enabled') === 'true';
+    overlay.style.display = enabled ? 'block' : 'none';
+
+    // Listen for toggle events
+    window.addEventListener('crt-toggle', (e: any) => {
+      const isEnabled = e.detail.enabled;
+      overlay.style.display = isEnabled ? 'block' : 'none';
+    });
+  }
+</script>
+
+<style>
+  .crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    background: radial-gradient(
+      circle,
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+  }
+
+  .scanlines {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.1)
+    );
+    background-size: 100% 4px;
+    animation: scanline 10s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 0 100%;
+    }
+  }
+
+  /* Flicker effect - optional, might be annoying */
+  /*
+  .crt-overlay::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 0.027951730303372957; }
+    5% { opacity: 0.03893325695286576; }
+    ...
+  }
+  */
+</style>

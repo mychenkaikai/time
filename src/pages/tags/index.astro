@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WindowFrame from '../../components/WindowFrame.astro';
+
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+const pageTitle = "Tags Cloud";
+---
+
+<BaseLayout title={pageTitle}>
+  <WindowFrame title="🏷️ All Tags">
+    <div class="tags-container">
+      {tags.length > 0 ? (
+        <ul class="tags-list">
+          {tags.map((tag) => (
+            <li class="tag-item">
+              <a href={`/tags/${tag}`}>#{tag}</a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No tags found.</p>
+      )}
+    </div>
+  </WindowFrame>
+  
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/" class="back-link">← Back to Home</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .tag-item a {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #808080;
+    padding: 4px 8px;
+    text-decoration: none;
+    box-shadow: 1px 1px 0 #000;
+  }
+  
+  .tag-item a:hover {
+    background: #000080;
+    color: #fff;
+  }
+</style>

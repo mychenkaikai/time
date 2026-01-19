@@ -55,12 +55,12 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
   
-  /* 字体 */
-  --font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-size-base: 14px;
-  --font-size-sm: 12px;
-  --font-size-lg: 16px;
-  --font-size-xl: 20px;
+  /* 字体 - 优化可读性，使用系统矢量字体代替位图字体 */
+  --font-family: "Tahoma", "Verdana", "Segoe UI", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 13px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
   
   /* 容器 */
   --container-max-width: 1024px;
@@ -81,6 +81,40 @@
   --border-light: #fcfcfc;
   --border-dark: #aca899;
   --border-darkest: #000000;
+}
+
+/* ============================================
+   Web 1.0 (Portal) Theme
+   ============================================ */
+[data-theme="web1"] {
+  --bg-color: #ffffff;
+  --window-bg: #ffffff;
+  --text-color: #000000;
+  --link-color: #003399; /* Portal Blue */
+  --link-visited: #800080;
+  --link-hover-bg: transparent;
+  --link-hover-text: #ff0000; /* Red on hover */
+  
+  --border-light: #dddddd;
+  --border-dark: #999999;
+  --border-darkest: #000000;
+  --border-width: 1px;
+  
+  /* Simple flat headers */
+  --titlebar-bg: #f5f5f5;
+  --titlebar-text: #000000;
+  
+  /* Browser default style buttons */
+  --button-bg: #efefef;
+  --button-text: #000000;
+  --button-shadow: 1px 1px 0 #666, inset 1px 1px 0 #fff;
+  --button-active-shadow: inset 1px 1px 0 #666;
+  
+  /* Classic Serif Fonts */
+  --font-family: "SimSun", "Songti SC", "STSong", "Times New Roman", serif;
+  
+  --window-shadow: none;
+  --window-border-radius: 0;
 }
 
 /* ============================================

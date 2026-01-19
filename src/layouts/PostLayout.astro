@@ -9,6 +9,8 @@ import TopNav from '../components/TopNav.astro';
 import SideNav from '../components/SideNav.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
+import VideoBox from '../components/VideoBox.astro';
+import Comments from '../components/Comments.astro';
 
 interface Props {
   frontmatter: {
@@ -16,7 +18,7 @@ interface Props {
     description: string;
     date: Date;
     updated?: Date;
-    theme: 'win98' | 'winxp' | 'macos9';
+    theme: 'web1' | 'win98' | 'winxp' | 'macos9';
     category: string;
     subcategory?: string;
     tags: string[];
@@ -52,6 +54,28 @@ const formatDate = (date: Date) => {
   }).format(date);
 };
 ---
+
+<script>
+  // 阅读进度条逻辑
+  const progressContainer = document.getElementById('reading-progress');
+  const progressFill = progressContainer?.querySelector('.progress-fill') as HTMLElement;
+  
+  if (progressContainer && progressFill) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      
+      progressFill.style.width = `${scrollPercent}%`;
+      
+      if (scrollTop > 100) {
+        progressContainer.classList.add('visible');
+      } else {
+        progressContainer.classList.remove('visible');
+      }
+    });
+  }
+</script>
 
 <BaseLayout 
   title={frontmatter.title} 
@@ -112,6 +136,16 @@ const formatDate = (date: Date) => {
           )}
         </div>
 
+        {frontmatter.media?.video && (
+          <div class="post-video" style="margin-bottom: var(--spacing-md);">
+            <VideoBox 
+              platform={frontmatter.media.video.platform as any} 
+              id={frontmatter.media.video.id}
+              title={frontmatter.media.video.title}
+            />
+          </div>
+        )}
+
         <hr class="divider" />
 
         <!-- 文章内容 -->
@@ -129,6 +163,36 @@ const formatDate = (date: Date) => {
   </div>
 
   <style>
+    /* 阅读进度条 */
+    .reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .reading-progress.visible {
+      opacity: 1;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: transparent;
+      width: 100%;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--link-color); /* Use theme color */
+      width: 0%;
+      transition: width 0.1s;
+      box-shadow: 0 0 4px var(--link-color);
+    }
+
     /* 主布局：左侧导航 + 右侧内容 */
     .main-layout {
       display: grid;

@@ -21,6 +21,7 @@ body {
   font-family: var(--font-family);
   color: var(--text-color);
   background-color: var(--bg-color);
+  /* Retro background pattern */
   background-image: 
     repeating-linear-gradient(
       0deg,
@@ -33,6 +34,15 @@ body {
   padding: var(--spacing-lg);
 }
 
+/* Ensure form elements and specific 98.css components inherit readable font */
+button, input, textarea, select, .window-body, .title-bar-text {
+  font-family: var(--font-family);
+}
+
+button, input, textarea, select {
+  font-size: var(--font-size-base);
+}
+
 /* ============================================
    Typography
    ============================================ */
@@ -43,25 +53,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--spacing-md);
 }
 
-h1 {
-  font-size: var(--font-size-xl);
-}
-
-h2 {
-  font-size: var(--font-size-lg);
-}
-
-h3, h4, h5, h6 {
-  font-size: var(--font-size-base);
-}
+h1 { font-size: var(--font-size-xl); }
+h2 { font-size: var(--font-size-lg); }
+h3, h4, h5, h6 { font-size: var(--font-size-base); }
 
 p {
   margin-bottom: var(--spacing-md);
 }
-
-/* ============================================
-   Links
-   ============================================ */
 
 a {
   color: var(--link-color);
@@ -69,18 +67,12 @@ a {
   cursor: pointer;
 }
 
-a:visited {
-  color: var(--link-visited);
-}
-
+a:visited { color: var(--link-visited); }
 a:hover {
   background-color: var(--link-hover-bg);
   color: var(--link-hover-text);
 }
-
-a:active {
-  color: var(--link-color);
-}
+a:active { color: var(--link-color); }
 
 /* ============================================
    Container
@@ -93,162 +85,144 @@ a:active {
 }
 
 /* ============================================
-   Window Frame Base Styles
+   Theme Overrides
    ============================================ */
 
-.window {
+/* Windows XP Overrides */
+[data-theme="winxp"] .window {
+  box-shadow: none;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #0053ee;
   background: var(--window-bg);
-  border-top: var(--border-width) solid var(--border-light);
-  border-left: var(--border-width) solid var(--border-light);
-  border-right: var(--border-width) solid var(--border-darkest);
-  border-bottom: var(--border-width) solid var(--border-darkest);
-  box-shadow: var(--window-shadow);
-  border-radius: var(--window-border-radius);
-  margin-bottom: var(--spacing-lg);
 }
 
-.window-titlebar {
-  background: var(--titlebar-bg);
-  color: var(--titlebar-text);
-  height: var(--titlebar-height);
-  padding: 0 var(--spacing-sm);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: var(--font-size-sm);
+[data-theme="winxp"] .title-bar {
+  background: linear-gradient(to bottom, #0997ff, #0053ee 8%, #0050ee 40%, #06f 88%, #06f 93%, #005bff 95%, #003dd7 96%, #003dd7);
+  border-radius: 8px 8px 0 0;
+  height: 30px;
 }
 
-.window-body {
-  padding: var(--spacing-md);
+[data-theme="winxp"] .title-bar-text {
+  font-family: "Trebuchet MS", sans-serif;
+  text-shadow: 1px 1px #0f3050;
 }
 
-/* ============================================
-   Button Styles
-   ============================================ */
-
-button,
-.button {
-  background: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  padding: var(--spacing-xs) var(--spacing-md);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  cursor: pointer;
-  box-shadow: var(--button-shadow);
-  min-width: 75px;
-  min-height: 23px;
+[data-theme="winxp"] button {
+  border-radius: 3px;
+  background: linear-gradient(180deg, #fff, #ece9d8);
+  border: 1px solid #003c74;
+  box-shadow: none;
 }
 
-button:active,
-.button:active {
-  box-shadow: var(--button-active-shadow);
-  transform: translate(1px, 1px);
+[data-theme="winxp"] button:hover {
+  background: linear-gradient(180deg, #fff, #e0e0e0);
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 
-button:focus,
-.button:focus {
-  outline: 1px dotted var(--text-color);
-  outline-offset: -4px;
+/* Mac OS 9 Overrides */
+[data-theme="macos9"] .window {
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  border: 1px solid #000;
+  background: var(--window-bg);
 }
 
-/* ============================================
-   Input Styles
-   ============================================ */
-
-input[type="text"],
-input[type="search"],
-textarea {
-  background: var(--input-bg);
-  color: var(--text-color);
-  border: none;
-  padding: var(--spacing-xs);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  box-shadow: var(--input-border);
+[data-theme="macos9"] .title-bar {
+  background: linear-gradient(to bottom, #fff, #ccc);
+  border-bottom: 1px solid #000;
+  color: #000;
 }
 
-input:focus,
-textarea:focus {
-  outline: none;
+[data-theme="macos9"] .title-bar-text {
+  text-align: center;
+  font-family: "Charcoal", "Chicago", sans-serif;
 }
 
-/* ============================================
-   Lists
-   ============================================ */
-
-ul, ol {
-  margin-left: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
+/* Web 1.0 (Portal) Overrides */
+[data-theme="web1"] {
+  /* Restore default font smoothing for serif fonts to prevent thin/broken strokes */
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }
 
-li {
-  margin-bottom: var(--spacing-xs);
+[data-theme="web1"] body {
+  background-image: none;
+  background-color: #ffffff;
 }
 
-/* ============================================
-   Code Blocks
-   ============================================ */
-
-code {
-  font-family: 'Courier New', monospace;
-  background: var(--input-bg);
-  padding: 2px 4px;
-  font-size: var(--font-size-sm);
+[data-theme="web1"] .window {
+  box-shadow: none;
+  border: 1px solid #cccccc;
+  margin-bottom: 20px;
 }
 
-pre {
-  background: var(--input-bg);
-  padding: var(--spacing-md);
-  overflow-x: auto;
-  margin-bottom: var(--spacing-md);
-  box-shadow: var(--input-border);
-}
-
-pre code {
-  background: none;
-  padding: 0;
-}
-
-/* ============================================
-   Images
-   ============================================ */
-
-img {
-  max-width: 100%;
+[data-theme="web1"] .title-bar {
+  background: #f0f0f0;
+  border-bottom: 1px solid #cccccc;
   height: auto;
-  display: block;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+  min-height: 30px;
+  padding: 5px 10px;
 }
 
-/* ============================================
-   Responsive Design
-   ============================================ */
-
-@media (max-width: 768px) {
-  body {
-    padding: var(--spacing-sm);
-  }
-  
-  .window-body {
-    padding: var(--spacing-sm);
-  }
-  
-  :root {
-    --font-size-base: 13px;
-  }
+[data-theme="web1"] .title-bar-text {
+  color: #000000;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-@media (max-width: 480px) {
-  body {
-    padding: var(--spacing-xs);
-  }
-  
-  :root {
-    --font-size-base: 12px;
-  }
+[data-theme="web1"] .title-bar-controls {
+  display: none; /* Hide window controls in web mode */
 }
 
+[data-theme="web1"] a {
+  text-decoration: underline;
+}
+
+[data-theme="web1"] a:hover {
+  background-color: transparent;
+  color: red;
+}
+
+[data-theme="web1"] .nav-link {
+  border: none;
+  background: transparent !important;
+  color: #003399 !important;
+  text-decoration: none;
+}
+
+[data-theme="web1"] .nav-link:hover {
+  text-decoration: underline;
+  color: #ff0000 !important;
+}
+
+[data-theme="web1"] .nav-link.active {
+  color: #000000 !important;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: default;
+}
+
+[data-theme="web1"] .top-nav {
+  background: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  box-shadow: none;
+  color: #000;
+}
+
+[data-theme="web1"] .side-nav {
+  border: 1px solid #eee;
+  box-shadow: none;
+  background: #f9f9f9;
+}
+
+[data-theme="web1"] .side-nav-header {
+  background: #eee;
+  box-shadow: none;
+  border-bottom: 1px solid #ddd;
+}
+
+[data-theme="web1"] .category-title {
+  background: #f5f5f5;
+  box-shadow: none;
+  border: 1px solid #ddd;
+  color: #333;
+}

@@ -4,16 +4,21 @@
  * 包含 SEO、meta 标签、全局样式引入
  */
 
+import '98.css';
+import ThemeSelector from '../components/ThemeSelector.astro';
+import CRTOverlay from '../components/CRTOverlay.astro';
+import SearchModal from '../components/SearchModal.astro';
+
 interface Props {
   title: string;
   description?: string;
-  theme?: 'win98' | 'winxp' | 'macos9';
+  theme?: 'web1' | 'win98' | 'winxp' | 'macos9';
 }
 
 const { 
   title, 
   description = '怀旧数字博物馆 - 为高敏人群打造的精神角落',
-  theme = 'win98'
+  theme = 'web1'
 } = Astro.props;
 
 const fullTitle = `${title} | 怀旧数字博物馆`;
@@ -24,14 +29,24 @@ const fullTitle = `${title} | 怀旧数字博物馆`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     
     <!-- SEO -->
     <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || Astro.url.origin)} />
+    
+    <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:site_name" content="怀旧数字博物馆" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
@@ -51,18 +66,14 @@ const fullTitle = `${title} | 怀旧数字博物馆`;
     </script>
   </head>
   <body>
+    <CRTOverlay />
     <div class="container">
       <slot />
+      
+      <footer style="margin-top: 50px; text-align: center; padding-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <ThemeSelector />
+        <p style="font-size: 12px; opacity: 0.7;">© 2024 Retro Digital Museum</p>
+      </footer>
     </div>
-    
-    <!-- 主题切换功能 -->
-    <script>
-      // 主题切换函数
-      window.setTheme = function(theme: string) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-      };
-    </script>
   </body>
 </html>
-

@@ -1,0 +1,94 @@
+---
+import WindowFrame from './WindowFrame.astro';
+
+interface Props {
+  platform: 'bilibili' | 'youtube';
+  id: string;
+  title: string;
+}
+
+const { platform, id, title } = Astro.props;
+---
+
+<WindowFrame title={title}>
+  <div class="video-container" data-platform={platform} data-id={id}>
+    <div class="video-placeholder">
+      <div class="play-button">▶</div>
+      <p>Click to Load Video</p>
+    </div>
+  </div>
+</WindowFrame>
+
+<script>
+  const containers = document.querySelectorAll('.video-container');
+  
+  containers.forEach(container => {
+    const placeholder = container.querySelector('.video-placeholder') as HTMLElement;
+    
+    if (placeholder) {
+      placeholder.addEventListener('click', () => {
+        const platform = (container as HTMLElement).dataset.platform;
+        const id = (container as HTMLElement).dataset.id;
+        
+        let iframeSrc = '';
+        if (platform === 'bilibili') {
+          iframeSrc = `//player.bilibili.com/player.html?bvid=${id}&page=1&high_quality=1&danmaku=0`;
+        } else if (platform === 'youtube') {
+          iframeSrc = `https://www.youtube.com/embed/${id}?autoplay=1`;
+        }
+        
+        if (iframeSrc) {
+          const iframe = document.createElement('iframe');
+          iframe.src = iframeSrc;
+          iframe.setAttribute('frameborder', '0');
+          iframe.setAttribute('allowfullscreen', 'true');
+          iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+          iframe.style.position = 'absolute';
+          iframe.style.top = '0';
+          iframe.style.left = '0';
+          iframe.style.width = '100%';
+          iframe.style.height = '100%';
+          
+          container.innerHTML = '';
+          container.appendChild(iframe);
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    background: #000;
+    overflow: hidden;
+  }
+  
+  .video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(45deg, #222, #333);
+    color: #fff;
+    transition: background 0.3s;
+  }
+  
+  .video-placeholder:hover {
+    background: linear-gradient(45deg, #333, #444);
+  }
+  
+  .play-button {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+interface Props {
+  repo?: string;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
+}
+
+const { 
+  repo = 'chenyaokai/the_past', // Default placeholder
+  repoId = '', 
+  category = 'Announcements', 
+  categoryId = '' 
+} = Astro.props;
+---
+
+<div class="giscus-container">
+  <script 
+    src="https://giscus.app/client.js"
+    data-repo={repo}
+    data-repo-id={repoId}
+    data-category={category}
+    data-category-id={categoryId}
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
+
+<script>
+  // Sync theme with Giscus
+  function updateGiscusTheme(theme: string) {
+    const iframe = document.querySelector('iframe.giscus-frame') as HTMLIFrameElement;
+    if (!iframe) return;
+    
+    // Map our themes to Giscus themes
+    let giscusTheme = 'light';
+    if (theme === 'win98') {
+      giscusTheme = 'https://giscus.app/themes/cobalt.css'; // Or custom CSS url
+    } else if (theme === 'macos9') {
+      giscusTheme = 'light_high_contrast';
+    }
+    
+    const message = {
+      setConfig: {
+        theme: giscusTheme
+      }
+    };
+    iframe.contentWindow?.postMessage({ giscus: message }, 'https://giscus.app');
+  }
+
+  // Listen for theme changes
+  window.addEventListener('theme-change', ((e: CustomEvent) => {
+    updateGiscusTheme(e.detail.theme);
+  }) as EventListener);
+</script>
+
+<style>
+  .giscus-container {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border-dark);
+  }
+</style>

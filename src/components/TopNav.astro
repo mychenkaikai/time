@@ -24,21 +24,44 @@ const navItems = [
     <span class="nav-title">怀旧数字博物馆</span>
   </div>
   
-  <ul class="nav-menu">
-    {navItems.map((item) => (
-      <li class="nav-item">
-        <a 
-          href={item.href} 
-          class:list={['nav-link', { active: currentPath === item.href }]}
-        >
-          {item.label}
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-menu">
+      {navItems.map((item) => (
+        <li class="nav-item">
+          <a 
+            href={item.href} 
+            class:list={['nav-link', { active: currentPath === item.href }]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <button class="search-btn" onclick="window.openSearchModal()">🔍</button>
+  </div>
 </nav>
 
 <style>
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .search-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+    opacity: 0.8;
+  }
+  
+  .search-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
   .top-nav {
     background: var(--window-title-bg);
     color: var(--window-title-text);

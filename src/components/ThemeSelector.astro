@@ -1,0 +1,70 @@
+---
+/**
+ * ThemeSelector - 主题切换组件 & CRT 开关
+ */
+---
+
+<div class="theme-controls">
+  <div class="field-row">
+    <label for="theme-select">Theme:</label>
+    <select id="theme-select">
+      <option value="web1">Web 1.0 (Portal)</option>
+      <option value="win98">Windows 98</option>
+      <option value="winxp">Windows XP</option>
+      <option value="macos9">Mac OS 9</option>
+    </select>
+  </div>
+  
+  <div class="field-row">
+    <input type="checkbox" id="crt-toggle">
+    <label for="crt-toggle">CRT Effect</label>
+  </div>
+</div>
+
+<script>
+  const select = document.getElementById('theme-select') as HTMLSelectElement;
+  const crtToggle = document.getElementById('crt-toggle') as HTMLInputElement;
+  
+  if (select) {
+    // Init theme
+    const currentTheme = localStorage.getItem('theme') || 'web1';
+    select.value = currentTheme;
+    // Ensure document attribute is synced if it wasn't set by inline script
+    if (!document.documentElement.getAttribute('data-theme')) {
+       document.documentElement.setAttribute('data-theme', currentTheme);
+    }
+
+    select.addEventListener('change', (e) => {
+      const theme = (e.target as HTMLSelectElement).value;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme } }));
+    });
+  }
+
+  if (crtToggle) {
+    // Init CRT
+    const enabled = localStorage.getItem('crt_enabled') === 'true';
+    crtToggle.checked = enabled;
+    
+    crtToggle.addEventListener('change', (e) => {
+      const isEnabled = (e.target as HTMLInputElement).checked;
+      localStorage.setItem('crt_enabled', isEnabled.toString());
+      window.dispatchEvent(new CustomEvent('crt-toggle', { detail: { enabled: isEnabled } }));
+    });
+  }
+</script>
+
+<style>
+  .theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+</style>

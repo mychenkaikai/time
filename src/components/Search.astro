@@ -1,0 +1,86 @@
+---
+---
+
+<div id="search" class="search-box"></div>
+
+<script>
+  // Dynamically load Pagefind UI script
+  const script = document.createElement('script');
+  script.src = "/pagefind/pagefind-ui.js";
+  script.onload = () => {
+    // @ts-ignore
+    new PagefindUI({
+      element: "#search",
+      showImages: false,
+      translations: {
+        placeholder: "Search Museum...",
+        zero_results: "No relics found for [SEARCH_TERM]",
+        count_one: "1 relic found",
+        count_many: "[COUNT] relics found",
+      }
+    });
+  };
+  script.onerror = () => {
+    const searchBox = document.getElementById('search');
+    if (searchBox) {
+      searchBox.innerHTML = '<p style="padding: 10px; color: red;">Search index not found. Please run build.</p>';
+    }
+  };
+  document.head.appendChild(script);
+  
+  // Load CSS
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '/pagefind/pagefind-ui.css';
+  document.head.appendChild(link);
+</script>
+
+<style is:global>
+  /* Customizing Pagefind UI to match retro style */
+  .pagefind-ui {
+    --pagefind-ui-scale: 0.8;
+    --pagefind-ui-primary: #000080;
+    --pagefind-ui-text: #000;
+    --pagefind-ui-background: #c0c0c0;
+    --pagefind-ui-border: #808080;
+    --pagefind-ui-tag: #c0c0c0;
+    --pagefind-ui-border-width: 2px;
+    --pagefind-ui-border-radius: 0px;
+    --pagefind-ui-image-border-radius: 0px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    font-family: var(--font-family);
+    width: 100%;
+  }
+
+  .pagefind-ui .pagefind-ui__search-input {
+    border: 2px inset #fff;
+    background-color: #fff;
+    border-radius: 0;
+    padding: 4px;
+    font-family: inherit;
+  }
+  
+  .pagefind-ui .pagefind-ui__result {
+    border: none;
+    border-bottom: 1px dotted #808080;
+    padding: 10px 0;
+    background: transparent;
+  }
+
+  .pagefind-ui .pagefind-ui__result-thumb {
+    display: none;
+  }
+  
+  .pagefind-ui .pagefind-ui__drawer {
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    box-shadow: 1px 1px 0 #000;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 5px;
+  }
+</style>
+
