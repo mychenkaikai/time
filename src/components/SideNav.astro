@@ -1,0 +1,233 @@
+---
+/**
+ * SideNav - 左侧两级导航组件
+ * 显示文章分类和列表
+ */
+
+import { getCollection } from 'astro:content';
+
+// 获取所有已发布的文章
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 按分类组织文章
+interface CategoryStructure {
+  [category: string]: {
+    [subcategory: string]: Array<{
+      slug: string;
+      title: string;
+      date: Date;
+    }>;
+  };
+}
+
+const categoryStructure: CategoryStructure = {};
+
+allPosts.forEach((post) => {
+  const category = post.data.category;
+  const subcategory = post.data.subcategory || '未分类';
+  
+  if (!categoryStructure[category]) {
+    categoryStructure[category] = {};
+  }
+  
+  if (!categoryStructure[category][subcategory]) {
+    categoryStructure[category][subcategory] = [];
+  }
+  
+  categoryStructure[category][subcategory].push({
+    slug: post.slug,
+    title: post.data.title,
+    date: post.data.date,
+  });
+});
+
+// 对每个子分类的文章按日期排序
+Object.keys(categoryStructure).forEach((category) => {
+  Object.keys(categoryStructure[category]).forEach((subcategory) => {
+    categoryStructure[category][subcategory].sort((a, b) => 
+      b.date.getTime() - a.date.getTime()
+    );
+  });
+});
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+---
+
+<aside class="side-nav">
+  <div class="side-nav-header">
+    <h3>📑 文章导航</h3>
+  </div>
+  
+  <div class="side-nav-content">
+    {Object.entries(categoryStructure).map(([category, subcategories]) => (
+      <div class="category-group">
+        <div class="category-title">
+          📁 {category}
+        </div>
+        
+        <div class="subcategory-list">
+          {Object.entries(subcategories).map(([subcategory, posts]) => (
+            <details class="subcategory-item" open>
+              <summary class="subcategory-title">
+                📂 {subcategory} ({posts.length})
+              </summary>
+              
+              <ul class="post-list">
+                {posts.map((post) => (
+                  <li class="post-item">
+                    <a 
+                      href={`/posts/${post.slug}`}
+                      class:list={['post-link', { active: currentSlug === post.slug }]}
+                    >
+                      📄 {post.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</aside>
+
+<style>
+  .side-nav {
+    background: var(--bg-color);
+    border: 2px solid;
+    border-color: var(--border-light) var(--border-darkest) var(--border-darkest) var(--border-light);
+    box-shadow: var(--window-shadow);
+    height: fit-content;
+    position: sticky;
+    top: var(--spacing-md);
+    max-height: calc(100vh - var(--spacing-lg) * 2);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .side-nav-header {
+    background: var(--window-title-bg);
+    color: var(--window-title-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-weight: bold;
+    box-shadow: inset -1px -1px 0 var(--border-darkest),
+                inset 1px 1px 0 var(--border-light);
+  }
+
+  .side-nav-header h3 {
+    margin: 0;
+    font-size: var(--font-size-base);
+  }
+
+  .side-nav-content {
+    padding: var(--spacing-sm);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .category-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .category-title {
+    font-weight: bold;
+    padding: var(--spacing-xs);
+    background: var(--button-bg);
+    border: 1px solid var(--border-dark);
+    margin-bottom: var(--spacing-xs);
+    box-shadow: inset -1px -1px 0 var(--border-darkest),
+                inset 1px 1px 0 var(--border-light);
+  }
+
+  .subcategory-list {
+    padding-left: var(--spacing-sm);
+  }
+
+  .subcategory-item {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .subcategory-title {
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--border-dark);
+    user-select: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .subcategory-title:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .post-list {
+    list-style: none;
+    margin: var(--spacing-xs) 0 0 0;
+    padding: 0;
+  }
+
+  .post-item {
+    margin: 0;
+  }
+
+  .post-link {
+    display: block;
+    padding: var(--spacing-xs);
+    padding-left: var(--spacing-md);
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .post-link:hover {
+    background: var(--link-hover-bg);
+    color: var(--link-hover-text);
+    border-left-color: var(--link-color);
+  }
+
+  .post-link.active {
+    background: var(--link-hover-bg);
+    color: var(--link-hover-text);
+    border-left-color: var(--link-color);
+    font-weight: bold;
+  }
+
+  /* 自定义滚动条 */
+  .side-nav-content::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .side-nav-content::-webkit-scrollbar-track {
+    background: var(--bg-color);
+  }
+
+  .side-nav-content::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border: 1px solid var(--border-dark);
+    box-shadow: inset -1px -1px 0 var(--border-darkest),
+                inset 1px 1px 0 var(--border-light);
+  }
+
+  .side-nav-content::-webkit-scrollbar-thumb:hover {
+    background: var(--border-dark);
+  }
+
+  /* 响应式 */
+  @media (max-width: 1024px) {
+    .side-nav {
+      position: static;
+      max-height: none;
+      margin-bottom: var(--spacing-md);
+    }
+  }
+</style>
+

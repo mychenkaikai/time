@@ -3,6 +3,8 @@ title: "童年的红白机游戏"
 description: "那些年我们一起玩过的经典游戏，超级马里奥、魂斗罗、坦克大战..."
 date: "2024-01-15"
 theme: "win98"
+category: "童年回忆"
+subcategory: "游戏"
 tags: ["游戏", "童年", "红白机"]
 mood: "怀念"
 draft: false

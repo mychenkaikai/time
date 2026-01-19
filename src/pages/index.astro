@@ -1,11 +1,13 @@
 ---
 /**
  * 首页 - 文章列表
- * 显示所有已发布的文章，按日期倒序排列
+ * 三栏布局：顶部导航 + 左侧分类导航 + 右侧内容区
  */
 
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SideNav from '../components/SideNav.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 
 // 获取所有文章，过滤草稿，按日期倒序
@@ -28,67 +30,104 @@ const formatDate = (date: Date) => {
 ---
 
 <BaseLayout title="首页" description="怀旧数字博物馆 - 记录旧时光的精神角落">
-  <!-- 网站标题 -->
-  <WindowFrame title="怀旧数字博物馆 v1.0">
-    <div class="site-header">
-      <h1>🖥️ 欢迎来到怀旧数字博物馆</h1>
-      <p class="site-description">
-        这里是为高敏人群（HSP）打造的精神角落，<br />
-        复刻 80/90 年代互联网的仪式感。
-      </p>
-    </div>
-  </WindowFrame>
+  <!-- 顶部导航栏 -->
+  <TopNav currentPath="/" />
 
-  <!-- 文章列表 -->
-  <WindowFrame title="📝 文章列表">
-    {sortedPosts.length === 0 ? (
-      <div class="empty-state">
-        <p>还没有文章，敬请期待...</p>
-      </div>
-    ) : (
-      <div class="posts-list">
-        {sortedPosts.map((post) => (
-          <article class="post-item">
-            <div class="post-item-header">
-              <h2 class="post-item-title">
-                <a href={`/posts/${post.slug}`}>{post.data.title}</a>
-              </h2>
-              <span class="post-item-date">{formatDate(post.data.date)}</span>
-            </div>
-            
-            <p class="post-item-description">{post.data.description}</p>
-            
-            {post.data.tags.length > 0 && (
-              <div class="post-item-tags">
-                {post.data.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
-            )}
-            
-            {post.data.mood && (
-              <div class="post-item-mood">
-                💭 {post.data.mood}
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
-    )}
-  </WindowFrame>
-
-  <!-- 页脚信息 -->
-  <WindowFrame title="ℹ️ 关于">
-    <div class="site-footer">
-      <p>
-        本站使用 <strong>Astro</strong> 构建，采用 <strong>Windows 98</strong> 复古风格。<br />
-        © 2024 怀旧数字博物馆 | 用 ❤️ 打造
-      </p>
+  <!-- 主内容区：左侧导航 + 右侧内容 -->
+  <div class="main-layout">
+    <!-- 左侧分类导航 -->
+    <div class="sidebar">
+      <SideNav />
     </div>
-  </WindowFrame>
+
+    <!-- 右侧内容区 -->
+    <div class="content-area">
+      <!-- 网站标题 -->
+      <WindowFrame title="怀旧数字博物馆 v1.0">
+        <div class="site-header">
+          <h1>🖥️ 欢迎来到怀旧数字博物馆</h1>
+          <p class="site-description">
+            这里是为高敏人群（HSP）打造的精神角落，<br />
+            复刻 80/90 年代互联网的仪式感。
+          </p>
+        </div>
+      </WindowFrame>
+
+      <!-- 最新文章 -->
+      <WindowFrame title="📝 最新文章">
+        {sortedPosts.length === 0 ? (
+          <div class="empty-state">
+            <p>还没有文章，敬请期待...</p>
+          </div>
+        ) : (
+          <div class="posts-list">
+            {sortedPosts.slice(0, 10).map((post) => (
+              <article class="post-item">
+                <div class="post-item-header">
+                  <h2 class="post-item-title">
+                    <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+                  </h2>
+                  <span class="post-item-date">{formatDate(post.data.date)}</span>
+                </div>
+                
+                <div class="post-item-meta">
+                  <span class="post-category">📁 {post.data.category}</span>
+                  {post.data.subcategory && (
+                    <span class="post-subcategory">/ {post.data.subcategory}</span>
+                  )}
+                </div>
+                
+                <p class="post-item-description">{post.data.description}</p>
+                
+                {post.data.tags.length > 0 && (
+                  <div class="post-item-tags">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+                
+                {post.data.mood && (
+                  <div class="post-item-mood">
+                    💭 {post.data.mood}
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
+      </WindowFrame>
+
+      <!-- 页脚信息 -->
+      <WindowFrame title="ℹ️ 关于">
+        <div class="site-footer">
+          <p>
+            本站使用 <strong>Astro</strong> 构建，采用 <strong>Windows 98</strong> 复古风格。<br />
+            © 2024 怀旧数字博物馆 | 用 ❤️ 打造
+          </p>
+        </div>
+      </WindowFrame>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
+  /* 主布局：左侧导航 + 右侧内容 */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-md);
+    align-items: start;
+  }
+
+  .sidebar {
+    /* 侧边栏样式在 SideNav 组件中 */
+  }
+
+  .content-area {
+    min-width: 0; /* 防止内容溢出 */
+  }
+
   /* 网站头部 */
   .site-header {
     text-align: center;
@@ -129,7 +168,7 @@ const formatDate = (date: Date) => {
     justify-content: space-between;
     align-items: baseline;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
     flex-wrap: wrap;
   }
 
@@ -152,6 +191,20 @@ const formatDate = (date: Date) => {
     font-size: var(--font-size-sm);
     color: var(--border-dark);
     white-space: nowrap;
+  }
+
+  .post-item-meta {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .post-category {
+    font-weight: bold;
+  }
+
+  .post-subcategory {
+    margin-left: var(--spacing-xs);
   }
 
   .post-item-description {
@@ -194,6 +247,20 @@ const formatDate = (date: Date) => {
   }
 
   /* 响应式 */
+  @media (max-width: 1024px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      order: 2;
+    }
+
+    .content-area {
+      order: 1;
+    }
+  }
+
   @media (max-width: 768px) {
     .post-item-header {
       flex-direction: column;

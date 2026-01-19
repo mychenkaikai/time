@@ -8,6 +8,9 @@ const postsCollection = defineCollection({
     date: z.string().transform(str => new Date(str)),
     updated: z.string().transform(str => new Date(str)).optional(),
     theme: z.enum(['win98', 'winxp', 'macos9']).default('win98'),
+    // 新增：分类系统（两级导航）
+    category: z.string(), // 一级分类，如 "童年回忆"、"技术怀旧"
+    subcategory: z.string().optional(), // 二级分类，如 "游戏"、"动画"
     tags: z.array(z.string()).default([]),
     mood: z.string().optional(),
     draft: z.boolean().default(false),

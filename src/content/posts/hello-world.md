@@ -3,6 +3,8 @@ title: "你好，旧时光"
 description: "这是第一篇测试文章，欢迎来到怀旧数字博物馆"
 date: "2024-01-01"
 theme: "win98"
+category: "关于本站"
+subcategory: "站点介绍"
 tags: ["测试", "开始", "怀旧"]
 mood: "期待"
 draft: false

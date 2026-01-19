@@ -148,6 +148,27 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"old-computer.md": {
+	id: "old-computer.md";
+  slug: "old-computer";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"old-music.md": {
+	id: "old-music.md";
+  slug: "old-music";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"old-tv.md": {
+	id: "old-tv.md";
+  slug: "old-tv";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "retro-games.md": {
 	id: "retro-games.md";
   slug: "retro-games";

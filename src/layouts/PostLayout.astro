@@ -1,10 +1,12 @@
 ---
 /**
  * PostLayout - 文章页布局
- * 用于渲染单篇文章，支持主题、音乐、视频等功能
+ * 三栏布局：顶部导航 + 左侧分类导航 + 右侧文章内容
  */
 
 import BaseLayout from './BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SideNav from '../components/SideNav.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
 
@@ -15,6 +17,8 @@ interface Props {
     date: Date;
     updated?: Date;
     theme: 'win98' | 'winxp' | 'macos9';
+    category: string;
+    subcategory?: string;
     tags: string[];
     mood?: string;
     media?: {
@@ -34,9 +38,10 @@ interface Props {
       accentColor?: string;
     };
   };
+  slug: string;
 }
 
-const { frontmatter } = Astro.props;
+const { frontmatter, slug } = Astro.props;
 
 // 格式化日期
 const formatDate = (date: Date) => {
@@ -53,6 +58,9 @@ const formatDate = (date: Date) => {
   description={frontmatter.description}
   theme={frontmatter.theme}
 >
+  <!-- 顶部导航栏 -->
+  <TopNav />
+
   <!-- 音乐播放器 -->
   {frontmatter.media?.bgm && (
     <MusicPlayer 
@@ -62,58 +70,97 @@ const formatDate = (date: Date) => {
     />
   )}
 
-  <!-- 文章窗口 -->
-  <WindowFrame title={frontmatter.title}>
-    <!-- 文章元信息 -->
-    <div class="post-meta">
-      <div class="post-date">
-        📅 发布于: {formatDate(frontmatter.date)}
-        {frontmatter.updated && (
-          <span> | 更新于: {formatDate(frontmatter.updated)}</span>
-        )}
-      </div>
-      
-      {frontmatter.mood && (
-        <div class="post-mood">
-          💭 心情: {frontmatter.mood}
-        </div>
-      )}
-      
-      {frontmatter.tags.length > 0 && (
-        <div class="post-tags">
-          🏷️ 标签: 
-          {frontmatter.tags.map((tag) => (
-            <a href={`/tags/${tag}`} class="tag">{tag}</a>
-          ))}
-        </div>
-      )}
+  <!-- 主内容区：左侧导航 + 右侧文章 -->
+  <div class="main-layout">
+    <!-- 左侧分类导航 -->
+    <div class="sidebar">
+      <SideNav currentSlug={slug} />
     </div>
 
-    <hr class="divider" />
+    <!-- 右侧文章内容 -->
+    <div class="content-area">
+      <WindowFrame title={frontmatter.title}>
+        <!-- 文章元信息 -->
+        <div class="post-meta">
+          <div class="post-category">
+            📁 分类: {frontmatter.category}
+            {frontmatter.subcategory && (
+              <span> / {frontmatter.subcategory}</span>
+            )}
+          </div>
+          
+          <div class="post-date">
+            📅 发布于: {formatDate(frontmatter.date)}
+            {frontmatter.updated && (
+              <span> | 更新于: {formatDate(frontmatter.updated)}</span>
+            )}
+          </div>
+          
+          {frontmatter.mood && (
+            <div class="post-mood">
+              💭 心情: {frontmatter.mood}
+            </div>
+          )}
+          
+          {frontmatter.tags.length > 0 && (
+            <div class="post-tags">
+              🏷️ 标签: 
+              {frontmatter.tags.map((tag) => (
+                <a href={`/tags/${tag}`} class="tag">{tag}</a>
+              ))}
+            </div>
+          )}
+        </div>
 
-    <!-- 文章内容 -->
-    <article class="post-content">
-      <slot />
-    </article>
+        <hr class="divider" />
 
-    <!-- 返回首页 -->
-    <hr class="divider" />
-    <div class="post-footer">
-      <a href="/" class="back-link">← 返回首页</a>
+        <!-- 文章内容 -->
+        <article class="post-content">
+          <slot />
+        </article>
+
+        <!-- 返回首页 -->
+        <hr class="divider" />
+        <div class="post-footer">
+          <a href="/" class="back-link">← 返回首页</a>
+        </div>
+      </WindowFrame>
     </div>
-  </WindowFrame>
+  </div>
 
   <style>
+    /* 主布局：左侧导航 + 右侧内容 */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--spacing-md);
+      align-items: start;
+    }
+
+    .sidebar {
+      /* 侧边栏样式在 SideNav 组件中 */
+    }
+
+    .content-area {
+      min-width: 0; /* 防止内容溢出 */
+    }
+
     .post-meta {
       font-size: var(--font-size-sm);
       color: var(--text-color);
       margin-bottom: var(--spacing-md);
     }
 
+    .post-category,
     .post-date,
     .post-mood,
     .post-tags {
       margin-bottom: var(--spacing-xs);
+    }
+
+    .post-category {
+      font-weight: bold;
+      color: var(--link-color);
     }
 
     .post-tags {
@@ -157,12 +204,47 @@ const formatDate = (date: Date) => {
       margin-top: var(--spacing-md);
     }
 
+    .post-content :global(p) {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .post-content :global(ul),
+    .post-content :global(ol) {
+      margin-bottom: var(--spacing-md);
+      padding-left: var(--spacing-lg);
+    }
+
+    .post-content :global(li) {
+      margin-bottom: var(--spacing-xs);
+    }
+
     .post-content :global(blockquote) {
       border-left: 4px solid var(--border-dark);
       padding-left: var(--spacing-md);
       margin: var(--spacing-md) 0;
       background: rgba(0, 0, 0, 0.05);
       padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .post-content :global(code) {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .post-content :global(pre) {
+      background: rgba(0, 0, 0, 0.1);
+      padding: var(--spacing-md);
+      overflow-x: auto;
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--border-dark);
+    }
+
+    .post-content :global(pre code) {
+      background: none;
+      padding: 0;
     }
 
     .post-footer {
@@ -185,6 +267,21 @@ const formatDate = (date: Date) => {
     .back-link:active {
       box-shadow: var(--button-active-shadow);
       transform: translate(1px, 1px);
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        order: 2;
+      }
+
+      .content-area {
+        order: 1;
+      }
     }
   </style>
 </BaseLayout>
