@@ -1,0 +1,90 @@
+---
+/**
+ * WindowFrame - 可复用的窗口框架组件
+ * 模拟 Windows 98 风格的窗口外壳
+ */
+
+interface Props {
+  title: string;
+  closable?: boolean;
+}
+
+const { title, closable = false } = Astro.props;
+---
+
+<div class="window">
+  <div class="window-titlebar">
+    <span class="window-title">{title}</span>
+    {closable && (
+      <button class="window-close" aria-label="关闭">✕</button>
+    )}
+  </div>
+  <div class="window-body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .window {
+    background: var(--window-bg);
+    border-top: var(--border-width) solid var(--border-light);
+    border-left: var(--border-width) solid var(--border-light);
+    border-right: var(--border-width) solid var(--border-darkest);
+    border-bottom: var(--border-width) solid var(--border-darkest);
+    box-shadow: var(--window-shadow);
+    border-radius: var(--window-border-radius);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .window-titlebar {
+    background: var(--titlebar-bg);
+    color: var(--titlebar-text);
+    height: var(--titlebar-height);
+    padding: 0 var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+    user-select: none;
+  }
+
+  .window-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .window-close {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    line-height: 1;
+    background: var(--button-bg);
+    color: var(--button-text);
+  }
+
+  .window-close:hover {
+    background: #ff0000;
+    color: #ffffff;
+  }
+
+  .window-body {
+    padding: var(--spacing-md);
+    background: var(--window-bg);
+  }
+
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .window-body {
+      padding: var(--spacing-sm);
+    }
+  }
+</style>
+

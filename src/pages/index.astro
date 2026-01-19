@@ -1,0 +1,208 @@
+---
+/**
+ * 首页 - 文章列表
+ * 显示所有已发布的文章，按日期倒序排列
+ */
+
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WindowFrame from '../components/WindowFrame.astro';
+
+// 获取所有文章，过滤草稿，按日期倒序
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedPosts = allPosts.sort((a, b) => {
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+
+// 格式化日期
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(date);
+};
+---
+
+<BaseLayout title="首页" description="怀旧数字博物馆 - 记录旧时光的精神角落">
+  <!-- 网站标题 -->
+  <WindowFrame title="怀旧数字博物馆 v1.0">
+    <div class="site-header">
+      <h1>🖥️ 欢迎来到怀旧数字博物馆</h1>
+      <p class="site-description">
+        这里是为高敏人群（HSP）打造的精神角落，<br />
+        复刻 80/90 年代互联网的仪式感。
+      </p>
+    </div>
+  </WindowFrame>
+
+  <!-- 文章列表 -->
+  <WindowFrame title="📝 文章列表">
+    {sortedPosts.length === 0 ? (
+      <div class="empty-state">
+        <p>还没有文章，敬请期待...</p>
+      </div>
+    ) : (
+      <div class="posts-list">
+        {sortedPosts.map((post) => (
+          <article class="post-item">
+            <div class="post-item-header">
+              <h2 class="post-item-title">
+                <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+              </h2>
+              <span class="post-item-date">{formatDate(post.data.date)}</span>
+            </div>
+            
+            <p class="post-item-description">{post.data.description}</p>
+            
+            {post.data.tags.length > 0 && (
+              <div class="post-item-tags">
+                {post.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+            
+            {post.data.mood && (
+              <div class="post-item-mood">
+                💭 {post.data.mood}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    )}
+  </WindowFrame>
+
+  <!-- 页脚信息 -->
+  <WindowFrame title="ℹ️ 关于">
+    <div class="site-footer">
+      <p>
+        本站使用 <strong>Astro</strong> 构建，采用 <strong>Windows 98</strong> 复古风格。<br />
+        © 2024 怀旧数字博物馆 | 用 ❤️ 打造
+      </p>
+    </div>
+  </WindowFrame>
+</BaseLayout>
+
+<style>
+  /* 网站头部 */
+  .site-header {
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+  }
+
+  .site-header h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .site-description {
+    color: var(--border-dark);
+    line-height: 1.6;
+  }
+
+  /* 文章列表 */
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .post-item {
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--border-dark);
+    transition: all 0.2s;
+  }
+
+  .post-item:hover {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .post-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .post-item-title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    flex: 1;
+  }
+
+  .post-item-title a {
+    text-decoration: none;
+    color: var(--link-color);
+  }
+
+  .post-item-title a:hover {
+    text-decoration: underline;
+  }
+
+  .post-item-date {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    white-space: nowrap;
+  }
+
+  .post-item-description {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+  }
+
+  .post-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .tag {
+    background: var(--button-bg);
+    padding: 2px 8px;
+    font-size: var(--font-size-sm);
+    box-shadow: inset -1px -1px 0 var(--border-darkest),
+                inset 1px 1px 0 var(--border-light);
+  }
+
+  .post-item-mood {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    font-style: italic;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--border-dark);
+  }
+
+  /* 页脚 */
+  .site-footer {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .post-item-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .post-item-date {
+      order: -1;
+    }
+  }
+</style>
+

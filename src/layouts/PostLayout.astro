@@ -1,0 +1,191 @@
+---
+/**
+ * PostLayout - 文章页布局
+ * 用于渲染单篇文章，支持主题、音乐、视频等功能
+ */
+
+import BaseLayout from './BaseLayout.astro';
+import WindowFrame from '../components/WindowFrame.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    date: Date;
+    updated?: Date;
+    theme: 'win98' | 'winxp' | 'macos9';
+    tags: string[];
+    mood?: string;
+    media?: {
+      bgm?: {
+        src: string;
+        title: string;
+        autoplay: boolean;
+      };
+      video?: {
+        platform: string;
+        id: string;
+        title: string;
+      };
+    };
+    customStyles?: {
+      backgroundColor?: string;
+      accentColor?: string;
+    };
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+// 格式化日期
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date);
+};
+---
+
+<BaseLayout 
+  title={frontmatter.title} 
+  description={frontmatter.description}
+  theme={frontmatter.theme}
+>
+  <!-- 音乐播放器 -->
+  {frontmatter.media?.bgm && (
+    <MusicPlayer 
+      src={frontmatter.media.bgm.src}
+      title={frontmatter.media.bgm.title}
+      autoplay={frontmatter.media.bgm.autoplay}
+    />
+  )}
+
+  <!-- 文章窗口 -->
+  <WindowFrame title={frontmatter.title}>
+    <!-- 文章元信息 -->
+    <div class="post-meta">
+      <div class="post-date">
+        📅 发布于: {formatDate(frontmatter.date)}
+        {frontmatter.updated && (
+          <span> | 更新于: {formatDate(frontmatter.updated)}</span>
+        )}
+      </div>
+      
+      {frontmatter.mood && (
+        <div class="post-mood">
+          💭 心情: {frontmatter.mood}
+        </div>
+      )}
+      
+      {frontmatter.tags.length > 0 && (
+        <div class="post-tags">
+          🏷️ 标签: 
+          {frontmatter.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="tag">{tag}</a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <hr class="divider" />
+
+    <!-- 文章内容 -->
+    <article class="post-content">
+      <slot />
+    </article>
+
+    <!-- 返回首页 -->
+    <hr class="divider" />
+    <div class="post-footer">
+      <a href="/" class="back-link">← 返回首页</a>
+    </div>
+  </WindowFrame>
+
+  <style>
+    .post-meta {
+      font-size: var(--font-size-sm);
+      color: var(--text-color);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .post-date,
+    .post-mood,
+    .post-tags {
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+      align-items: center;
+    }
+
+    .tag {
+      background: var(--button-bg);
+      padding: 2px 8px;
+      text-decoration: none;
+      box-shadow: var(--button-shadow);
+      font-size: var(--font-size-sm);
+    }
+
+    .tag:hover {
+      background: var(--link-hover-bg);
+      color: var(--link-hover-text);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-light);
+      margin: var(--spacing-md) 0;
+    }
+
+    .post-content {
+      line-height: 1.8;
+    }
+
+    .post-content :global(h2) {
+      margin-top: var(--spacing-lg);
+      padding-bottom: var(--spacing-xs);
+      border-bottom: 2px solid var(--border-dark);
+    }
+
+    .post-content :global(h3) {
+      margin-top: var(--spacing-md);
+    }
+
+    .post-content :global(blockquote) {
+      border-left: 4px solid var(--border-dark);
+      padding-left: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      background: rgba(0, 0, 0, 0.05);
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .post-footer {
+      text-align: center;
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: var(--spacing-xs) var(--spacing-md);
+      background: var(--button-bg);
+      text-decoration: none;
+      box-shadow: var(--button-shadow);
+    }
+
+    .back-link:hover {
+      background: var(--link-hover-bg);
+      color: var(--link-hover-text);
+    }
+
+    .back-link:active {
+      box-shadow: var(--button-active-shadow);
+      transform: translate(1px, 1px);
+    }
+  </style>
+</BaseLayout>
+

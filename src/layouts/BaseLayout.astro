@@ -1,0 +1,68 @@
+---
+/**
+ * BaseLayout - 基础 HTML 骨架
+ * 包含 SEO、meta 标签、全局样式引入
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  theme?: 'win98' | 'winxp' | 'macos9';
+}
+
+const { 
+  title, 
+  description = '怀旧数字博物馆 - 为高敏人群打造的精神角落',
+  theme = 'win98'
+} = Astro.props;
+
+const fullTitle = `${title} | 怀旧数字博物馆`;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO -->
+    <title>{fullTitle}</title>
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
+    
+    <!-- 样式 -->
+    <link rel="stylesheet" href="/src/styles/variables.css" />
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/scrollbar.css" />
+    
+    <!-- 主题切换脚本（避免闪烁） -->
+    <script is:inline>
+      // 在页面加载前应用保存的主题
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+    </div>
+    
+    <!-- 主题切换功能 -->
+    <script>
+      // 主题切换函数
+      window.setTheme = function(theme: string) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      };
+    </script>
+  </body>
+</html>
+

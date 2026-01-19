@@ -1,0 +1,201 @@
+---
+/**
+ * MusicPlayer - 像素风音乐播放器
+ * 支持播放/暂停、音量控制、记住用户偏好
+ */
+
+interface Props {
+  src: string;
+  title: string;
+  autoplay?: boolean;
+}
+
+const { src, title, autoplay = false } = Astro.props;
+---
+
+<div class="music-player window">
+  <div class="window-titlebar">
+    <span>🎵 {title}</span>
+  </div>
+  <div class="window-body music-player-body">
+    <audio id="bgm-audio" src={src} loop></audio>
+    
+    <div class="player-controls">
+      <button id="play-btn" class="control-btn" aria-label="播放/暂停">
+        <span class="play-icon">▶</span>
+        <span class="pause-icon" style="display: none;">⏸</span>
+      </button>
+      
+      <div class="volume-control">
+        <label for="volume-slider">🔊</label>
+        <input 
+          type="range" 
+          id="volume-slider" 
+          min="0" 
+          max="100" 
+          value="50"
+          aria-label="音量"
+        />
+        <span id="volume-value">50%</span>
+      </div>
+    </div>
+    
+    <div class="player-info">
+      <div class="track-title">{title}</div>
+      <div class="track-time">
+        <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .music-player {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    width: 320px;
+    z-index: 1000;
+  }
+
+  .music-player-body {
+    padding: var(--spacing-sm);
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .volume-control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex: 1;
+  }
+
+  #volume-slider {
+    flex: 1;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  #volume-value {
+    font-size: var(--font-size-sm);
+    min-width: 35px;
+  }
+
+  .player-info {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs);
+    background: var(--input-bg);
+    box-shadow: var(--input-border);
+  }
+
+  .track-title {
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .track-time {
+    color: var(--border-dark);
+  }
+
+  /* 响应式：移动端隐藏或调整位置 */
+  @media (max-width: 768px) {
+    .music-player {
+      width: calc(100% - var(--spacing-md) * 2);
+      bottom: var(--spacing-sm);
+      right: var(--spacing-sm);
+      left: var(--spacing-sm);
+    }
+  }
+</style>
+
+<script>
+  // 音乐播放器逻辑
+  const audio = document.getElementById('bgm-audio') as HTMLAudioElement;
+  const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
+  const playIcon = playBtn.querySelector('.play-icon') as HTMLElement;
+  const pauseIcon = playBtn.querySelector('.pause-icon') as HTMLElement;
+  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+  const volumeValue = document.getElementById('volume-value') as HTMLElement;
+  const currentTimeEl = document.getElementById('current-time') as HTMLElement;
+  const durationEl = document.getElementById('duration') as HTMLElement;
+
+  // 从 localStorage 读取音量设置
+  const savedVolume = localStorage.getItem('musicVolume');
+  if (savedVolume) {
+    const volume = parseInt(savedVolume);
+    audio.volume = volume / 100;
+    volumeSlider.value = savedVolume;
+    volumeValue.textContent = `${volume}%`;
+  } else {
+    audio.volume = 0.5;
+  }
+
+  // 播放/暂停切换
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'inline';
+    } else {
+      audio.pause();
+      playIcon.style.display = 'inline';
+      pauseIcon.style.display = 'none';
+    }
+  });
+
+  // 音量控制
+  volumeSlider.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const volume = parseInt(target.value);
+    audio.volume = volume / 100;
+    volumeValue.textContent = `${volume}%`;
+    localStorage.setItem('musicVolume', volume.toString());
+  });
+
+  // 时间格式化
+  function formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  // 更新播放时间
+  audio.addEventListener('timeupdate', () => {
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
+
+  // 加载完成后显示总时长
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
+  });
+
+  // 自动播放（如果设置）
+  const autoplay = audio.hasAttribute('autoplay');
+  if (autoplay) {
+    // 需要用户交互才能自动播放，这里只是尝试
+    audio.play().catch(() => {
+      console.log('自动播放被浏览器阻止，需要用户手动点击播放');
+    });
+  }
+</script>
+
