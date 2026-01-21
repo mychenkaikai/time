@@ -10,7 +10,6 @@ import SideNav from '../components/SideNav.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
 import VideoBox from '../components/VideoBox.astro';
-import Comments from '../components/Comments.astro';
 
 interface Props {
   frontmatter: {
@@ -18,7 +17,7 @@ interface Props {
     description: string;
     date: Date;
     updated?: Date;
-    theme: 'web1' | 'win98' | 'winxp' | 'macos9';
+    theme: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
     category: string;
     subcategory?: string;
     tags: string[];
@@ -28,7 +27,11 @@ interface Props {
         src: string;
         title: string;
         autoplay: boolean;
-      };
+      } | Array<{
+        src: string;
+        title: string;
+        artist?: string;
+      }>;
       video?: {
         platform: string;
         id: string;
