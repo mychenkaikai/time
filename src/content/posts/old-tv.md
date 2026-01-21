@@ -8,6 +8,11 @@ subcategory: "动画"
 tags: ["动画", "童年", "电视"]
 mood: "快乐"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1ks411G7cr"
+    title: "熊猫京京"
 ---
 
 ## 📺 那台大屁股电视
