@@ -13,6 +13,10 @@
 html {
   font-size: var(--font-size-base);
   line-height: 1.6;
+  /* 强制启用字体平滑，确保清晰显示 */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -30,11 +34,19 @@ body {
     );
   min-height: 100vh;
   padding: var(--spacing-lg);
+  /* 确保字体平滑渲染 */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 }
 
-/* Ensure form elements and specific 98.css components inherit readable font */
-button, input, textarea, select, .window-body, .title-bar-text {
-  font-family: var(--font-family);
+/* 强制覆盖 98.css 的像素字体和字体平滑设置 */
+.title-bar, .window, button, input, label, legend, 
+li[role=tab], option, select, table, textarea, ul.tree-view,
+.window-body, .title-bar-text, body, html, *, 
+p, h1, h2, h3, h4, h5, h6, a, span, div, li, td, th {
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "NSimSun", "新宋体", serif !important;
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  -moz-osx-font-smoothing: auto !important;
 }
 
 button, input, textarea, select {
@@ -137,9 +149,7 @@ a:active { color: var(--link-color); }
 
 /* Web 1.0 (Portal) Overrides */
 [data-theme="web1"] {
-  /* Restore antialiasing for sans-serif fonts on macOS */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* 使用默认字体渲染 */
 }
 
 /* Ensure article content background is white for readability across all themes */
