@@ -15,11 +15,20 @@ const postsCollection = defineCollection({
     mood: z.string().optional(),
     draft: z.boolean().default(false),
     media: z.object({
-      bgm: z.object({
-        src: z.string(),
-        title: z.string(),
-        autoplay: z.boolean().default(false),
-      }).optional(),
+      bgm: z.union([
+        // 单个音乐（向后兼容）
+        z.object({
+          src: z.string(),
+          title: z.string(),
+          autoplay: z.boolean().default(false),
+        }),
+        // 多个音乐（播放列表）
+        z.array(z.object({
+          src: z.string(),
+          title: z.string(),
+          artist: z.string().optional(),
+        }))
+      ]).optional(),
       video: z.object({
         platform: z.enum(['bilibili', 'youtube', 'local']),
         id: z.string(),

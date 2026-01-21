@@ -1,42 +1,95 @@
 ---
-import '98.css';
+/**
+ * MusicPlayer - 音乐播放器组件
+ * 支持单曲和播放列表
+ */
 
-interface Props {
+interface Track {
   src: string;
   title: string;
+  artist?: string;
+}
+
+interface Props {
+  tracks: Track[];
   autoplay?: boolean;
 }
 
-const { src, title, autoplay = false } = Astro.props;
+const { tracks, autoplay = false } = Astro.props;
 ---
 
-<div class="music-player window" data-src={src} data-autoplay={autoplay.toString()}>
-  <div class="title-bar">
-    <div class="title-bar-text">🎵 {title}</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Close"></button>
-    </div>
-  </div>
-  <div class="window-body">
-    <div class="player-controls">
-      <button id="play-btn">Play</button>
-      <button id="pause-btn" style="display: none;">Pause</button>
-      
-      <div class="status-bar-field" style="flex: 1; text-align: center;">
-        <span id="time-display">0:00 / 0:00</span>
+<div class="music-player-container" data-tracks={JSON.stringify(tracks)} data-autoplay={autoplay.toString()}>
+  <div class="window-frame music-player">
+    <div class="frame-title-bar">
+      <div class="frame-title-text">🎵 音乐播放器</div>
+      <div class="frame-title-controls">
+        <button class="minimize-btn" aria-label="Minimize">_</button>
       </div>
     </div>
-    
-    <div class="field-row" style="margin-top: 10px;">
-      <label for="volume-slider">Volume:</label>
-      <input 
-        id="volume-slider" 
-        type="range" 
-        min="0" 
-        max="100" 
-        value="50"
-      />
+    <div class="frame-body">
+      <!-- 当前播放信息 -->
+      <div class="now-playing">
+        <div class="track-title" id="current-title">未播放</div>
+        <div class="track-artist" id="current-artist"></div>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="progress-container">
+        <input 
+          type="range" 
+          id="progress-bar" 
+          min="0" 
+          max="100" 
+          value="0"
+          class="progress-slider"
+        />
+      </div>
+
+      <!-- 时间显示 -->
+      <div class="time-display">
+        <span id="current-time">0:00</span>
+        <span id="duration-time">0:00</span>
+      </div>
+
+      <!-- 播放控制 -->
+      <div class="player-controls">
+        <button id="prev-btn" class="control-btn" title="上一曲">⏮</button>
+        <button id="play-btn" class="control-btn play-btn" title="播放">▶</button>
+        <button id="pause-btn" class="control-btn play-btn" style="display: none;" title="暂停">⏸</button>
+        <button id="next-btn" class="control-btn" title="下一曲">⏭</button>
+        <button id="loop-btn" class="control-btn" title="循环模式">🔁</button>
+      </div>
+
+      <!-- 音量控制 -->
+      <div class="volume-control">
+        <span class="volume-icon">🔊</span>
+        <input 
+          id="volume-slider" 
+          type="range" 
+          min="0" 
+          max="100" 
+          value="50"
+          class="volume-slider"
+        />
+      </div>
+
+      <!-- 播放列表 -->
+      {tracks.length > 1 && (
+        <div class="playlist">
+          <div class="playlist-header">播放列表 ({tracks.length} 首)</div>
+          <div class="playlist-items" id="playlist-items">
+            {tracks.map((track, index) => (
+              <div class="playlist-item" data-index={index}>
+                <span class="track-number">{index + 1}.</span>
+                <div class="track-info">
+                  <div class="track-name">{track.title}</div>
+                  {track.artist && <div class="track-artist-small">{track.artist}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   </div>
 </div>
@@ -44,52 +97,97 @@ const { src, title, autoplay = false } = Astro.props;
 <script>
   import { Howl } from 'howler';
 
-  const playerElement = document.querySelector('.music-player') as HTMLElement;
-  if (playerElement) {
-    const src = playerElement.dataset.src;
-    const autoplay = playerElement.dataset.autoplay === 'true';
+  const container = document.querySelector('.music-player-container') as HTMLElement;
+  if (container) {
+    const tracksData = JSON.parse(container.dataset.tracks || '[]');
+    const autoplay = container.dataset.autoplay === 'true';
     
-    const playBtn = playerElement.querySelector('#play-btn') as HTMLButtonElement;
-    const pauseBtn = playerElement.querySelector('#pause-btn') as HTMLButtonElement;
-    const volumeSlider = playerElement.querySelector('#volume-slider') as HTMLInputElement;
-    const timeDisplay = playerElement.querySelector('#time-display') as HTMLElement;
+    const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
+    const pauseBtn = document.getElementById('pause-btn') as HTMLButtonElement;
+    const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
+    const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
+    const loopBtn = document.getElementById('loop-btn') as HTMLButtonElement;
+    const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+    const progressBar = document.getElementById('progress-bar') as HTMLInputElement;
+    const currentTitle = document.getElementById('current-title') as HTMLElement;
+    const currentArtist = document.getElementById('current-artist') as HTMLElement;
+    const currentTime = document.getElementById('current-time') as HTMLElement;
+    const durationTime = document.getElementById('duration-time') as HTMLElement;
+    const playlistItems = document.getElementById('playlist-items');
+    const minimizeBtn = document.querySelector('.minimize-btn') as HTMLButtonElement;
+    const musicPlayer = document.querySelector('.music-player') as HTMLElement;
 
-    // Load volume from localStorage
+    let currentTrackIndex = 0;
+    let sound: Howl | null = null;
+    let updateTimer: number;
+    let loopMode = 'all'; // 'all', 'one', 'none'
+    let isMinimized = false;
+
+    // 加载保存的音量
     const savedVolume = localStorage.getItem('bgm_volume');
     const initialVolume = savedVolume ? parseFloat(savedVolume) : 0.5;
     volumeSlider.value = (initialVolume * 100).toString();
 
-    let sound: Howl | null = null;
-    let updateTimer: number;
-
+    // 格式化时间
     const formatTime = (secs: number) => {
       const minutes = Math.floor(secs / 60) || 0;
       const seconds = Math.floor(secs - minutes * 60) || 0;
       return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    const updateTime = () => {
+    // 更新进度
+    const updateProgress = () => {
       if (sound && sound.playing()) {
         const seek = sound.seek() || 0;
         const duration = sound.duration();
-        timeDisplay.textContent = `${formatTime(Math.round(seek))} / ${formatTime(Math.round(duration))}`;
-        updateTimer = requestAnimationFrame(updateTime);
+        const percent = (seek / duration) * 100;
+        progressBar.value = percent.toString();
+        currentTime.textContent = formatTime(Math.round(seek));
+        updateTimer = requestAnimationFrame(updateProgress);
       }
     };
 
-    const initSound = () => {
-      if (sound) return;
+    // 更新播放列表高亮
+    const updatePlaylistHighlight = () => {
+      if (playlistItems) {
+        const items = playlistItems.querySelectorAll('.playlist-item');
+        items.forEach((item, index) => {
+          if (index === currentTrackIndex) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      }
+    };
 
+    // 加载并播放音乐
+    const loadTrack = (index: number, shouldPlay: boolean = false) => {
+      if (index < 0 || index >= tracksData.length) return;
+      
+      currentTrackIndex = index;
+      const track = tracksData[index];
+
+      // 停止当前音乐
+      if (sound) {
+        sound.unload();
+      }
+
+      // 更新显示
+      currentTitle.textContent = track.title;
+      currentArtist.textContent = track.artist || '';
+      currentArtist.style.display = track.artist ? 'block' : 'none';
+      updatePlaylistHighlight();
+
+      // 创建新音乐
       sound = new Howl({
-        src: [src!],
-        html5: true, // Force HTML5 Audio to stream large files
+        src: [track.src],
+        html5: true,
         volume: initialVolume,
-        autoplay: autoplay,
-        loop: true,
         onplay: () => {
           playBtn.style.display = 'none';
           pauseBtn.style.display = 'inline-block';
-          requestAnimationFrame(updateTime);
+          requestAnimationFrame(updateProgress);
         },
         onpause: () => {
           playBtn.style.display = 'inline-block';
@@ -100,24 +198,76 @@ const { src, title, autoplay = false } = Astro.props;
           playBtn.style.display = 'inline-block';
           pauseBtn.style.display = 'none';
           cancelAnimationFrame(updateTimer);
-          timeDisplay.textContent = '0:00 / 0:00';
         },
         onload: () => {
-           const duration = sound?.duration() || 0;
-           timeDisplay.textContent = `0:00 / ${formatTime(Math.round(duration))}`;
+          const duration = sound?.duration() || 0;
+          durationTime.textContent = formatTime(Math.round(duration));
+        },
+        onend: () => {
+          // 播放结束，根据循环模式决定下一步
+          if (loopMode === 'one') {
+            sound?.play();
+          } else if (loopMode === 'all') {
+            const nextIndex = (currentTrackIndex + 1) % tracksData.length;
+            loadTrack(nextIndex, true);
+          } else {
+            // loopMode === 'none'
+            if (currentTrackIndex < tracksData.length - 1) {
+              loadTrack(currentTrackIndex + 1, true);
+            }
+          }
         }
       });
+
+      if (shouldPlay) {
+        sound.play();
+      }
     };
 
+    // 播放按钮
     playBtn.addEventListener('click', () => {
-      if (!sound) initSound();
-      sound?.play();
+      if (!sound) {
+        loadTrack(0, true);
+      } else {
+        sound.play();
+      }
     });
 
+    // 暂停按钮
     pauseBtn.addEventListener('click', () => {
       sound?.pause();
     });
 
+    // 上一曲
+    prevBtn.addEventListener('click', () => {
+      const prevIndex = currentTrackIndex > 0 ? currentTrackIndex - 1 : tracksData.length - 1;
+      loadTrack(prevIndex, sound?.playing() || false);
+    });
+
+    // 下一曲
+    nextBtn.addEventListener('click', () => {
+      const nextIndex = (currentTrackIndex + 1) % tracksData.length;
+      loadTrack(nextIndex, sound?.playing() || false);
+    });
+
+    // 循环模式
+    loopBtn.addEventListener('click', () => {
+      if (loopMode === 'all') {
+        loopMode = 'one';
+        loopBtn.textContent = '🔂';
+        loopBtn.title = '单曲循环';
+      } else if (loopMode === 'one') {
+        loopMode = 'none';
+        loopBtn.textContent = '➡️';
+        loopBtn.title = '顺序播放';
+      } else {
+        loopMode = 'all';
+        loopBtn.textContent = '🔁';
+        loopBtn.title = '列表循环';
+      }
+    });
+
+    // 音量控制
     volumeSlider.addEventListener('input', (e) => {
       const value = parseInt((e.target as HTMLInputElement).value) / 100;
       if (sound) {
@@ -126,25 +276,268 @@ const { src, title, autoplay = false } = Astro.props;
       localStorage.setItem('bgm_volume', value.toString());
     });
 
-    // Auto init if autoplay is true (browser might block it though)
+    // 进度条控制
+    progressBar.addEventListener('input', (e) => {
+      if (sound) {
+        const percent = parseInt((e.target as HTMLInputElement).value);
+        const duration = sound.duration();
+        const seekTo = (percent / 100) * duration;
+        sound.seek(seekTo);
+      }
+    });
+
+    // 播放列表点击
+    if (playlistItems) {
+      playlistItems.addEventListener('click', (e) => {
+        const item = (e.target as HTMLElement).closest('.playlist-item') as HTMLElement;
+        if (item) {
+          const index = parseInt(item.dataset.index || '0');
+          loadTrack(index, true);
+        }
+      });
+    }
+
+    // 最小化/展开
+    minimizeBtn.addEventListener('click', () => {
+      isMinimized = !isMinimized;
+      if (isMinimized) {
+        musicPlayer.classList.add('minimized');
+        minimizeBtn.textContent = '□';
+      } else {
+        musicPlayer.classList.remove('minimized');
+        minimizeBtn.textContent = '_';
+      }
+    });
+
+    // 自动播放
     if (autoplay) {
-      initSound();
+      loadTrack(0, true);
+    } else {
+      loadTrack(0, false);
     }
   }
 </script>
 
 <style>
-  .music-player {
+  .music-player-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 250px;
     z-index: 1000;
   }
-  
+
+  .music-player {
+    width: 320px;
+    background: var(--window-bg, #ffffff);
+    border: 2px solid var(--border-darkest, #000000);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+
+  .music-player.minimized .frame-body {
+    display: none;
+  }
+
+  .frame-title-bar {
+    background: var(--titlebar-bg, #cccccc);
+    color: var(--titlebar-text, #000000);
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-darkest, #000000);
+    cursor: move;
+  }
+
+  .frame-title-text {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .frame-title-controls {
+    display: flex;
+    gap: 4px;
+  }
+
+  .minimize-btn {
+    background: var(--button-bg, #eeeeee);
+    border: 1px solid var(--border-dark, #808080);
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  .minimize-btn:hover {
+    background: #dddddd;
+  }
+
+  .frame-body {
+    padding: 12px;
+  }
+
+  .now-playing {
+    text-align: center;
+    margin-bottom: 12px;
+    min-height: 40px;
+  }
+
+  .track-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .track-artist {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .progress-container {
+    margin-bottom: 8px;
+  }
+
+  .progress-slider {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+  }
+
+  .time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
   .player-controls {
     display: flex;
+    justify-content: center;
     gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .control-btn {
+    background: var(--button-bg, #eeeeee);
+    border: 1px solid var(--border-dark, #808080);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .control-btn:hover {
+    background: #dddddd;
+  }
+
+  .control-btn:active {
+    transform: translate(1px, 1px);
+  }
+
+  .play-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+
+  .volume-control {
+    display: flex;
     align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .volume-icon {
+    font-size: 16px;
+  }
+
+  .volume-slider {
+    flex: 1;
+    height: 4px;
+    cursor: pointer;
+  }
+
+  .playlist {
+    border-top: 1px solid var(--border-dark, #808080);
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+
+  .playlist-header {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: #666;
+  }
+
+  .playlist-items {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .playlist-item:hover {
+    background: #f0f0f0;
+    border-color: var(--border-dark, #808080);
+  }
+
+  .playlist-item.active {
+    background: var(--link-color, #0000ff);
+    color: #ffffff;
+  }
+
+  .track-number {
+    font-size: 11px;
+    color: #999;
+    min-width: 20px;
+  }
+
+  .playlist-item.active .track-number {
+    color: #ffffff;
+  }
+
+  .track-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .track-name {
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .track-artist-small {
+    font-size: 11px;
+    color: #666;
+  }
+
+  .playlist-item.active .track-artist-small {
+    color: #ccccff;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .music-player-container {
+      bottom: 10px;
+      right: 10px;
+    }
+
+    .music-player {
+      width: 280px;
+    }
   }
 </style>

@@ -88,9 +88,15 @@ const formatDate = (date: Date) => {
   <!-- 音乐播放器 -->
   {frontmatter.media?.bgm && (
     <MusicPlayer 
-      src={frontmatter.media.bgm.src}
-      title={frontmatter.media.bgm.title}
-      autoplay={frontmatter.media.bgm.autoplay}
+      tracks={Array.isArray(frontmatter.media.bgm) 
+        ? frontmatter.media.bgm 
+        : [{ 
+            src: frontmatter.media.bgm.src, 
+            title: frontmatter.media.bgm.title,
+            artist: undefined
+          }]
+      }
+      autoplay={Array.isArray(frontmatter.media.bgm) ? false : frontmatter.media.bgm.autoplay}
     />
   )}
 
