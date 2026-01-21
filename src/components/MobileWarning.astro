@@ -1,0 +1,211 @@
+---
+/**
+ * MobileWarning - 移动端提示组件
+ * 模拟 90 年代"本站最佳分辨率 800x600"的提示
+ */
+---
+
+<div class="mobile-warning" id="mobile-warning">
+  <div class="warning-dialog">
+    <div class="warning-header">
+      <span class="warning-icon">⚠️</span>
+      <h2>系统兼容性提示</h2>
+    </div>
+    
+    <div class="warning-content">
+      <p class="warning-message">
+        本站为 PC 端优化设计<br />
+        最佳浏览分辨率：1024×768 或更高
+      </p>
+      
+      <p class="warning-note">
+        您当前使用的设备屏幕较小，<br />
+        可能无法获得最佳浏览体验。
+      </p>
+      
+      <div class="warning-actions">
+        <button class="btn-primary" id="continue-anyway">
+          仍要继续访问
+        </button>
+        <button class="btn-secondary" id="rotate-hint">
+          横屏查看
+        </button>
+      </div>
+      
+      <p class="warning-footer">
+        建议使用 PC 浏览器访问以获得完整体验
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 检测是否为移动设备
+  const isMobile = () => {
+    return window.innerWidth < 768;
+  };
+
+  // 检查用户是否已经选择继续访问
+  const hasAcceptedWarning = localStorage.getItem('mobile_warning_accepted') === 'true';
+
+  const warningEl = document.getElementById('mobile-warning');
+  const continueBtn = document.getElementById('continue-anyway');
+  const rotateBtn = document.getElementById('rotate-hint');
+
+  // 如果是移动设备且未接受警告，显示提示
+  if (isMobile() && !hasAcceptedWarning && warningEl) {
+    warningEl.style.display = 'flex';
+  }
+
+  // 继续访问按钮
+  if (continueBtn && warningEl) {
+    continueBtn.addEventListener('click', () => {
+      localStorage.setItem('mobile_warning_accepted', 'true');
+      warningEl.style.display = 'none';
+    });
+  }
+
+  // 横屏提示按钮
+  if (rotateBtn) {
+    rotateBtn.addEventListener('click', () => {
+      alert('请将设备横向旋转以获得更好的浏览体验。');
+    });
+  }
+
+  // 监听窗口大小变化
+  window.addEventListener('resize', () => {
+    if (!isMobile() && warningEl) {
+      warningEl.style.display = 'none';
+    }
+  });
+</script>
+
+<style>
+  .mobile-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .warning-dialog {
+    background: var(--window-bg, #c0c0c0);
+    border: 2px solid var(--border-darkest, #000000);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .warning-header {
+    background: var(--titlebar-bg, linear-gradient(to right, #000080, #1084d0));
+    color: var(--titlebar-text, #ffffff);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .warning-icon {
+    font-size: 20px;
+  }
+
+  .warning-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .warning-content {
+    padding: 20px;
+    background: #ffffff;
+  }
+
+  .warning-message {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .warning-note {
+    font-size: 14px;
+    text-align: center;
+    color: #666666;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .warning-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #000000;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background: #0000ff;
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background: #0000cc;
+  }
+
+  .btn-primary:active {
+    background: #000099;
+  }
+
+  .btn-secondary {
+    background: #c0c0c0;
+    color: #000000;
+  }
+
+  .btn-secondary:hover {
+    background: #d0d0d0;
+  }
+
+  .btn-secondary:active {
+    background: #a0a0a0;
+  }
+
+  .warning-footer {
+    font-size: 12px;
+    text-align: center;
+    color: #999999;
+    margin: 0;
+  }
+
+  /* 响应式 */
+  @media (max-width: 480px) {
+    .warning-dialog {
+      max-width: 90%;
+    }
+
+    .warning-message {
+      font-size: 14px;
+    }
+
+    .warning-note {
+      font-size: 13px;
+    }
+  }
+</style>
+

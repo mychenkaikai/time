@@ -1,0 +1,110 @@
+/* ============================================
+   Windows XP Theme - Luna 蓝绿配色
+   提供 Windows XP 的视觉风格
+   ============================================ */
+
+[data-theme="winxp"] {
+  /* 颜色系统 - Windows XP Luna 主题 */
+  --bg-color: #ece9d8;
+  --window-bg: #ece9d8;
+  --text-color: #000000;
+  --link-color: #0066cc;
+  --link-visited: #800080;
+  --link-hover-bg: #316ac5;
+  --link-hover-text: #ffffff;
+  
+  /* 窗口边框 - 柔和的 3D 效果 */
+  --border-light: #fcfcfc;
+  --border-dark: #aca899;
+  --border-darkest: #000000;
+  --border-width: 1px;
+  
+  /* 标题栏 - XP 经典蓝色渐变 */
+  --titlebar-bg: linear-gradient(to bottom, #0997ff, #0053ee 8%, #0050ee 40%, #06f 88%, #06f 93%, #005bff 95%, #003dd7 96%, #003dd7);
+  --titlebar-text: #ffffff;
+  --titlebar-height: 30px;
+  
+  /* 按钮 - 柔和的 3D 效果 */
+  --button-bg: #ece9d8;
+  --button-text: #000000;
+  --button-shadow: inset -1px -1px 0 #aca899,
+                   inset 1px 1px 0 #fcfcfc;
+  --button-active-shadow: inset -1px -1px 0 #fcfcfc,
+                          inset 1px 1px 0 #aca899;
+  
+  /* 输入框 */
+  --input-bg: #ffffff;
+  --input-border: 1px solid #7f9db9;
+  
+  /* 滚动条 */
+  --scrollbar-bg: #ece9d8;
+  --scrollbar-thumb: #d4d0c8;
+  
+  /* 字体 */
+  --font-family: "Microsoft YaHei", "微软雅黑", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-heading: "Microsoft YaHei", "微软雅黑", "Segoe UI", Tahoma, Arial, sans-serif;
+  
+  /* 字体大小 */
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* 容器 */
+  --container-max-width: 1024px;
+  --window-border-radius: 8px;
+  
+  /* 阴影 */
+  --window-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 按钮样式 */
+[data-theme="winxp"] button,
+[data-theme="winxp"] .button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-dark);
+  border-radius: 3px;
+  box-shadow: var(--button-shadow);
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+}
+
+[data-theme="winxp"] button:hover,
+[data-theme="winxp"] .button:hover {
+  background: #dedad1;
+  border-color: #0066cc;
+}
+
+[data-theme="winxp"] button:active,
+[data-theme="winxp"] .button:active {
+  box-shadow: var(--button-active-shadow);
+}
+
+/* 输入框样式 */
+[data-theme="winxp"] input[type="text"],
+[data-theme="winxp"] input[type="search"],
+[data-theme="winxp"] textarea,
+[data-theme="winxp"] select {
+  background: var(--input-bg);
+  border: var(--input-border);
+  border-radius: 2px;
+  padding: 4px;
+  font-family: var(--font-family);
+}
+
+[data-theme="winxp"] input:focus,
+[data-theme="winxp"] textarea:focus,
+[data-theme="winxp"] select:focus {
+  outline: 1px solid #0066cc;
+  border-color: #0066cc;
+}
+

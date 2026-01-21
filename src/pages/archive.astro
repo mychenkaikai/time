@@ -1,0 +1,315 @@
+---
+/**
+ * 归档页面 - 按年份/月份展示所有文章
+ */
+
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SideNav from '../components/SideNav.astro';
+import WindowFrame from '../components/WindowFrame.astro';
+
+// 获取所有文章，过滤草稿
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 按日期倒序排列
+const sortedPosts = allPosts.sort((a, b) => {
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+
+// 按年份和月份分组
+interface PostsByYearMonth {
+  [year: string]: {
+    [month: string]: typeof sortedPosts;
+  };
+}
+
+const postsByYearMonth: PostsByYearMonth = {};
+
+sortedPosts.forEach((post) => {
+  const year = post.data.date.getFullYear().toString();
+  const month = (post.data.date.getMonth() + 1).toString().padStart(2, '0');
+  
+  if (!postsByYearMonth[year]) {
+    postsByYearMonth[year] = {};
+  }
+  
+  if (!postsByYearMonth[year][month]) {
+    postsByYearMonth[year][month] = [];
+  }
+  
+  postsByYearMonth[year][month].push(post);
+});
+
+// 获取所有年份，倒序
+const years = Object.keys(postsByYearMonth).sort((a, b) => parseInt(b) - parseInt(a));
+
+// 月份名称
+const monthNames = [
+  '一月', '二月', '三月', '四月', '五月', '六月',
+  '七月', '八月', '九月', '十月', '十一月', '十二月'
+];
+
+// 格式化日期
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(date);
+};
+---
+
+<BaseLayout title="归档" description="按时间归档的所有文章">
+  <!-- 顶部导航栏 -->
+  <TopNav currentPath="/archive" />
+
+  <!-- 主内容区：左侧导航 + 右侧内容 -->
+  <div class="main-layout">
+    <!-- 左侧分类导航 -->
+    <div class="sidebar">
+      <SideNav />
+    </div>
+
+    <!-- 右侧内容区 -->
+    <div class="content-area">
+      <WindowFrame title="📅 文章归档">
+        <div class="archive-container">
+          <div class="archive-header">
+            <h1>文章归档</h1>
+            <p class="archive-stats">
+              共 {sortedPosts.length} 篇文章
+            </p>
+          </div>
+
+          {years.length === 0 ? (
+            <div class="empty-state">
+              <p>还没有文章，敬请期待...</p>
+            </div>
+          ) : (
+            <div class="archive-timeline">
+              {years.map((year) => {
+                const months = Object.keys(postsByYearMonth[year]).sort((a, b) => parseInt(b) - parseInt(a));
+                const yearPostCount = months.reduce((sum, month) => sum + postsByYearMonth[year][month].length, 0);
+                
+                return (
+                  <div class="year-section">
+                    <h2 class="year-title">
+                      {year} 年
+                      <span class="year-count">({yearPostCount} 篇)</span>
+                    </h2>
+                    
+                    {months.map((month) => {
+                      const posts = postsByYearMonth[year][month];
+                      const monthIndex = parseInt(month) - 1;
+                      
+                      return (
+                        <div class="month-section">
+                          <h3 class="month-title">
+                            {monthNames[monthIndex]}
+                            <span class="month-count">({posts.length} 篇)</span>
+                          </h3>
+                          
+                          <ul class="posts-list">
+                            {posts.map((post) => (
+                              <li class="post-item">
+                                <span class="post-date">{formatDate(post.data.date)}</span>
+                                <a href={`/posts/${post.slug}`} class="post-title">
+                                  {post.data.title}
+                                </a>
+                                {post.data.tags.length > 0 && (
+                                  <span class="post-tags">
+                                    {post.data.tags.map((tag) => (
+                                      <span class="tag">{tag}</span>
+                                    ))}
+                                  </span>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </WindowFrame>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* 主布局 */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-md);
+    align-items: start;
+  }
+
+  .content-area {
+    min-width: 0;
+  }
+
+  /* 归档容器 */
+  .archive-container {
+    padding: var(--spacing-md);
+    background: #ffffff;
+  }
+
+  .archive-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-dark);
+  }
+
+  .archive-header h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .archive-stats {
+    color: var(--border-dark);
+    font-size: var(--font-size-sm);
+  }
+
+  /* 时间线 */
+  .archive-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  /* 年份区块 */
+  .year-section {
+    border-left: 3px solid var(--link-color);
+    padding-left: var(--spacing-lg);
+  }
+
+  .year-title {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin-bottom: var(--spacing-md);
+    color: var(--link-color);
+  }
+
+  .year-count {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    font-weight: normal;
+  }
+
+  /* 月份区块 */
+  .month-section {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .month-title {
+    font-size: var(--font-size-base);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-color);
+  }
+
+  .month-count {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    font-weight: normal;
+  }
+
+  /* 文章列表 */
+  .posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xs) 0;
+    flex-wrap: wrap;
+  }
+
+  .post-item:hover {
+    background: #f5f5f5;
+  }
+
+  .post-date {
+    font-size: var(--font-size-sm);
+    color: var(--border-dark);
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  .post-title {
+    flex: 1;
+    color: var(--link-color);
+    text-decoration: none;
+  }
+
+  .post-title:hover {
+    text-decoration: underline;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: var(--button-bg);
+    padding: 2px 6px;
+    font-size: 12px;
+    border: 1px solid var(--border-dark);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--border-dark);
+  }
+
+  /* 响应式 */
+  @media (max-width: 1024px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      order: 2;
+    }
+
+    .content-area {
+      order: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .post-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-xs);
+    }
+
+    .post-date {
+      order: -1;
+    }
+
+    .year-section {
+      padding-left: var(--spacing-md);
+    }
+  }
+</style>
+

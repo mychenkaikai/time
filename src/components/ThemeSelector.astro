@@ -8,10 +8,11 @@
   <div class="field-row">
     <label for="theme-select">Theme:</label>
     <select id="theme-select">
-      <option value="web1">Web 1.0 (Portal)</option>
+      <option value="retro-web">Retro Web (90s)</option>
       <option value="win98">Windows 98</option>
       <option value="winxp">Windows XP</option>
       <option value="macos9">Mac OS 9</option>
+      <option value="web1">Web 1.0 (Portal)</option>
     </select>
   </div>
   
@@ -26,8 +27,8 @@
   const crtToggle = document.getElementById('crt-toggle') as HTMLInputElement;
   
   if (select) {
-    // Init theme
-    const currentTheme = localStorage.getItem('theme') || 'web1';
+    // Init theme - 默认使用 retro-web
+    const currentTheme = localStorage.getItem('theme') || 'retro-web';
     select.value = currentTheme;
     // Ensure document attribute is synced if it wasn't set by inline script
     if (!document.documentElement.getAttribute('data-theme')) {

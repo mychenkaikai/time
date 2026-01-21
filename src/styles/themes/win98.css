@@ -1,0 +1,104 @@
+/* ============================================
+   Windows 98 Theme - 经典 Win98 配色方案
+   提供怀旧的 Windows 98 视觉风格
+   ============================================ */
+
+[data-theme="win98"] {
+  /* 颜色系统 - Windows 98 经典配色 */
+  --bg-color: #c0c0c0;
+  --window-bg: #c0c0c0;
+  --text-color: #000000;
+  --link-color: #0000ff;
+  --link-visited: #800080;
+  --link-hover-bg: #000080;
+  --link-hover-text: #ffffff;
+  
+  /* 窗口边框 - 3D 效果 */
+  --border-light: #ffffff;
+  --border-dark: #808080;
+  --border-darkest: #000000;
+  --border-width: 2px;
+  
+  /* 标题栏 - 蓝色渐变 */
+  --titlebar-bg: linear-gradient(to right, #000080, #1084d0);
+  --titlebar-text: #ffffff;
+  --titlebar-height: 28px;
+  
+  /* 按钮 - 3D 凸起效果 */
+  --button-bg: #c0c0c0;
+  --button-text: #000000;
+  --button-shadow: inset -1px -1px 0 var(--border-darkest), 
+                   inset 1px 1px 0 var(--border-light),
+                   inset -2px -2px 0 var(--border-dark),
+                   inset 2px 2px 0 #dfdfdf;
+  --button-active-shadow: inset -1px -1px 0 var(--border-light),
+                          inset 1px 1px 0 var(--border-darkest),
+                          inset -2px -2px 0 #dfdfdf,
+                          inset 2px 2px 0 var(--border-dark);
+  
+  /* 输入框 - 3D 凹陷效果 */
+  --input-bg: #ffffff;
+  --input-border: inset -1px -1px 0 var(--border-light),
+                  inset 1px 1px 0 var(--border-darkest),
+                  inset -2px -2px 0 #dfdfdf,
+                  inset 2px 2px 0 var(--border-dark);
+  
+  /* 滚动条 */
+  --scrollbar-bg: #c0c0c0;
+  --scrollbar-thumb: #c0c0c0;
+  --scrollbar-arrow: #000000;
+  
+  /* 字体 - 使用宋体营造复古感 */
+  --font-family: "SimSun", "宋体", "STSong", "华文宋体", "NSimSun", "新宋体", serif;
+  --font-heading: "SimHei", "黑体", "STHeiti", "华文黑体", sans-serif;
+  
+  /* 字体大小 */
+  --font-size-base: 18px;
+  --font-size-sm: 14px;
+  --font-size-lg: 20px;
+  --font-size-xl: 28px;
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* 容器 */
+  --container-max-width: 1024px;
+  --window-border-radius: 0px;
+  
+  /* 阴影 */
+  --window-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 按钮 3D 效果 */
+[data-theme="win98"] button,
+[data-theme="win98"] .button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  box-shadow: var(--button-shadow);
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+}
+
+[data-theme="win98"] button:active,
+[data-theme="win98"] .button:active {
+  box-shadow: var(--button-active-shadow);
+}
+
+/* 输入框 3D 效果 */
+[data-theme="win98"] input[type="text"],
+[data-theme="win98"] input[type="search"],
+[data-theme="win98"] textarea,
+[data-theme="win98"] select {
+  background: var(--input-bg);
+  border: none;
+  box-shadow: var(--input-border);
+  padding: 4px;
+  font-family: var(--font-family);
+}
+

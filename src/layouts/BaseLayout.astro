@@ -4,21 +4,21 @@
  * 包含 SEO、meta 标签、全局样式引入
  */
 
-import '98.css';
 import ThemeSelector from '../components/ThemeSelector.astro';
 import CRTOverlay from '../components/CRTOverlay.astro';
 import SearchModal from '../components/SearchModal.astro';
+import MobileWarning from '../components/MobileWarning.astro';
 
 interface Props {
   title: string;
   description?: string;
-  theme?: 'web1' | 'win98' | 'winxp' | 'macos9';
+  theme?: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
 }
 
 const { 
   title, 
   description = '怀旧数字博物馆 - 为高敏人群打造的精神角落',
-  theme = 'web1'
+  theme = 'retro-web'
 } = Astro.props;
 
 const fullTitle = `${title} | 怀旧数字博物馆`;
@@ -56,16 +56,21 @@ const fullTitle = `${title} | 怀旧数字博物馆`;
     <link rel="stylesheet" href="/src/styles/global.css" />
     <link rel="stylesheet" href="/src/styles/scrollbar.css" />
     
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="/src/styles/themes/retro-web.css" />
+    <link rel="stylesheet" href="/src/styles/themes/win98.css" />
+    <link rel="stylesheet" href="/src/styles/themes/winxp.css" />
+    <link rel="stylesheet" href="/src/styles/themes/macos9.css" />
+    
     <!-- 主题切换脚本（避免闪烁） -->
     <script is:inline>
-      // 在页面加载前应用保存的主题
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
+      // 在页面加载前应用保存的主题，默认为 retro-web
+      const savedTheme = localStorage.getItem('theme') || 'retro-web';
+      document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
   </head>
   <body>
+    <MobileWarning />
     <CRTOverlay />
     <div class="container">
       <slot />

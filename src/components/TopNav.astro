@@ -63,15 +63,13 @@ const navItems = [
   }
 
   .top-nav {
-    background: var(--window-title-bg);
-    color: var(--window-title-text);
+    background: var(--titlebar-bg);
+    color: var(--titlebar-text);
     padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: inset -1px -1px 0 var(--border-darkest),
-                inset 1px 1px 0 var(--border-light),
-                0 2px 4px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid var(--border-dark, #808080);
     margin-bottom: var(--spacing-md);
   }
 
@@ -102,21 +100,21 @@ const navItems = [
   .nav-link {
     display: block;
     padding: var(--spacing-xs) var(--spacing-sm);
-    color: var(--window-title-text);
+    color: var(--titlebar-text);
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border: 1px solid transparent;
     transition: all 0.2s;
   }
 
   .nav-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--link-hover-bg, rgba(0, 0, 0, 0.1));
+    color: var(--link-hover-text, inherit);
   }
 
   .nav-link.active {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: var(--button-bg, #eeeeee);
+    border-color: var(--border-dark, #808080);
     font-weight: bold;
   }
 

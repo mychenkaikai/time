@@ -1,0 +1,114 @@
+/* ============================================
+   Mac OS 9 Theme - Platinum 配色
+   提供经典 Mac OS 9 的视觉风格
+   ============================================ */
+
+[data-theme="macos9"] {
+  /* 颜色系统 - Mac OS 9 Platinum 主题 */
+  --bg-color: #dddddd;
+  --window-bg: #dddddd;
+  --text-color: #000000;
+  --link-color: #0000ee;
+  --link-visited: #551a8b;
+  --link-hover-bg: #0000ee;
+  --link-hover-text: #ffffff;
+  
+  /* 窗口边框 - Mac 风格 */
+  --border-light: #ffffff;
+  --border-dark: #888888;
+  --border-darkest: #000000;
+  --border-width: 1px;
+  
+  /* 标题栏 - 灰色渐变 */
+  --titlebar-bg: linear-gradient(to bottom, #ffffff, #cccccc);
+  --titlebar-text: #000000;
+  --titlebar-height: 22px;
+  
+  /* 按钮 - Mac 风格按钮 */
+  --button-bg: #dddddd;
+  --button-text: #000000;
+  --button-shadow: inset -1px -1px 0 #888888,
+                   inset 1px 1px 0 #ffffff;
+  --button-active-shadow: inset -1px -1px 0 #ffffff,
+                          inset 1px 1px 0 #888888;
+  
+  /* 输入框 */
+  --input-bg: #ffffff;
+  --input-border: 1px solid #888888;
+  
+  /* 滚动条 */
+  --scrollbar-bg: #dddddd;
+  --scrollbar-thumb: #bbbbbb;
+  
+  /* 字体 - Mac 经典字体 */
+  --font-family: "Lucida Grande", "Geneva", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-heading: "Lucida Grande", "Geneva", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  
+  /* 字体大小 */
+  --font-size-base: 16px;
+  --font-size-sm: 13px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* 容器 */
+  --container-max-width: 1024px;
+  --window-border-radius: 0px;
+  
+  /* 阴影 */
+  --window-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* 按钮样式 */
+[data-theme="macos9"] button,
+[data-theme="macos9"] .button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  box-shadow: var(--button-shadow);
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 13px;
+}
+
+[data-theme="macos9"] button:hover,
+[data-theme="macos9"] .button:hover {
+  background: #eeeeee;
+}
+
+[data-theme="macos9"] button:active,
+[data-theme="macos9"] .button:active {
+  box-shadow: var(--button-active-shadow);
+}
+
+/* 输入框样式 */
+[data-theme="macos9"] input[type="text"],
+[data-theme="macos9"] input[type="search"],
+[data-theme="macos9"] textarea,
+[data-theme="macos9"] select {
+  background: var(--input-bg);
+  border: var(--input-border);
+  border-radius: 3px;
+  padding: 4px;
+  font-family: var(--font-family);
+}
+
+/* Mac 风格的彩色按钮（可选） */
+[data-theme="macos9"] .button-primary {
+  background: linear-gradient(to bottom, #6699ff, #3366cc);
+  color: #ffffff;
+  border-color: #2255aa;
+}
+
+[data-theme="macos9"] .button-primary:hover {
+  background: linear-gradient(to bottom, #77aaff, #4477dd);
+}
+

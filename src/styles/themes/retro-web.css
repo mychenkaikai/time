@@ -1,0 +1,171 @@
+/* ============================================
+   Retro Web Theme - 90年代真实网页风格
+   还原经典的 Web 1.0 时代网页设计
+   ============================================ */
+
+[data-theme="retro-web"] {
+  /* 布局 */
+  --max-width: 1024px;
+  --content-padding: 20px;
+  
+  /* 颜色 - 经典网页配色 */
+  --bg-color: #ffffff;
+  --window-bg: #ffffff;
+  --text-color: #000000;
+  --link-color: #0000ff;           /* 经典蓝色链接 */
+  --link-visited: #800080;         /* 紫色已访问链接 */
+  --link-hover-bg: transparent;    /* 透明背景 */
+  --link-hover-text: #ff0000;      /* 红色文字（hover 效果）*/
+  --border-color: #000000;
+  --hr-color: #808080;
+  
+  /* 窗口边框 - 简单的实线边框 */
+  --border-light: #cccccc;
+  --border-dark: #666666;
+  --border-darkest: #000000;
+  --border-width: 1px;
+  
+  /* 标题栏 - 简洁风格 */
+  --titlebar-bg: #cccccc;
+  --titlebar-text: #000000;
+  --titlebar-height: 24px;
+  --window-title-bg: #cccccc;
+  --window-title-text: #000000;
+  
+  /* 按钮 - 简单的边框按钮 */
+  --button-bg: #eeeeee;
+  --button-text: #000000;
+  --button-shadow: 1px 1px 0 #666666;
+  --button-active-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+  
+  /* 输入框 */
+  --input-bg: #ffffff;
+  --input-border: 1px solid #000000;
+  
+  /* 滚动条 - 保持浏览器默认 */
+  --scrollbar-bg: #f0f0f0;
+  --scrollbar-thumb: #cccccc;
+  
+  /* 字体 - 经典网页字体组合 */
+  --font-serif: 'Times New Roman', Times, '宋体', SimSun, serif;
+  --font-sans: Arial, Helvetica, '黑体', SimHei, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+  --font-family: var(--font-serif);
+  --font-heading: var(--font-sans);
+  
+  /* 字体大小 */
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* 容器 */
+  --container-max-width: 1024px;
+  --window-border-radius: 0px;
+  
+  /* 阴影 - 不使用阴影，保持平面 */
+  --window-shadow: none;
+  
+  /* 动画 */
+  --transition-speed: 0.15s;
+  
+  /* Z-index 层级 */
+  --z-content: 1;
+  --z-nav: 100;
+  --z-player: 200;
+  --z-modal: 1000;
+}
+
+/* 链接样式 - 经典网页风格 */
+[data-theme="retro-web"] a {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+[data-theme="retro-web"] a:visited {
+  color: var(--link-visited);
+}
+
+[data-theme="retro-web"] a:hover {
+  color: var(--link-hover-text);
+  text-decoration: underline;
+}
+
+[data-theme="retro-web"] a:active {
+  color: #ff0000;
+}
+
+/* HR 分隔线 - 经典样式 */
+[data-theme="retro-web"] hr {
+  border: none;
+  border-top: 1px solid var(--hr-color);
+  margin: var(--spacing-lg) 0;
+}
+
+/* 标题样式 */
+[data-theme="retro-web"] h1,
+[data-theme="retro-web"] h2,
+[data-theme="retro-web"] h3,
+[data-theme="retro-web"] h4,
+[data-theme="retro-web"] h5,
+[data-theme="retro-web"] h6 {
+  font-family: var(--font-heading);
+  font-weight: bold;
+}
+
+/* 按钮样式 - 简单边框 */
+[data-theme="retro-web"] button,
+[data-theme="retro-web"] .button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-darkest);
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+[data-theme="retro-web"] button:hover,
+[data-theme="retro-web"] .button:hover {
+  background: #dddddd;
+}
+
+[data-theme="retro-web"] button:active,
+[data-theme="retro-web"] .button:active {
+  box-shadow: var(--button-active-shadow);
+}
+
+/* 输入框样式 */
+[data-theme="retro-web"] input[type="text"],
+[data-theme="retro-web"] input[type="search"],
+[data-theme="retro-web"] textarea,
+[data-theme="retro-web"] select {
+  background: var(--input-bg);
+  border: var(--input-border);
+  padding: 4px;
+  font-family: var(--font-sans);
+}
+
+/* 表格样式 - 经典网页表格 */
+[data-theme="retro-web"] table {
+  border-collapse: collapse;
+  border: 1px solid var(--border-darkest);
+}
+
+[data-theme="retro-web"] th,
+[data-theme="retro-web"] td {
+  border: 1px solid var(--border-darkest);
+  padding: 4px 8px;
+}
+
+[data-theme="retro-web"] th {
+  background: #cccccc;
+  font-weight: bold;
+}
+

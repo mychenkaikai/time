@@ -1,7 +1,7 @@
 ---
 /**
  * WindowFrame - 可复用的窗口框架组件
- * 模拟 Windows 98 风格的窗口外壳 (基于 98.css)
+ * 支持多主题的窗口外壳
  */
 
 interface Props {
@@ -13,23 +13,103 @@ interface Props {
 const { title, closable = false, class: className = '' } = Astro.props;
 ---
 
-<div class:list={['window', className]}>
-  <div class="title-bar">
-    <div class="title-bar-text">{title}</div>
-    <div class="title-bar-controls">
+<div class:list={['window-frame', className]}>
+  <div class="frame-title-bar">
+    <div class="frame-title-text">{title}</div>
+    <div class="frame-title-controls">
       {closable && (
-        <button aria-label="Close"></button>
+        <button class="frame-close-btn" aria-label="Close">×</button>
       )}
     </div>
   </div>
-  <div class="window-body">
+  <div class="frame-body">
     <slot />
   </div>
 </div>
 
 <style>
-  .window {
+  .window-frame {
     margin-bottom: var(--spacing-lg);
     width: 100%;
+    border: var(--border-width, 1px) solid var(--border-dark, #808080);
+    background: var(--window-bg, #ffffff);
+    box-shadow: var(--window-shadow, none);
+    border-radius: var(--window-border-radius, 0);
+  }
+
+  .frame-title-bar {
+    background: var(--titlebar-bg, #cccccc);
+    color: var(--titlebar-text, #000000);
+    padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: var(--titlebar-height, 24px);
+    border-bottom: 1px solid var(--border-dark, #808080);
+  }
+
+  .frame-title-text {
+    font-weight: bold;
+    font-size: var(--font-size-base, 16px);
+  }
+
+  .frame-title-controls {
+    display: flex;
+    gap: 4px;
+  }
+
+  .frame-close-btn {
+    background: var(--button-bg, #eeeeee);
+    border: 1px solid var(--border-dark, #808080);
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .frame-close-btn:hover {
+    background: var(--link-hover-bg, #dddddd);
+  }
+
+  .frame-body {
+    padding: var(--spacing-lg, 24px);
+    background: var(--window-bg, #ffffff);
+  }
+
+  /* Retro Web 主题特殊样式 */
+  [data-theme="retro-web"] .window-frame {
+    border: 2px solid var(--border-darkest, #000000);
+    box-shadow: none;
+  }
+
+  [data-theme="retro-web"] .frame-title-bar {
+    background: #eeeeee;
+    border-bottom: 2px solid var(--border-darkest, #000000);
+  }
+
+  /* Win98 主题特殊样式 */
+  [data-theme="win98"] .window-frame {
+    box-shadow: inset -1px -1px 0 var(--border-darkest),
+                inset 1px 1px 0 var(--border-light),
+                inset -2px -2px 0 var(--border-dark),
+                inset 2px 2px 0 #dfdfdf;
+  }
+
+  [data-theme="win98"] .frame-title-bar {
+    background: var(--titlebar-bg);
+  }
+
+  /* WinXP 主题特殊样式 */
+  [data-theme="winxp"] .window-frame {
+    border-radius: 8px 8px 0 0;
+  }
+
+  [data-theme="winxp"] .frame-title-bar {
+    border-radius: 8px 8px 0 0;
   }
 </style>
