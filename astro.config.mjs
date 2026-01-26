@@ -5,12 +5,11 @@ import { defineConfig } from 'astro/config';
 // 使用方法：
 //   开发: npm run dev (使用根路径)
 //   GitHub 用户页面: npm run build (仓库名必须是 <username>.github.io)
-//   GitHub 项目页面: DEPLOY_TYPE=project npm run build (仓库名任意，如 the-past)
-//   Gitee 用户页面:  DEPLOY_PLATFORM=gitee npm run build (仓库名必须是 <username>)
-//   Gitee 项目页面:  DEPLOY_PLATFORM=gitee DEPLOY_TYPE=project npm run build
+//   GitHub 项目页面: DEPLOY_TYPE=project npm run build (仓库名任意，如 time)
+//   Cloudflare Pages: DEPLOY_PLATFORM=cloudflare npm run build:cf
 const DEPLOY_PLATFORM = process.env.DEPLOY_PLATFORM || 'github';
 const DEPLOY_TYPE = process.env.DEPLOY_TYPE || 'user'; // 'user' 或 'project'
-const REPO_NAME = 'the-past';
+const REPO_NAME = 'time';
 const isDev = import.meta.env.DEV;
 
 // 配置映射
@@ -19,9 +18,9 @@ const configs = {
     site: `https://mychenkaikai.github.io`,
     base: DEPLOY_TYPE === 'user' ? '/' : `/${REPO_NAME}`,
   },
-  gitee: {
-    site: `https://chenkk.gitee.io`,
-    base: isDev ? '/' : `/${REPO_NAME}`,  // 开发环境使用根路径
+  cloudflare: {
+    site: `https://time.pages.dev`,
+    base: '/',
   },
 };
 
@@ -33,7 +32,7 @@ console.log(`🔧 开发模式: ${isDev ? '是' : '否'}`);
 
 // https://astro.build/config
 export default defineConfig({
-  site: `${config.site}${config.base}`,  // 完整的网站 URL
+  site: config.site,
   base: config.base,
   output: 'static',
   integrations: [
