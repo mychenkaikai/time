@@ -20,6 +20,14 @@ const {
   theme = 'retro-web'
 } = Astro.props;
 
+import '../styles/variables.css';
+import '../styles/global.css';
+import '../styles/scrollbar.css';
+import '../styles/themes/retro-web.css';
+import '../styles/themes/win98.css';
+import '../styles/themes/winxp.css';
+import '../styles/themes/macos9.css';
+
 const fullTitle = `${title} | 怀旧数字博物馆`;
 const baseUrl = import.meta.env.BASE_URL;
 ---
@@ -50,17 +58,6 @@ const baseUrl = import.meta.env.BASE_URL;
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href={`${baseUrl}icons/favicon.ico`} />
-    
-    <!-- 样式 -->
-    <link rel="stylesheet" href={`${baseUrl}src/styles/variables.css`} />
-    <link rel="stylesheet" href={`${baseUrl}src/styles/global.css`} />
-    <link rel="stylesheet" href={`${baseUrl}src/styles/scrollbar.css`} />
-    
-    <!-- 主题样式 -->
-    <link rel="stylesheet" href={`${baseUrl}src/styles/themes/retro-web.css`} />
-    <link rel="stylesheet" href={`${baseUrl}src/styles/themes/win98.css`} />
-    <link rel="stylesheet" href={`${baseUrl}src/styles/themes/winxp.css`} />
-    <link rel="stylesheet" href={`${baseUrl}src/styles/themes/macos9.css`} />
     
     <!-- 主题切换脚本（避免闪烁） -->
     <script is:inline>
