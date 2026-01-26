@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+// import sitemap from '@astrojs/sitemap';  // 暂时禁用，存在兼容性问题
 
 // 根据环境变量决定部署平台
 // 使用方法：
@@ -30,15 +30,12 @@ console.log(`🔧 开发模式: ${isDev ? '是' : '否'}`);
 
 // https://astro.build/config
 export default defineConfig({
-  site: config.site,
+  site: `${config.site}${config.base}`,  // 完整的网站 URL
   base: config.base,
   output: 'static',
   integrations: [
-    sitemap({
-      filter: (page) => {
-        return page && !page.includes('/tags/');
-      },
-    })
+    // sitemap 插件暂时禁用，存在兼容性问题
+    // 如需 SEO，可以后续手动创建 sitemap.xml 或升级插件版本
   ],
   build: {
     inlineStylesheets: 'never', // 保持 CSS 文件独立，便于主题切换
