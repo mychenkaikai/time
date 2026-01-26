@@ -14,7 +14,7 @@ const isDev = import.meta.env.DEV;
 const configs = {
   github: {
     site: `https://mychenkaikai.github.io`,
-    base: isDev ? '/' : `/${REPO_NAME}`,  // 开发环境使用根路径
+    base: '/',  // 用户页面使用根路径
   },
   gitee: {
     site: `https://chenkk.gitee.io`,
