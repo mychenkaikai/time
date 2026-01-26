@@ -35,7 +35,9 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/tags/'),
+      filter: (page) => {
+        return page && !page.includes('/tags/');
+      },
     })
   ],
   build: {
