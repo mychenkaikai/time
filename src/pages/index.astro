@@ -27,6 +27,8 @@ const formatDate = (date: Date) => {
     day: '2-digit'
   }).format(date);
 };
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="首页" description="怀旧数字博物馆 - 记录旧时光的精神角落">
@@ -65,7 +67,7 @@ const formatDate = (date: Date) => {
               <article class="post-item">
                 <div class="post-item-header">
                   <h2 class="post-item-title">
-                    <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+                    <a href={`${baseUrl}posts/${post.slug}`}>{post.data.title}</a>
                   </h2>
                   <span class="post-item-date">{formatDate(post.data.date)}</span>
                 </div>

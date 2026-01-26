@@ -9,6 +9,7 @@ const allPosts = await getCollection('posts', ({ data }) => {
 
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
 const pageTitle = "Tags Cloud";
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={pageTitle}>
@@ -18,7 +19,7 @@ const pageTitle = "Tags Cloud";
         <ul class="tags-list">
           {tags.map((tag) => (
             <li class="tag-item">
-              <a href={`/tags/${tag}`}>#{tag}</a>
+              <a href={`${baseUrl}tags/${tag}`}>#{tag}</a>
             </li>
           ))}
         </ul>
@@ -29,7 +30,7 @@ const pageTitle = "Tags Cloud";
   </WindowFrame>
   
   <div style="text-align: center; margin-top: 20px;">
-    <a href="/" class="back-link">← Back to Home</a>
+    <a href={baseUrl} class="back-link">← Back to Home</a>
   </div>
 </BaseLayout>
 

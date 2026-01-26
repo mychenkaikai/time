@@ -9,12 +9,13 @@ interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 
 const navItems = [
-  { label: '🏠 首页', href: '/' },
-  { label: '📚 全部文章', href: '/archive' },
-  { label: '🏷️ 标签', href: '/tags' },
-  { label: 'ℹ️ 关于', href: '/about' },
+  { label: '🏠 首页', href: `${baseUrl}` },
+  { label: '📚 全部文章', href: `${baseUrl}archive` },
+  { label: '🏷️ 标签', href: `${baseUrl}tags` },
+  { label: 'ℹ️ 关于', href: `${baseUrl}about` },
 ];
 ---
 
