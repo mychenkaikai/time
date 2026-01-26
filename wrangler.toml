@@ -1,6 +1,0 @@
-name = "retro-museum"
-compatibility_date = "2026-01-26"
-
-[site]
-bucket = "./dist"
-
