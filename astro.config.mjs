@@ -4,9 +4,12 @@ import { defineConfig } from 'astro/config';
 // 根据环境变量决定部署平台
 // 使用方法：
 //   开发: npm run dev (使用根路径)
-//   GitHub: npm run build
-//   Gitee:  DEPLOY_PLATFORM=gitee npm run build
+//   GitHub 用户页面: npm run build (仓库名必须是 <username>.github.io)
+//   GitHub 项目页面: DEPLOY_TYPE=project npm run build (仓库名任意，如 the-past)
+//   Gitee 用户页面:  DEPLOY_PLATFORM=gitee npm run build (仓库名必须是 <username>)
+//   Gitee 项目页面:  DEPLOY_PLATFORM=gitee DEPLOY_TYPE=project npm run build
 const DEPLOY_PLATFORM = process.env.DEPLOY_PLATFORM || 'github';
+const DEPLOY_TYPE = process.env.DEPLOY_TYPE || 'user'; // 'user' 或 'project'
 const REPO_NAME = 'the-past';
 const isDev = import.meta.env.DEV;
 
@@ -14,7 +17,7 @@ const isDev = import.meta.env.DEV;
 const configs = {
   github: {
     site: `https://mychenkaikai.github.io`,
-    base: '/',  // 用户页面使用根路径
+    base: DEPLOY_TYPE === 'user' ? '/' : `/${REPO_NAME}`,
   },
   gitee: {
     site: `https://chenkk.gitee.io`,
