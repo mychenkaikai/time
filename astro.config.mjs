@@ -19,7 +19,7 @@ const configs = {
     base: DEPLOY_TYPE === 'user' ? '/' : `/${REPO_NAME}`,
   },
   cloudflare: {
-    site: `https://time.pages.dev`,
+    site: `https://www.tinynote.cn`, // 您的自定义域名
     base: '/',
   },
 };
