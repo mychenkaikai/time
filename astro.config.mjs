@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 // import sitemap from '@astrojs/sitemap';  // 暂时禁用，存在兼容性问题
 
 // 根据环境变量决定部署平台
@@ -36,6 +37,7 @@ export default defineConfig({
   base: config.base,
   output: 'static',
   integrations: [
+    mdx(),  // 启用 MDX 支持
     // sitemap 插件暂时禁用，存在兼容性问题
     // 如需 SEO，可以后续手动创建 sitemap.xml 或升级插件版本
   ],
