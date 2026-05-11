@@ -12,7 +12,7 @@ import WindowFrame from '../components/WindowFrame.astro';
     <div class="about-container">
       <section class="about-section">
         <h1>🖥️ 怀旧数字博物馆</h1>
-        <p class="subtitle">为高敏人群（HSP）打造的精神角落</p>
+        <p class="subtitle">收集旧互联网与旧生活记忆的安静角落</p>
       </section>
 
       <hr />
@@ -20,8 +20,12 @@ import WindowFrame from '../components/WindowFrame.astro';
       <section class="about-section">
         <h2>📖 项目愿景</h2>
         <p>
-          这是一个复刻 80/90 年代互联网仪式感的个人博客项目。
-          通过还原经典的网页设计风格，为用户提供一个沉浸式的怀旧体验。
+          这是一个以怀旧为主题的个人站点，记录旧网页、旧设备、旧声音，
+          以及那些不太起眼、却会在很多年后忽然想起的生活细节。
+        </p>
+        <p>
+          与其说它是一个“博物馆”，不如说是把散落的旧时光重新摆上架：
+          让记忆有地方停，让阅读有一点慢下来的仪式感。
         </p>
       </section>
 
@@ -30,10 +34,10 @@ import WindowFrame from '../components/WindowFrame.astro';
       <section class="about-section">
         <h2>🎨 设计理念</h2>
         <ul>
-          <li><strong>内容与样式分离</strong>：支持多种主题一键切换</li>
-          <li><strong>还原真实</strong>：默认主题追求 90 年代真实网页风格</li>
-          <li><strong>PC 端优先</strong>：为大屏幕优化，保持最佳阅读体验</li>
-          <li><strong>性能优化</strong>：静态生成，极速加载</li>
+          <li><strong>内容优先</strong>：先把记忆写具体，再让风格为内容服务</li>
+          <li><strong>多主题浏览</strong>：不同主题对应不同年代和设备气质</li>
+          <li><strong>保留旧网页感</strong>：尽量留下链接、边框、窗口和分栏带来的阅读氛围</li>
+          <li><strong>轻量打开</strong>：静态生成，尽可能快地进入内容本身</li>
         </ul>
       </section>
 
@@ -80,13 +84,13 @@ import WindowFrame from '../components/WindowFrame.astro';
 
       <section class="about-section">
         <h2>📝 写作规范</h2>
-        <p>所有文章使用 Markdown 格式编写，支持以下元数据：</p>
+        <p>所有文章使用 Markdown 编写，目前主要围绕以下几类内容展开：</p>
         <ul>
-          <li>标题、描述、日期</li>
-          <li>主题选择（retro-web / win98 / winxp / macos9）</li>
-          <li>分类和标签</li>
-          <li>心情标记</li>
-          <li>背景音乐和视频嵌入</li>
+          <li>旧互联网与旧网页</li>
+          <li>童年物件、设备与媒介</li>
+          <li>音乐、电视、游戏与节日记忆</li>
+          <li>带有主题、标签和情绪标记的文章归档</li>
+          <li>必要时穿插音乐和视频，帮助还原当时的氛围</li>
         </ul>
       </section>
 
@@ -96,25 +100,24 @@ import WindowFrame from '../components/WindowFrame.astro';
         <h2>🎵 特色功能</h2>
         <ul>
           <li>✅ 多主题一键切换</li>
-          <li>✅ 背景音乐播放器（可选）</li>
-          <li>✅ CRT 扫描线滤镜（可选）</li>
-          <li>✅ 移动端友好提示</li>
+          <li>✅ 背景音乐播放器（按文章内容选择开启）</li>
+          <li>✅ CRT 扫描线滤镜（按需切换）</li>
+          <li>✅ 移动端阅读提示</li>
           <li>✅ 文章归档和标签系统</li>
-          <li>✅ 响应式设计</li>
+          <li>✅ 可检索的站内搜索</li>
         </ul>
       </section>
 
       <hr />
-    </div>
+
       <section class="about-section">
         <h2>📧 联系方式</h2>
         <p>
-          如果您有任何建议或问题，欢迎通过以下方式联系：
+          目前这个站点仍在慢慢补内容。
         </p>
-        <ul>
-          <li>GitHub: <a href="https://github.com" target="_blank">@your-username</a></li>
-          <li>Email: your-email@example.com</li>
-        </ul>
+        <p>
+          如果后续开放评论区之外的联系方式，会在这里更新。
+        </p>
       </section>
 
       <hr />
@@ -125,7 +128,7 @@ import WindowFrame from '../components/WindowFrame.astro';
           用 ❤️ 和 Astro 打造
         </p>
         <p class="version">
-          Version 1.0.0 | 最后更新：2024-01-22
+          慢一点，看一会儿旧时光。
         </p>
       </section>
     </div>
@@ -133,9 +136,9 @@ import WindowFrame from '../components/WindowFrame.astro';
 </ContentLayout>
 <style>
   /* 主布局 */
+  .about-container {
     padding: var(--spacing-lg);
     background: #ffffff;
-    line-height: 1.8;
     line-height: 1.8;
   }
 
