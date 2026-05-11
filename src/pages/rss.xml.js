@@ -1,10 +1,9 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../lib/posts';
+import { getPostPath } from '../lib/routes';
 
 export async function GET(context) {
-  const posts = await getCollection('posts', ({ data }) => {
-    return data.draft !== true;
-  });
+  const posts = await getPublishedPosts();
   
   return rss({
     title: '怀旧数字博物馆',
@@ -14,7 +13,7 @@ export async function GET(context) {
       title: post.data.title,
       pubDate: post.data.date,
       description: post.data.description,
-      link: `/posts/${post.slug}/`,
+      link: getPostPath(post.slug),
     })),
     customData: `<language>zh-cn</language>`,
   });

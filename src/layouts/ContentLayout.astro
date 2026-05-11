@@ -1,0 +1,58 @@
+---
+/**
+ * ContentLayout - 统一内容页布局
+ * 提供站点壳层 + 左侧导航 + 右侧内容区
+ */
+
+import SiteShell from './SiteShell.astro';
+import SideNav from '../components/SideNav.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  theme?: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
+  currentPath?: string;
+  currentSlug?: string;
+}
+
+const { title, description, theme, currentPath, currentSlug } = Astro.props;
+---
+
+<SiteShell title={title} description={description} theme={theme} currentPath={currentPath}>
+  <div class="main-layout">
+    <div class="sidebar">
+      <SideNav currentSlug={currentSlug} />
+    </div>
+
+    <div class="content-area">
+      <slot />
+    </div>
+  </div>
+</SiteShell>
+
+<style>
+  .main-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-md);
+    align-items: start;
+  }
+
+  .content-area {
+    min-width: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      order: 2;
+    }
+
+    .content-area {
+      order: 1;
+    }
+  }
+</style>

@@ -11,7 +11,7 @@ const { platform, id, title } = Astro.props;
 ---
 
 <WindowFrame title={title}>
-  <div class="video-container" data-platform={platform} data-id={id}>
+  <div class="video-container" data-video-root data-platform={platform} data-id={id}>
     <div class="video-placeholder">
       <div class="play-button">▶</div>
       <p>Click to Load Video</p>
@@ -20,16 +20,15 @@ const { platform, id, title } = Astro.props;
 </WindowFrame>
 
 <script>
-  const containers = document.querySelectorAll('.video-container');
-  
-  containers.forEach(container => {
+  document.querySelectorAll('[data-video-root]').forEach((containerElement) => {
+    const container = containerElement as HTMLElement;
     const placeholder = container.querySelector('.video-placeholder') as HTMLElement;
-    
+
     if (placeholder) {
       placeholder.addEventListener('click', () => {
-        const platform = (container as HTMLElement).dataset.platform;
-        const id = (container as HTMLElement).dataset.id;
-        
+        const platform = container.dataset.platform;
+        const id = container.dataset.id;
+
         let iframeSrc = '';
         if (platform === 'bilibili') {
           iframeSrc = `//player.bilibili.com/player.html?bvid=${id}&page=1&high_quality=1&danmaku=0`;

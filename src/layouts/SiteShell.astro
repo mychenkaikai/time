@@ -1,0 +1,76 @@
+---
+/**
+ * SiteShell - 统一站点壳层
+ * 集中承载顶部导航、搜索、全局覆盖层和页脚控制区
+ */
+
+import BaseDocument from './BaseDocument.astro';
+import TopNav from '../components/TopNav.astro';
+import SearchModal from '../components/SearchModal.astro';
+import ThemeSelector from '../components/ThemeSelector.astro';
+import CRTOverlay from '../components/CRTOverlay.astro';
+import MobileWarning from '../components/MobileWarning.astro';
+import { normalizePathname } from '../lib/routes';
+
+interface Props {
+  title: string;
+  description?: string;
+  theme?: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
+  currentPath?: string;
+}
+
+const {
+  title,
+  description,
+  theme = 'retro-web',
+  currentPath = normalizePathname(Astro.url.pathname),
+} = Astro.props;
+---
+
+<BaseDocument title={title} description={description} theme={theme}>
+  <div class="site-shell" data-site-shell>
+    <MobileWarning />
+    <CRTOverlay />
+
+    <div class="container">
+      <TopNav currentPath={currentPath} />
+      <SearchModal />
+      <slot />
+
+      <footer class="site-footer">
+        <ThemeSelector />
+        <p>© 2024 Retro Digital Museum</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-site-shell]').forEach((shellRoot) => {
+      shellRoot.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement | null;
+
+        if (target?.closest('[data-site-search-trigger]')) {
+          shellRoot.dispatchEvent(new CustomEvent('site-search:open', { bubbles: true }));
+        }
+      });
+    });
+  </script>
+</BaseDocument>
+
+<style>
+  .site-footer {
+    margin-top: 50px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .site-footer p {
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 0;
+  }
+</style>

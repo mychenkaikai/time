@@ -4,12 +4,12 @@
  * 根据 slug 渲染对应的文章内容
  */
 
-import { getCollection } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
+import { getPublishedPosts } from '../../lib/posts';
 
 // 生成所有文章的静态路径
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  const posts = await getPublishedPosts();
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -23,4 +23,3 @@ const { Content } = await post.render();
 <PostLayout frontmatter={post.data} slug={post.slug}>
   <Content />
 </PostLayout>
-

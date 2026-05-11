@@ -3,168 +3,139 @@
  * 关于页面 - 介绍网站和项目
  */
 
-import BaseLayout from '../layouts/BaseLayout.astro';
-import TopNav from '../components/TopNav.astro';
-import SideNav from '../components/SideNav.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 ---
 
-<BaseLayout title="关于" description="关于怀旧数字博物馆">
-  <!-- 顶部导航栏 -->
-  <TopNav currentPath="/about" />
+<ContentLayout title="关于" description="关于怀旧数字博物馆" currentPath="/about">
+  <WindowFrame title="ℹ️ 关于本站">
+    <div class="about-container">
+      <section class="about-section">
+        <h1>🖥️ 怀旧数字博物馆</h1>
+        <p class="subtitle">为高敏人群（HSP）打造的精神角落</p>
+      </section>
 
-  <!-- 主内容区：左侧导航 + 右侧内容 -->
-  <div class="main-layout">
-    <!-- 左侧分类导航 -->
-    <div class="sidebar">
-      <SideNav />
-    </div>
+      <hr />
 
-    <!-- 右侧内容区 -->
-    <div class="content-area">
-      <WindowFrame title="ℹ️ 关于本站">
-        <div class="about-container">
-          <section class="about-section">
-            <h1>🖥️ 怀旧数字博物馆</h1>
-            <p class="subtitle">为高敏人群（HSP）打造的精神角落</p>
-          </section>
+      <section class="about-section">
+        <h2>📖 项目愿景</h2>
+        <p>
+          这是一个复刻 80/90 年代互联网仪式感的个人博客项目。
+          通过还原经典的网页设计风格，为用户提供一个沉浸式的怀旧体验。
+        </p>
+      </section>
 
-          <hr />
+      <hr />
 
-          <section class="about-section">
-            <h2>📖 项目愿景</h2>
-            <p>
-              这是一个复刻 80/90 年代互联网仪式感的个人博客项目。
-              通过还原经典的网页设计风格，为用户提供一个沉浸式的怀旧体验。
-            </p>
-          </section>
+      <section class="about-section">
+        <h2>🎨 设计理念</h2>
+        <ul>
+          <li><strong>内容与样式分离</strong>：支持多种主题一键切换</li>
+          <li><strong>还原真实</strong>：默认主题追求 90 年代真实网页风格</li>
+          <li><strong>PC 端优先</strong>：为大屏幕优化，保持最佳阅读体验</li>
+          <li><strong>性能优化</strong>：静态生成，极速加载</li>
+        </ul>
+      </section>
 
-          <hr />
+      <hr />
 
-          <section class="about-section">
-            <h2>🎨 设计理念</h2>
-            <ul>
-              <li><strong>内容与样式分离</strong>：支持多种主题一键切换</li>
-              <li><strong>还原真实</strong>：默认主题追求 90 年代真实网页风格</li>
-              <li><strong>PC 端优先</strong>：为大屏幕优化，保持最佳阅读体验</li>
-              <li><strong>性能优化</strong>：静态生成，极速加载</li>
-            </ul>
-          </section>
+      <section class="about-section">
+        <h2>🎯 主题风格</h2>
+        <div class="theme-list">
+          <div class="theme-item">
+            <h3>Retro Web (90s)</h3>
+            <p>还原 90 年代真实网页风格，白色背景、蓝色链接、Times New Roman 字体。</p>
+          </div>
 
-          <hr />
+          <div class="theme-item">
+            <h3>Windows 98</h3>
+            <p>经典的 Win98 配色方案，灰色背景、3D 边框效果。</p>
+          </div>
 
-          <section class="about-section">
-            <h2>🎯 主题风格</h2>
-            <div class="theme-list">
-              <div class="theme-item">
-                <h3>Retro Web (90s)</h3>
-                <p>还原 90 年代真实网页风格，白色背景、蓝色链接、Times New Roman 字体。</p>
-              </div>
-              
-              <div class="theme-item">
-                <h3>Windows 98</h3>
-                <p>经典的 Win98 配色方案，灰色背景、3D 边框效果。</p>
-              </div>
-              
-              <div class="theme-item">
-                <h3>Windows XP</h3>
-                <p>Luna 蓝绿配色，柔和的界面风格。</p>
-              </div>
-              
-              <div class="theme-item">
-                <h3>Mac OS 9</h3>
-                <p>Platinum 灰色主题，经典 Mac 风格。</p>
-              </div>
-            </div>
-          </section>
+          <div class="theme-item">
+            <h3>Windows XP</h3>
+            <p>Luna 蓝绿配色，柔和的界面风格。</p>
+          </div>
 
-          <hr />
-
-          <section class="about-section">
-            <h2>⚙️ 技术栈</h2>
-            <ul>
-              <li><strong>框架</strong>：Astro 4.x（静态站点生成）</li>
-              <li><strong>内容管理</strong>：Content Collections（类型安全）</li>
-              <li><strong>样式</strong>：纯 CSS + CSS Variables（主题系统）</li>
-              <li><strong>托管</strong>：GitHub Pages + Cloudflare CDN</li>
-            </ul>
-          </section>
-
-          <hr />
-
-          <section class="about-section">
-            <h2>📝 写作规范</h2>
-            <p>所有文章使用 Markdown 格式编写，支持以下元数据：</p>
-            <ul>
-              <li>标题、描述、日期</li>
-              <li>主题选择（retro-web / win98 / winxp / macos9）</li>
-              <li>分类和标签</li>
-              <li>心情标记</li>
-              <li>背景音乐和视频嵌入</li>
-            </ul>
-          </section>
-
-          <hr />
-
-          <section class="about-section">
-            <h2>🎵 特色功能</h2>
-            <ul>
-              <li>✅ 多主题一键切换</li>
-              <li>✅ 背景音乐播放器（可选）</li>
-              <li>✅ CRT 扫描线滤镜（可选）</li>
-              <li>✅ 移动端友好提示</li>
-              <li>✅ 文章归档和标签系统</li>
-              <li>✅ 响应式设计</li>
-            </ul>
-          </section>
-
-          <hr />
-
-          <section class="about-section">
-            <h2>📧 联系方式</h2>
-            <p>
-              如果您有任何建议或问题，欢迎通过以下方式联系：
-            </p>
-            <ul>
-              <li>GitHub: <a href="https://github.com" target="_blank">@your-username</a></li>
-              <li>Email: your-email@example.com</li>
-            </ul>
-          </section>
-
-          <hr />
-
-          <section class="about-section footer-section">
-            <p class="copyright">
-              © 2024 怀旧数字博物馆<br />
-              用 ❤️ 和 Astro 打造
-            </p>
-            <p class="version">
-              Version 1.0.0 | 最后更新：2024-01-22
-            </p>
-          </section>
+          <div class="theme-item">
+            <h3>Mac OS 9</h3>
+            <p>Platinum 灰色主题，经典 Mac 风格。</p>
+          </div>
         </div>
-      </WindowFrame>
-    </div>
-  </div>
-</BaseLayout>
+      </section>
 
+      <hr />
+
+      <section class="about-section">
+        <h2>⚙️ 技术栈</h2>
+        <ul>
+          <li><strong>框架</strong>：Astro 4.x（静态站点生成）</li>
+          <li><strong>内容管理</strong>：Content Collections（类型安全）</li>
+          <li><strong>样式</strong>：纯 CSS + CSS Variables（主题系统）</li>
+          <li><strong>托管</strong>：GitHub Pages + Cloudflare CDN</li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <section class="about-section">
+        <h2>📝 写作规范</h2>
+        <p>所有文章使用 Markdown 格式编写，支持以下元数据：</p>
+        <ul>
+          <li>标题、描述、日期</li>
+          <li>主题选择（retro-web / win98 / winxp / macos9）</li>
+          <li>分类和标签</li>
+          <li>心情标记</li>
+          <li>背景音乐和视频嵌入</li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <section class="about-section">
+        <h2>🎵 特色功能</h2>
+        <ul>
+          <li>✅ 多主题一键切换</li>
+          <li>✅ 背景音乐播放器（可选）</li>
+          <li>✅ CRT 扫描线滤镜（可选）</li>
+          <li>✅ 移动端友好提示</li>
+          <li>✅ 文章归档和标签系统</li>
+          <li>✅ 响应式设计</li>
+        </ul>
+      </section>
+
+      <hr />
+    </div>
+      <section class="about-section">
+        <h2>📧 联系方式</h2>
+        <p>
+          如果您有任何建议或问题，欢迎通过以下方式联系：
+        </p>
+        <ul>
+          <li>GitHub: <a href="https://github.com" target="_blank">@your-username</a></li>
+          <li>Email: your-email@example.com</li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <section class="about-section footer-section">
+        <p class="copyright">
+          © 2024 怀旧数字博物馆<br />
+          用 ❤️ 和 Astro 打造
+        </p>
+        <p class="version">
+          Version 1.0.0 | 最后更新：2024-01-22
+        </p>
+      </section>
+    </div>
+  </WindowFrame>
+</ContentLayout>
 <style>
   /* 主布局 */
-  .main-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-md);
-    align-items: start;
-  }
-
-  .content-area {
-    min-width: 0;
-  }
-
-  /* 关于容器 */
-  .about-container {
     padding: var(--spacing-lg);
     background: #ffffff;
+    line-height: 1.8;
     line-height: 1.8;
   }
 
@@ -257,21 +228,6 @@ import WindowFrame from '../components/WindowFrame.astro';
     color: var(--border-dark);
   }
 
-  /* 响应式 */
-  @media (max-width: 1024px) {
-    .main-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-      order: 2;
-    }
-
-    .content-area {
-      order: 1;
-    }
-  }
-
   @media (max-width: 768px) {
     .about-container {
       padding: var(--spacing-md);
@@ -282,4 +238,3 @@ import WindowFrame from '../components/WindowFrame.astro';
     }
   }
 </style>
-

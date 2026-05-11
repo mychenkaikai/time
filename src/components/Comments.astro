@@ -57,7 +57,7 @@ const {
   }
 
   // Listen for theme changes
-  window.addEventListener('theme-change', ((e: CustomEvent) => {
+  window.addEventListener('site-theme-change', ((e: CustomEvent) => {
     updateGiscusTheme(e.detail.theme);
   }) as EventListener);
 </script>

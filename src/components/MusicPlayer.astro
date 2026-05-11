@@ -18,7 +18,7 @@ interface Props {
 const { tracks, autoplay = false } = Astro.props;
 ---
 
-<div class="music-player-container" data-tracks={JSON.stringify(tracks)} data-autoplay={autoplay.toString()}>
+<div class="music-player-container" data-music-player-root data-tracks={JSON.stringify(tracks)} data-autoplay={autoplay.toString()}>
   <div class="window-frame music-player">
     <div class="frame-title-bar">
       <div class="frame-title-text">🎵 音乐播放器</div>
@@ -29,47 +29,47 @@ const { tracks, autoplay = false } = Astro.props;
     <div class="frame-body">
       <!-- 当前播放信息 -->
       <div class="now-playing">
-        <div class="track-title" id="current-title">未播放</div>
-        <div class="track-artist" id="current-artist"></div>
+        <div class="track-title" data-role="current-title">未播放</div>
+        <div class="track-artist" data-role="current-artist"></div>
       </div>
 
       <!-- 进度条 -->
       <div class="progress-container">
         <input 
           type="range" 
-          id="progress-bar" 
           min="0" 
           max="100" 
           value="0"
           class="progress-slider"
+          data-role="progress-bar"
         />
       </div>
 
       <!-- 时间显示 -->
       <div class="time-display">
-        <span id="current-time">0:00</span>
-        <span id="duration-time">0:00</span>
+        <span data-role="current-time">0:00</span>
+        <span data-role="duration-time">0:00</span>
       </div>
 
       <!-- 播放控制 -->
       <div class="player-controls">
-        <button id="prev-btn" class="control-btn" title="上一曲">⏮</button>
-        <button id="play-btn" class="control-btn play-btn" title="播放">▶</button>
-        <button id="pause-btn" class="control-btn play-btn" style="display: none;" title="暂停">⏸</button>
-        <button id="next-btn" class="control-btn" title="下一曲">⏭</button>
-        <button id="loop-btn" class="control-btn" title="循环模式">🔁</button>
+        <button class="control-btn" data-role="prev-btn" title="上一曲">⏮</button>
+        <button class="control-btn play-btn" data-role="play-btn" title="播放">▶</button>
+        <button class="control-btn play-btn" data-role="pause-btn" style="display: none;" title="暂停">⏸</button>
+        <button class="control-btn" data-role="next-btn" title="下一曲">⏭</button>
+        <button class="control-btn" data-role="loop-btn" title="循环模式">🔁</button>
       </div>
 
       <!-- 音量控制 -->
       <div class="volume-control">
         <span class="volume-icon">🔊</span>
         <input 
-          id="volume-slider" 
           type="range" 
           min="0" 
           max="100" 
           value="50"
           class="volume-slider"
+          data-role="volume-slider"
         />
       </div>
 
@@ -77,7 +77,7 @@ const { tracks, autoplay = false } = Astro.props;
       {tracks.length > 1 && (
         <div class="playlist">
           <div class="playlist-header">播放列表 ({tracks.length} 首)</div>
-          <div class="playlist-items" id="playlist-items">
+          <div class="playlist-items" data-role="playlist-items">
             {tracks.map((track, index) => (
               <div class="playlist-item" data-index={index}>
                 <span class="track-number">{index + 1}.</span>
@@ -97,25 +97,25 @@ const { tracks, autoplay = false } = Astro.props;
 <script>
   import { Howl } from 'howler';
 
-  const container = document.querySelector('.music-player-container') as HTMLElement;
-  if (container) {
+  document.querySelectorAll('[data-music-player-root]').forEach((rootElement) => {
+    const container = rootElement as HTMLElement;
     const tracksData = JSON.parse(container.dataset.tracks || '[]');
     const autoplay = container.dataset.autoplay === 'true';
-    
-    const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
-    const pauseBtn = document.getElementById('pause-btn') as HTMLButtonElement;
-    const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
-    const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
-    const loopBtn = document.getElementById('loop-btn') as HTMLButtonElement;
-    const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
-    const progressBar = document.getElementById('progress-bar') as HTMLInputElement;
-    const currentTitle = document.getElementById('current-title') as HTMLElement;
-    const currentArtist = document.getElementById('current-artist') as HTMLElement;
-    const currentTime = document.getElementById('current-time') as HTMLElement;
-    const durationTime = document.getElementById('duration-time') as HTMLElement;
-    const playlistItems = document.getElementById('playlist-items');
-    const minimizeBtn = document.querySelector('.minimize-btn') as HTMLButtonElement;
-    const musicPlayer = document.querySelector('.music-player') as HTMLElement;
+
+    const playBtn = container.querySelector('[data-role="play-btn"]') as HTMLButtonElement;
+    const pauseBtn = container.querySelector('[data-role="pause-btn"]') as HTMLButtonElement;
+    const prevBtn = container.querySelector('[data-role="prev-btn"]') as HTMLButtonElement;
+    const nextBtn = container.querySelector('[data-role="next-btn"]') as HTMLButtonElement;
+    const loopBtn = container.querySelector('[data-role="loop-btn"]') as HTMLButtonElement;
+    const volumeSlider = container.querySelector('[data-role="volume-slider"]') as HTMLInputElement;
+    const progressBar = container.querySelector('[data-role="progress-bar"]') as HTMLInputElement;
+    const currentTitle = container.querySelector('[data-role="current-title"]') as HTMLElement;
+    const currentArtist = container.querySelector('[data-role="current-artist"]') as HTMLElement;
+    const currentTime = container.querySelector('[data-role="current-time"]') as HTMLElement;
+    const durationTime = container.querySelector('[data-role="duration-time"]') as HTMLElement;
+    const playlistItems = container.querySelector('[data-role="playlist-items"]');
+    const minimizeBtn = container.querySelector('.minimize-btn') as HTMLButtonElement;
+    const musicPlayer = container.querySelector('.music-player') as HTMLElement;
 
     let currentTrackIndex = 0;
     let sound: Howl | null = null;
@@ -315,7 +315,7 @@ const { tracks, autoplay = false } = Astro.props;
     } else {
       loadTrack(0, false);
     }
-  }
+  });
 </script>
 
 <style>

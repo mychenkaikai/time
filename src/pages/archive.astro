@@ -3,21 +3,12 @@
  * 归档页面 - 按年份/月份展示所有文章
  */
 
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import TopNav from '../components/TopNav.astro';
-import SideNav from '../components/SideNav.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 import WindowFrame from '../components/WindowFrame.astro';
+import { getPublishedPosts } from '../lib/posts';
+import { getPostPath } from '../lib/routes';
 
-// 获取所有文章，过滤草稿
-const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
-
-// 按日期倒序排列
-const sortedPosts = allPosts.sort((a, b) => {
-  return b.data.date.getTime() - a.data.date.getTime();
-});
+const sortedPosts = await getPublishedPosts();
 
 // 按年份和月份分组
 interface PostsByYearMonth {
@@ -61,104 +52,76 @@ const formatDate = (date: Date) => {
   }).format(date);
 };
 
-const baseUrl = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="归档" description="按时间归档的所有文章">
-  <!-- 顶部导航栏 -->
-  <TopNav currentPath="/archive" />
+<ContentLayout title="归档" description="按时间归档的所有文章" currentPath="/archive">
+  <WindowFrame title="📅 文章归档">
+    <div class="archive-container">
+      <div class="archive-header">
+        <h1>文章归档</h1>
+        <p class="archive-stats">
+          共 {sortedPosts.length} 篇文章
+        </p>
+      </div>
 
-  <!-- 主内容区：左侧导航 + 右侧内容 -->
-  <div class="main-layout">
-    <!-- 左侧分类导航 -->
-    <div class="sidebar">
-      <SideNav />
-    </div>
-
-    <!-- 右侧内容区 -->
-    <div class="content-area">
-      <WindowFrame title="📅 文章归档">
-        <div class="archive-container">
-          <div class="archive-header">
-            <h1>文章归档</h1>
-            <p class="archive-stats">
-              共 {sortedPosts.length} 篇文章
-            </p>
-          </div>
-
-          {years.length === 0 ? (
-            <div class="empty-state">
-              <p>还没有文章，敬请期待...</p>
-            </div>
-          ) : (
-            <div class="archive-timeline">
-              {years.map((year) => {
-                const months = Object.keys(postsByYearMonth[year]).sort((a, b) => parseInt(b) - parseInt(a));
-                const yearPostCount = months.reduce((sum, month) => sum + postsByYearMonth[year][month].length, 0);
-                
-                return (
-                  <div class="year-section">
-                    <h2 class="year-title">
-                      {year} 年
-                      <span class="year-count">({yearPostCount} 篇)</span>
-                    </h2>
-                    
-                    {months.map((month) => {
-                      const posts = postsByYearMonth[year][month];
-                      const monthIndex = parseInt(month) - 1;
-                      
-                      return (
-                        <div class="month-section">
-                          <h3 class="month-title">
-                            {monthNames[monthIndex]}
-                            <span class="month-count">({posts.length} 篇)</span>
-                          </h3>
-                          
-                          <ul class="posts-list">
-                            {posts.map((post) => (
-                              <li class="post-item">
-                                <span class="post-date">{formatDate(post.data.date)}</span>
-                                <a href={`${baseUrl}posts/${post.slug}`} class="post-title">
-                                  {post.data.title}
-                                </a>
-                                {post.data.tags.length > 0 && (
-                                  <span class="post-tags">
-                                    {post.data.tags.map((tag) => (
-                                      <span class="tag">{tag}</span>
-                                    ))}
-                                  </span>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+      {years.length === 0 ? (
+        <div class="empty-state">
+          <p>还没有文章，敬请期待...</p>
         </div>
-      </WindowFrame>
+      ) : (
+        <div class="archive-timeline">
+          {years.map((year) => {
+            const months = Object.keys(postsByYearMonth[year]).sort((a, b) => parseInt(b) - parseInt(a));
+            const yearPostCount = months.reduce((sum, month) => sum + postsByYearMonth[year][month].length, 0);
+
+            return (
+              <div class="year-section">
+                <h2 class="year-title">
+                  {year} 年
+                  <span class="year-count">({yearPostCount} 篇)</span>
+                </h2>
+
+                {months.map((month) => {
+                  const posts = postsByYearMonth[year][month];
+                  const monthIndex = parseInt(month) - 1;
+
+                  return (
+                    <div class="month-section">
+                      <h3 class="month-title">
+                        {monthNames[monthIndex]}
+                        <span class="month-count">({posts.length} 篇)</span>
+                      </h3>
+
+                      <ul class="posts-list">
+                        {posts.map((post) => (
+                          <li class="post-item">
+                            <span class="post-date">{formatDate(post.data.date)}</span>
+                            <a href={getPostPath(post.slug)} class="post-title">
+                              {post.data.title}
+                            </a>
+                            {post.data.tags.length > 0 && (
+                              <span class="post-tags">
+                                {post.data.tags.map((tag) => (
+                                  <span class="tag">{tag}</span>
+                                ))}
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
-  </div>
-</BaseLayout>
+  </WindowFrame>
+</ContentLayout>
 
 <style>
-  /* 主布局 */
-  .main-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-md);
-    align-items: start;
-  }
-
-  .content-area {
-    min-width: 0;
-  }
-
-  /* 归档容器 */
   .archive-container {
     padding: var(--spacing-md);
     background: #ffffff;
@@ -283,21 +246,6 @@ const baseUrl = import.meta.env.BASE_URL;
     color: var(--border-dark);
   }
 
-  /* 响应式 */
-  @media (max-width: 1024px) {
-    .main-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-      order: 2;
-    }
-
-    .content-area {
-      order: 1;
-    }
-  }
-
   @media (max-width: 768px) {
     .post-item {
       flex-direction: column;
@@ -314,4 +262,3 @@ const baseUrl = import.meta.env.BASE_URL;
     }
   }
 </style>
-

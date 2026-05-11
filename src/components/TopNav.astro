@@ -8,14 +8,20 @@ interface Props {
   currentPath?: string;
 }
 
+import {
+  getAboutPath,
+  getArchivePath,
+  getHomePath,
+  getTagIndexPath,
+} from '../lib/routes';
+
 const { currentPath = '/' } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
 
 const navItems = [
-  { label: '🏠 首页', href: `${baseUrl}` },
-  { label: '📚 全部文章', href: `${baseUrl}archive` },
-  { label: '🏷️ 标签', href: `${baseUrl}tags` },
-  { label: 'ℹ️ 关于', href: `${baseUrl}about` },
+  { label: '🏠 首页', path: '/', href: getHomePath() },
+  { label: '📚 全部文章', path: '/archive', href: getArchivePath() },
+  { label: '🏷️ 标签', path: '/tags', href: getTagIndexPath() },
+  { label: 'ℹ️ 关于', path: '/about', href: getAboutPath() },
 ];
 ---
 
@@ -31,14 +37,14 @@ const navItems = [
         <li class="nav-item">
           <a 
             href={item.href} 
-            class:list={['nav-link', { active: currentPath === item.href }]}
+            class:list={['nav-link', { active: currentPath === item.path }]}
           >
             {item.label}
           </a>
         </li>
       ))}
     </ul>
-    <button class="search-btn" onclick="window.openSearchModal()">🔍</button>
+    <button type="button" class="search-btn" data-site-search-trigger aria-label="打开搜索">🔍</button>
   </div>
 </nav>
 
@@ -141,4 +147,3 @@ const navItems = [
     }
   }
 </style>
-

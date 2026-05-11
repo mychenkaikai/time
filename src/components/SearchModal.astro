@@ -3,51 +3,55 @@ import Search from './Search.astro';
 import WindowFrame from './WindowFrame.astro';
 ---
 
-<div id="search-modal" class="search-modal" style="display: none;">
+<div class="search-modal" data-search-modal-root hidden>
   <div class="modal-overlay"></div>
   <div class="modal-content">
     <WindowFrame title="🔎 Find Relics">
       <div class="search-container">
         <Search />
         <div class="modal-actions">
-          <button id="close-search-btn">Close</button>
+          <button type="button" data-search-close>Close</button>
         </div>
       </div>
     </WindowFrame>
   </div>
 </div>
 
-<script>
-  const modal = document.getElementById('search-modal');
-  const overlay = modal?.querySelector('.modal-overlay');
-  const closeBtn = document.getElementById('close-search-btn');
+<script is:inline>
+  document.querySelectorAll('[data-search-modal-root]').forEach((modalRoot) => {
+    const modal = modalRoot;
+    const shellRoot = modal.closest('[data-site-shell]') || document;
+    const overlay = modal.querySelector('.modal-overlay');
+    const closeBtn = modal.querySelector('[data-search-close]');
 
-  function closeSearch() {
-    if (modal) modal.style.display = 'none';
-  }
+    const closeSearch = () => {
+      modal.hidden = true;
+    };
 
-  function openSearch() {
-    if (modal) modal.style.display = 'block';
-    // Focus input if possible
-    setTimeout(() => {
-      const input = modal?.querySelector('input');
-      if (input) input.focus();
-    }, 100);
-  }
+    const openSearch = () => {
+      modal.hidden = false;
 
-  // Expose to window for other components to call
-  (window as any).openSearchModal = openSearch;
+      window.setTimeout(() => {
+        const input = modal.querySelector('input');
 
-  if (overlay) overlay.addEventListener('click', closeSearch);
-  if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+        if (input) {
+          input.focus();
+        }
+      }, 100);
+    };
 
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.style.display === 'block') {
-      closeSearch();
-    }
+    shellRoot.addEventListener('site-search:open', openSearch);
+    overlay?.addEventListener('click', closeSearch);
+    closeBtn?.addEventListener('click', closeSearch);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.hidden) {
+        closeSearch();
+      }
+    });
   });
 </script>
+
 
 <style>
   .search-modal {
@@ -87,7 +91,7 @@ import WindowFrame from './WindowFrame.astro';
     text-align: right;
   }
 
-  #close-search-btn {
+  [data-search-close] {
     min-width: 80px;
   }
 </style>

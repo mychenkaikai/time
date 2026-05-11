@@ -1,23 +1,15 @@
 ---
 /**
  * 首页 - 文章列表
- * 三栏布局：顶部导航 + 左侧分类导航 + 右侧内容区
+ * 统一站点壳层下的文章列表页
  */
 
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import TopNav from '../components/TopNav.astro';
-import SideNav from '../components/SideNav.astro';
+import ContentLayout from '../layouts/ContentLayout.astro';
 import WindowFrame from '../components/WindowFrame.astro';
+import { getPublishedPosts } from '../lib/posts';
+import { getPostPath } from '../lib/routes';
 
-// 获取所有文章，过滤草稿，按日期倒序
-const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
-
-const sortedPosts = allPosts.sort((a, b) => {
-  return b.data.date.getTime() - a.data.date.getTime();
-});
+const sortedPosts = await getPublishedPosts();
 
 // 格式化日期
 const formatDate = (date: Date) => {
@@ -28,109 +20,74 @@ const formatDate = (date: Date) => {
   }).format(date);
 };
 
-const baseUrl = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="首页" description="怀旧数字博物馆 - 记录旧时光的精神角落">
-  <!-- 顶部导航栏 -->
-  <TopNav currentPath="/" />
-
-  <!-- 主内容区：左侧导航 + 右侧内容 -->
-  <div class="main-layout">
-    <!-- 左侧分类导航 -->
-    <div class="sidebar">
-      <SideNav />
+<ContentLayout title="首页" description="怀旧数字博物馆 - 记录旧时光的精神角落" currentPath="/">
+  <WindowFrame title="怀旧数字博物馆 v1.0">
+    <div class="site-header">
+      <h1>🖥️ 欢迎来到怀旧数字博物馆</h1>
+      <p class="site-description">
+        这里是为高敏人群（HSP）打造的精神角落，<br />
+        复刻 80/90 年代互联网的仪式感。
+      </p>
     </div>
+  </WindowFrame>
 
-    <!-- 右侧内容区 -->
-    <div class="content-area">
-      <!-- 网站标题 -->
-      <WindowFrame title="怀旧数字博物馆 v1.0">
-        <div class="site-header">
-          <h1>🖥️ 欢迎来到怀旧数字博物馆</h1>
-          <p class="site-description">
-            这里是为高敏人群（HSP）打造的精神角落，<br />
-            复刻 80/90 年代互联网的仪式感。
-          </p>
-        </div>
-      </WindowFrame>
+  <WindowFrame title="📝 最新文章">
+    {sortedPosts.length === 0 ? (
+      <div class="empty-state">
+        <p>还没有文章，敬请期待...</p>
+      </div>
+    ) : (
+      <div class="posts-list">
+        {sortedPosts.slice(0, 10).map((post) => (
+          <article class="post-item">
+            <div class="post-item-header">
+              <h2 class="post-item-title">
+                <a href={getPostPath(post.slug)}>{post.data.title}</a>
+              </h2>
+              <span class="post-item-date">{formatDate(post.data.date)}</span>
+            </div>
 
-      <!-- 最新文章 -->
-      <WindowFrame title="📝 最新文章">
-        {sortedPosts.length === 0 ? (
-          <div class="empty-state">
-            <p>还没有文章，敬请期待...</p>
-          </div>
-        ) : (
-          <div class="posts-list">
-            {sortedPosts.slice(0, 10).map((post) => (
-              <article class="post-item">
-                <div class="post-item-header">
-                  <h2 class="post-item-title">
-                    <a href={`${baseUrl}posts/${post.slug}`}>{post.data.title}</a>
-                  </h2>
-                  <span class="post-item-date">{formatDate(post.data.date)}</span>
-                </div>
-                
-                <div class="post-item-meta">
-                  <span class="post-category">📁 {post.data.category}</span>
-                  {post.data.subcategory && (
-                    <span class="post-subcategory">/ {post.data.subcategory}</span>
-                  )}
-                </div>
-                
-                <p class="post-item-description">{post.data.description}</p>
-                
-                {post.data.tags.length > 0 && (
-                  <div class="post-item-tags">
-                    {post.data.tags.map((tag) => (
-                      <span class="tag">{tag}</span>
-                    ))}
-                  </div>
-                )}
-                
-                {post.data.mood && (
-                  <div class="post-item-mood">
-                    💭 {post.data.mood}
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        )}
-      </WindowFrame>
+            <div class="post-item-meta">
+              <span class="post-category">📁 {post.data.category}</span>
+              {post.data.subcategory && (
+                <span class="post-subcategory">/ {post.data.subcategory}</span>
+              )}
+            </div>
 
-      <!-- 页脚信息 -->
-      <WindowFrame title="ℹ️ 关于">
-        <div class="site-footer">
-          <p>
-            本站使用 <strong>Astro</strong> 构建，采用 <strong>Windows 98</strong> 复古风格。<br />
-            © 2024 怀旧数字博物馆 | 用 ❤️ 打造
-          </p>
-        </div>
-      </WindowFrame>
+            <p class="post-item-description">{post.data.description}</p>
+
+            {post.data.tags.length > 0 && (
+              <div class="post-item-tags">
+                {post.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+
+            {post.data.mood && (
+              <div class="post-item-mood">
+                💭 {post.data.mood}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    )}
+  </WindowFrame>
+
+  <WindowFrame title="ℹ️ 关于">
+    <div class="site-footer">
+      <p>
+        本站使用 <strong>Astro</strong> 构建，采用 <strong>Windows 98</strong> 复古风格。<br />
+        © 2024 怀旧数字博物馆 | 用 ❤️ 打造
+      </p>
     </div>
-  </div>
-</BaseLayout>
+  </WindowFrame>
+</ContentLayout>
 
 <style>
-  /* 主布局：左侧导航 + 右侧内容 */
-  .main-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-md);
-    align-items: start;
-  }
-
-  .sidebar {
-    /* 侧边栏样式在 SideNav 组件中 */
-  }
-
-  .content-area {
-    min-width: 0; /* 防止内容溢出 */
-  }
-
-  /* 网站头部 */
   .site-header {
     text-align: center;
     padding: var(--spacing-lg) 0;
@@ -251,21 +208,6 @@ const baseUrl = import.meta.env.BASE_URL;
     background: #ffffff;
   }
 
-  /* 响应式 */
-  @media (max-width: 1024px) {
-    .main-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-      order: 2;
-    }
-
-    .content-area {
-      order: 1;
-    }
-  }
-
   @media (max-width: 768px) {
     .post-item-header {
       flex-direction: column;
@@ -277,4 +219,3 @@ const baseUrl = import.meta.env.BASE_URL;
     }
   }
 </style>
-

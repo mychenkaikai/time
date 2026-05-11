@@ -1,38 +1,73 @@
 ---
+import { getPagefindAssetPath } from '../lib/routes';
+
+const pagefindScriptPath = getPagefindAssetPath('pagefind-ui.js');
+const pagefindStylePath = getPagefindAssetPath('pagefind-ui.css');
 ---
 
-<div id="search" class="search-box"></div>
+<div class="search-box" data-search-box></div>
 
-<script>
-  // Dynamically load Pagefind UI script
-  const script = document.createElement('script');
-  script.src = "/pagefind/pagefind-ui.js";
-  script.onload = () => {
-    // @ts-ignore
-    new PagefindUI({
-      element: "#search",
-      showImages: false,
-      translations: {
-        placeholder: "Search Museum...",
-        zero_results: "No relics found for [SEARCH_TERM]",
-        count_one: "1 relic found",
-        count_many: "[COUNT] relics found",
+<script is:inline define:vars={{ pagefindScriptPath, pagefindStylePath }}>
+  const renderSearchError = () => {
+    document.querySelectorAll('[data-search-box]').forEach((searchBox) => {
+      searchBox.innerHTML =
+        '<p style="padding: 10px; color: red;">Search index not found. Please run build.</p>';
+    });
+  };
+
+  if (!document.querySelector(`script[src="${pagefindScriptPath}"]`)) {
+    const script = document.createElement('script');
+    script.src = pagefindScriptPath;
+    script.dataset.pagefindUi = 'true';
+    document.head.appendChild(script);
+  }
+
+  if (!document.querySelector(`link[href="${pagefindStylePath}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = pagefindStylePath;
+    link.dataset.pagefindUi = 'true';
+    document.head.appendChild(link);
+  }
+
+  const bootPagefind = () => {
+    document.querySelectorAll('[data-search-box]').forEach((searchBox, index) => {
+      if (searchBox.dataset.pagefindReady === 'true') {
+        return;
+      }
+
+      searchBox.dataset.pagefindReady = 'true';
+      const elementId = `search-box-${index}`;
+      searchBox.id = elementId;
+
+      try {
+        new window.PagefindUI({
+          element: `#${elementId}`,
+          showImages: false,
+          translations: {
+            placeholder: 'Search Museum...',
+            zero_results: 'No relics found for [SEARCH_TERM]',
+            count_one: '1 relic found',
+            count_many: '[COUNT] relics found',
+          },
+        });
+      } catch (_error) {
+        searchBox.innerHTML =
+          '<p style="padding: 10px; color: red;">Search index not found. Please run build.</p>';
       }
     });
   };
-  script.onerror = () => {
-    const searchBox = document.getElementById('search');
-    if (searchBox) {
-      searchBox.innerHTML = '<p style="padding: 10px; color: red;">Search index not found. Please run build.</p>';
-    }
-  };
-  document.head.appendChild(script);
-  
-  // Load CSS
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '/pagefind/pagefind-ui.css';
-  document.head.appendChild(link);
+
+  const existingScript = document.querySelector(`script[src="${pagefindScriptPath}"]`);
+
+  if (window.PagefindUI) {
+    bootPagefind();
+  } else if (existingScript) {
+    existingScript.addEventListener('load', bootPagefind, { once: true });
+    existingScript.addEventListener('error', renderSearchError, { once: true });
+  } else {
+    renderSearchError();
+  }
 </script>
 
 <style is:global>
@@ -83,4 +118,3 @@
     margin-top: 5px;
   }
 </style>
-

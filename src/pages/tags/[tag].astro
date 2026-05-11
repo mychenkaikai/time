@@ -1,17 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentLayout from '../../layouts/ContentLayout.astro';
 import WindowFrame from '../../components/WindowFrame.astro';
+import { getPublishedPosts, getPostsByTag, getTags } from '../../lib/posts';
+import { getPostPath, getTagIndexPath } from '../../lib/routes';
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection('posts', ({ data }) => {
-    return data.draft !== true;
-  });
-  
-  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+  const allPosts = await getPublishedPosts();
+  const uniqueTags = getTags(allPosts);
 
   return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
+    const filteredPosts = getPostsByTag(allPosts, tag);
     return {
       params: { tag },
       props: { posts: filteredPosts },
@@ -21,18 +19,17 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
 
 // Sort posts by date
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title={`Tag: ${tag}`}>
+<ContentLayout title={`Tag: ${tag}`} currentPath="/tags">
   <WindowFrame title={`🏷️ Tag: ${tag}`}>
     <ul class="post-list tree-view">
       {posts.map((post) => (
         <li>
-          <a href={`${baseUrl}posts/${post.slug}/`}>
+          <a href={getPostPath(post.slug)}>
             {post.data.title}
           </a>
           <span style="float: right; color: #666;">
@@ -44,9 +41,9 @@ posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   </WindowFrame>
 
   <div style="text-align: center; margin-top: 20px;">
-    <a href={`${baseUrl}tags`} class="back-link">← All Tags</a>
+    <a href={getTagIndexPath()} class="back-link">← All Tags</a>
   </div>
-</BaseLayout>
+</ContentLayout>
 
 <style>
   .post-list {

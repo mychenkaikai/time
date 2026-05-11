@@ -4,60 +4,15 @@
  * 显示文章分类和列表
  */
 
-import { getCollection } from 'astro:content';
-
-// 获取所有已发布的文章
-const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
-
-// 按分类组织文章
-interface CategoryStructure {
-  [category: string]: {
-    [subcategory: string]: Array<{
-      slug: string;
-      title: string;
-      date: Date;
-    }>;
-  };
-}
-
-const categoryStructure: CategoryStructure = {};
-
-allPosts.forEach((post) => {
-  const category = post.data.category;
-  const subcategory = post.data.subcategory || '未分类';
-  
-  if (!categoryStructure[category]) {
-    categoryStructure[category] = {};
-  }
-  
-  if (!categoryStructure[category][subcategory]) {
-    categoryStructure[category][subcategory] = [];
-  }
-  
-  categoryStructure[category][subcategory].push({
-    slug: post.slug,
-    title: post.data.title,
-    date: post.data.date,
-  });
-});
-
-// 对每个子分类的文章按日期排序
-Object.keys(categoryStructure).forEach((category) => {
-  Object.keys(categoryStructure[category]).forEach((subcategory) => {
-    categoryStructure[category][subcategory].sort((a, b) => 
-      b.date.getTime() - a.date.getTime()
-    );
-  });
-});
+import { getCategoryTree } from '../lib/posts';
+import { getPostPath } from '../lib/routes';
 
 interface Props {
   currentSlug?: string;
 }
 
 const { currentSlug } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
+const categoryStructure = await getCategoryTree();
 ---
 
 <aside class="side-nav">
@@ -83,7 +38,7 @@ const baseUrl = import.meta.env.BASE_URL;
                 {posts.map((post) => (
                   <li class="post-item">
                     <a 
-                      href={`${baseUrl}posts/${post.slug}`}
+                      href={getPostPath(post.slug)}
                       class:list={['post-link', { active: currentSlug === post.slug }]}
                     >
                       📄 {post.title}
@@ -231,4 +186,3 @@ const baseUrl = import.meta.env.BASE_URL;
     }
   }
 </style>
-

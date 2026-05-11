@@ -1,25 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentLayout from '../../layouts/ContentLayout.astro';
 import WindowFrame from '../../components/WindowFrame.astro';
+import { getPublishedPosts, getTags } from '../../lib/posts';
+import { getHomePath, getTagPath } from '../../lib/routes';
 
-const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
-
-const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
-const pageTitle = "Tags Cloud";
-const baseUrl = import.meta.env.BASE_URL;
+const allPosts = await getPublishedPosts();
+const tags = getTags(allPosts);
+const pageTitle = 'Tags Cloud';
 ---
 
-<BaseLayout title={pageTitle}>
+<ContentLayout title={pageTitle} currentPath="/tags">
   <WindowFrame title="🏷️ All Tags">
     <div class="tags-container">
       {tags.length > 0 ? (
         <ul class="tags-list">
           {tags.map((tag) => (
             <li class="tag-item">
-              <a href={`${baseUrl}tags/${tag}`}>#{tag}</a>
+              <a href={getTagPath(tag)}>#{tag}</a>
             </li>
           ))}
         </ul>
@@ -30,9 +27,9 @@ const baseUrl = import.meta.env.BASE_URL;
   </WindowFrame>
   
   <div style="text-align: center; margin-top: 20px;">
-    <a href={baseUrl} class="back-link">← Back to Home</a>
+    <a href={getHomePath()} class="back-link">← Back to Home</a>
   </div>
-</BaseLayout>
+</ContentLayout>
 
 <style>
   .tags-list {
