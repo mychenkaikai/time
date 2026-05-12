@@ -66,6 +66,19 @@ draft: false
 
 ---
 
+## 🔗 资料补充
+
+如果你想把这篇文章里的早期网页记忆再接得更远一点，这几类资料很适合顺手看看：
+
+- [Wikipedia：GeoCities](https://en.wikipedia.org/wiki/GeoCities)
+- [Wikipedia：Netscape](https://en.wikipedia.org/wiki/Netscape)
+- [Wikipedia：History of the World Wide Web](https://en.wikipedia.org/wiki/History_of_the_World_Wide_Web)
+
+它们会把个人主页、早期浏览器和整个 Web 刚公开扩张时的气味重新连起来，
+
+也能让人更容易理解，为什么那个年代很多网页明明很粗糙，却总像带着一种“这是某个人亲手搭起来的地方”的温度。
+
+---
+
 **最后更新**：2024-01-22  
 **作者**：怀旧数字博物馆
-

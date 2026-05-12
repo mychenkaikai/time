@@ -159,6 +159,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"after-school-store.md": {
+	id: "after-school-store.md";
+  slug: "after-school-store";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "audio-video-store.mdx": {
 	id: "audio-video-store.mdx";
   slug: "audio-video-store";
@@ -166,6 +173,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"bamboo-bed-grass-mat-nap.md": {
+	id: "bamboo-bed-grass-mat-nap.md";
+  slug: "bamboo-bed-grass-mat-nap";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"broadband-days.md": {
+	id: "broadband-days.md";
+  slug: "broadband-days";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "childhood-spring-festival.mdx": {
 	id: "childhood-spring-festival.mdx";
   slug: "childhood-spring-festival";
@@ -173,9 +194,114 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"digital-camera-card-reader.md": {
+	id: "digital-camera-card-reader.md";
+  slug: "digital-camera-card-reader";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"download-sites-weird-file-names.md": {
+	id: "download-sites-weird-file-names.md";
+  slug: "download-sites-weird-file-names";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"downstairs-summer-stools.md": {
+	id: "downstairs-summer-stools.md";
+  slug: "downstairs-summer-stools";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"electronic-dictionary-learning-machine.md": {
+	id: "electronic-dictionary-learning-machine.md";
+  slug: "electronic-dictionary-learning-machine";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"email-attachments-first-files.md": {
+	id: "email-attachments-first-files.md";
+  slug: "email-attachments-first-files";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"first-internet-cafe.md": {
+	id: "first-internet-cafe.md";
+  slug: "first-internet-cafe";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"first-music-phone-mp4.md": {
+	id: "first-music-phone-mp4.md";
+  slug: "first-music-phone-mp4";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"floppy-discs-burned-cds.md": {
+	id: "floppy-discs-burned-cds.md";
+  slug: "floppy-discs-burned-cds";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"forum-signature-avatar.md": {
+	id: "forum-signature-avatar.md";
+  slug: "forum-signature-avatar";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "hello-world.md": {
 	id: "hello-world.md";
   slug: "hello-world";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"ice-cream-box-old-popsicles.md": {
+	id: "ice-cream-box-old-popsicles.md";
+  slug: "ice-cream-box-old-popsicles";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"lan-party-red-alert-cs.md": {
+	id: "lan-party-red-alert-cs.md";
+  slug: "lan-party-red-alert-cs";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"mosquito-net-floral-water.md": {
+	id: "mosquito-net-floral-water.md";
+  slug: "mosquito-net-floral-water";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"msn-signature-status.md": {
+	id: "msn-signature-status.md";
+  slug: "msn-signature-status";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"newsstand-magazines.md": {
+	id: "newsstand-magazines.md";
+  slug: "newsstand-magazines";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"nokia-keypad-typing.md": {
+	id: "nokia-keypad-typing.md";
+  slug: "nokia-keypad-typing";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -201,9 +327,177 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"palm-fan-well-watermelon.md": {
+	id: "palm-fan-well-watermelon.md";
+  slug: "palm-fan-well-watermelon";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"phone-booth-ic-card.md": {
+	id: "phone-booth-ic-card.md";
+  slug: "phone-booth-ic-card";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"power-outage-night.md": {
+	id: "power-outage-night.md";
+  slug: "power-outage-night";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"print-shop-copy-files.md": {
+	id: "print-shop-copy-files.md";
+  slug: "print-shop-copy-files";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qianqian-listen-mp3.md": {
+	id: "qianqian-listen-mp3.md";
+  slug: "qianqian-listen-mp3";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qq-avatar-flash-message-alerts.md": {
+	id: "qq-avatar-flash-message-alerts.md";
+  slug: "qq-avatar-flash-message-alerts";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qq-zone-homepage.md": {
+	id: "qq-zone-homepage.md";
+  slug: "qq-zone-homepage";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"repeater-and-english-tapes.md": {
+	id: "repeater-and-english-tapes.md";
+  slug: "repeater-and-english-tapes";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"reset-button-and-freeze.md": {
+	id: "reset-button-and-freeze.md";
+  slug: "reset-button-and-freeze";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "retro-games.md": {
 	id: "retro-games.md";
   slug: "retro-games";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"scanner-and-photo-digitizing.md": {
+	id: "scanner-and-photo-digitizing.md";
+  slug: "scanner-and-photo-digitizing";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"school-computer-room.md": {
+	id: "school-computer-room.md";
+  slug: "school-computer-room";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"screensavers-and-standby.md": {
+	id: "screensavers-and-standby.md";
+  slug: "screensavers-and-standby";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"stationery-shop-glass-counter.md": {
+	id: "stationery-shop-glass-counter.md";
+  slug: "stationery-shop-glass-counter";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"storm-player-era.md": {
+	id: "storm-player-era.md";
+  slug: "storm-player-era";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"summer-mat-electric-fan.md": {
+	id: "summer-mat-electric-fan.md";
+  slug: "summer-mat-electric-fan";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"symbian-themes-ringtones.md": {
+	id: "symbian-themes-ringtones.md";
+  slug: "symbian-themes-ringtones";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"system-sounds-startup-chimes.md": {
+	id: "system-sounds-startup-chimes.md";
+  slug: "system-sounds-startup-chimes";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"tieba-level-titles.md": {
+	id: "tieba-level-titles.md";
+  slug: "tieba-level-titles";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"tray-icons-little-software.md": {
+	id: "tray-icons-little-software.md";
+  slug: "tray-icons-little-software";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"usb-drive-replaced-floppy.md": {
+	id: "usb-drive-replaced-floppy.md";
+  slug: "usb-drive-replaced-floppy";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"webcam-first-video-chat.md": {
+	id: "webcam-first-video-chat.md";
+  slug: "webcam-first-video-chat";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"weekend-dvd-rental.md": {
+	id: "weekend-dvd-rental.md";
+  slug: "weekend-dvd-rental";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"winrar-and-archive-files.md": {
+	id: "winrar-and-archive-files.md";
+  slug: "winrar-and-archive-files";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"xp-desktop-customization.md": {
+	id: "xp-desktop-customization.md";
+  slug: "xp-desktop-customization";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

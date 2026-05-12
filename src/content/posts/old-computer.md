@@ -97,6 +97,20 @@ CPU: Intel Pentium II 350MHz
 
 ---
 
+## 🔗 资料补充
+
+如果你想把这篇文章里的第一台电脑记忆补得更具体一点，这几类资料可以顺手看看：
+
+- [Wikipedia：Pentium II](https://en.wikipedia.org/wiki/Pentium_II)
+- [Wikipedia：Windows 98](https://en.wikipedia.org/wiki/Windows_98)
+- [B站：回到1998年！复活一台20年前的电脑](https://www.bilibili.com/video/BV1Vt41167Y4/)
+
+它们会把奔腾 II、Windows 98、CRT 显示器和那种慢慢启动的家用电脑经验重新串起来，
+
+也能让人更容易想起，为什么当年一台摆在家里固定位置上的电脑，会像一整段生活方式的入口。
+
+---
+
 **你的第一台电脑是什么配置？**
 
 *—— 写于 2024 年 1 月 20 日*
