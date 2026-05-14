@@ -1,13 +1,18 @@
 ---
 title: "红警、CS 和局域网联机"
 description: "真正让人记得住的，不只是游戏本身，还有拉网线、喊人开机、掉线重进和一屋子人同时吵起来的那种热闹"
-date: "2025-02-23"
+date: "2026-05-04"
 theme: "winxp"
 category: "技术怀旧"
 subcategory: "游戏"
 tags: ["红警", "CS", "局域网", "联机", "回忆"]
 mood: "热闹"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1aroZBfEy2"
+    title: "谁的青春没 CS？80尾90头集合报到"
 ---
 
 ## 🎮 以前玩游戏，常常得先把人凑齐
@@ -208,7 +213,6 @@ CS 的局域网联机又是另一种气氛。
 
 - [Wikipedia：LAN party](https://en.wikipedia.org/wiki/LAN_party)
 - [极客博物馆：还记得《红警2》吗？当年网吧最火的游戏之一](https://game.huanqiu.com/article/9CaKrnKeaF6)
-- [B 站：谁的青春没 CS？80尾 90头集合报到](https://www.bilibili.com/video/BV1aroZBfEy2/)
 
 它们刚好能把“人真的凑在一起玩”的那层热闹，
 

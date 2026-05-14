@@ -8,6 +8,12 @@ subcategory: "手机"
 tags: ["诺基亚", "按键手机", "九宫格", "短信", "回忆"]
 mood: "熟练"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Nokia_3310_-_Front.jpg"
+    alt: "正面朝向镜头的 Nokia 3310 按键手机"
+    caption: "九宫格时代的手感，很大一部分就藏在这种厚实的小屏幕和实体按键里。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Nokia_3310_-_Front.jpg"
 ---
 
 ## ⌨️ 以前在手机上打字，是一件需要手感的事

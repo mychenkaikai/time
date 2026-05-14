@@ -8,6 +8,12 @@ subcategory: "软件"
 tags: ["打印店", "U盘", "打印", "文件", "回忆"]
 mood: "匆忙"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/8/8d/HP_LaserJet_1020_printer.jpg"
+    alt: "一台摆放在白色背景前的 HP LaserJet 1020 黑白激光打印机"
+    caption: "打印店记忆里最容易让人想起的设备之一，就是这种安静等着吐纸的激光打印机。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:HP_LaserJet_1020_printer.jpg"
 ---
 
 ## 🏪 以前电脑里的文件，常常要去打印店才算真正落地

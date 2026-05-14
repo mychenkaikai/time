@@ -8,6 +8,12 @@ subcategory: "上网"
 tags: ["摄像头", "视频聊天", "QQ", "网络", "回忆"]
 mood: "局促"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/6/67/Logitech_QuickCam_Traveller-P4191212-white.jpg"
+    alt: "白色背景前的 Logitech QuickCam Traveller 外接摄像头"
+    caption: "很多年以前，视频聊天还得先把这样的外接摄像头装好，画面才会真正亮起来。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Logitech_QuickCam_Traveller-P4191212-white.jpg"
 ---
 
 ## 🎥 以前看到对方“出现在屏幕里”，是一件很新鲜的事

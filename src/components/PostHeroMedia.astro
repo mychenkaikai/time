@@ -1,0 +1,153 @@
+---
+interface ImageMedia {
+  src: string;
+  alt: string;
+  caption?: string;
+  sourceUrl?: string;
+}
+
+interface Props {
+  title: string;
+  category: string;
+  theme: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
+  tags?: string[];
+  image?: ImageMedia;
+}
+
+const { title, category, theme, tags = [], image } = Astro.props;
+
+const paletteMap = {
+  'retro-web': {
+    bg: '#f6f1da',
+    panel: '#fff9e8',
+    accent: '#0057d8',
+    accentSoft: '#7eb6ff',
+    text: '#1d1d1d',
+    frame: '#3f3f3f',
+  },
+  win98: {
+    bg: '#008080',
+    panel: '#c0c0c0',
+    accent: '#000080',
+    accentSoft: '#44b7b0',
+    text: '#101010',
+    frame: '#ffffff',
+  },
+  winxp: {
+    bg: '#245edb',
+    panel: '#f5f8ff',
+    accent: '#0a246a',
+    accentSoft: '#60a5ff',
+    text: '#0f172a',
+    frame: '#ffffff',
+  },
+  macos9: {
+    bg: '#d9dde6',
+    panel: '#f6f7fb',
+    accent: '#6b7280',
+    accentSoft: '#aeb6c5',
+    text: '#111827',
+    frame: '#ffffff',
+  },
+  web1: {
+    bg: '#111827',
+    panel: '#1f2937',
+    accent: '#22c55e',
+    accentSoft: '#86efac',
+    text: '#f9fafb',
+    frame: '#e5e7eb',
+  },
+} as const;
+
+const palette = paletteMap[theme];
+
+function chunkTitle(input: string, size = 12) {
+  const chars = Array.from(input.trim());
+  const lines: string[] = [];
+
+  for (let index = 0; index < chars.length; index += size) {
+    lines.push(chars.slice(index, index + size).join(''));
+  }
+
+  return lines.slice(0, 3);
+}
+
+const titleLines = chunkTitle(title, 12);
+const tagText = tags.slice(0, 3).join(' / ');
+
+const generatedSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="${title}">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="${palette.bg}" />
+      <stop offset="100%" stop-color="${palette.accentSoft}" />
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="${palette.frame}" stroke-opacity="0.18" stroke-width="1" />
+    </pattern>
+    <pattern id="scan" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="2" fill="${palette.frame}" fill-opacity="0.08" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)" />
+  <rect width="1200" height="675" fill="url(#grid)" />
+  <rect width="1200" height="675" fill="url(#scan)" />
+  <rect x="44" y="44" width="1112" height="587" rx="18" fill="${palette.panel}" fill-opacity="0.92" stroke="${palette.frame}" stroke-width="4" />
+  <rect x="76" y="82" width="240" height="42" rx="10" fill="${palette.accent}" />
+  <text x="96" y="110" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="${palette.panel}">${category}</text>
+  <circle cx="1088" cy="102" r="12" fill="${palette.accentSoft}" />
+  <circle cx="1124" cy="102" r="12" fill="${palette.accent}" />
+  ${titleLines.map((line, index) => `<text x="86" y="${220 + index * 96}" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700" fill="${palette.text}">${line}</text>`).join('')}
+  <rect x="84" y="470" width="1030" height="2" fill="${palette.accent}" fill-opacity="0.35" />
+  <text x="88" y="538" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="${palette.text}" opacity="0.92">怀旧数字博物馆</text>
+  <text x="88" y="580" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="${palette.text}" opacity="0.72">${tagText || title}</text>
+  <text x="1004" y="580" text-anchor="end" font-family="Courier New, monospace" font-size="24" fill="${palette.accent}">${theme.toUpperCase()}</text>
+</svg>`;
+
+const generatedSrc = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(generatedSvg)}`;
+---
+
+<figure class="hero-media">
+  <img
+    src={image?.src || generatedSrc}
+    alt={image?.alt || `${title} 文章题图`}
+    class="hero-media__image"
+    loading="eager"
+  />
+  {(image?.caption || image?.sourceUrl) && (
+    <figcaption class="hero-media__caption">
+      {image?.caption}
+      {image?.sourceUrl && (
+        <>
+          {image?.caption ? ' · ' : ''}
+          <a href={image.sourceUrl} target="_blank" rel="noreferrer">图片来源</a>
+        </>
+      )}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .hero-media {
+    margin: 0 0 var(--spacing-md);
+  }
+
+  .hero-media__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--button-shadow);
+    background: var(--window-bg, #fff);
+  }
+
+  .hero-media__caption {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+  }
+
+  .hero-media__caption a {
+    color: var(--link-color);
+  }
+</style>

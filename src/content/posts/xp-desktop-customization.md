@@ -1,13 +1,18 @@
 ---
 title: "XP 时代的桌面美化"
 description: "壁纸、主题包、鼠标指针、开始菜单和任务栏颜色，很多人第一次认真“装修”自己的电脑，就是从 Windows XP 时代开始的"
-date: "2025-02-25"
+date: "2026-05-09"
 theme: "winxp"
 category: "技术怀旧"
 subcategory: "系统"
 tags: ["Windows XP", "桌面美化", "壁纸", "主题", "回忆"]
 mood: "讲究"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1wk4y1H7QC"
+    title: "Windows XP 自带壁纸合集"
 ---
 
 ## 🖼️ 电脑一开机，先看到的是桌面
@@ -199,7 +204,6 @@ XP 时代的审美现在回头看，很容易一眼认出来。
 
 如果你想把这篇文章里的桌面味道找得更具体一点，这几类公开资料很适合顺手翻一眼：
 
-- [B站：WindowsXP自带壁纸合集](https://www.bilibili.com/video/BV1wk4y1H7QC/)
 - [Wikipedia：Windows XP visual styles](https://en.wikipedia.org/wiki/Windows_XP_visual_styles)
 - [Microsoft MSDN Magazine：New Graphical Interface: Enhance Your Programs with New Windows XP Shell Features](https://learn.microsoft.com/en-us/archive/msdn-magazine/2001/november/new-graphical-interface-enhance-your-programs-with-new-windows-xp-shell-features)
 

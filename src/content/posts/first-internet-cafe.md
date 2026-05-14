@@ -1,13 +1,18 @@
 ---
 title: "第一次去网吧"
 description: "会员卡、开机号、耳机和下载进度条，很多人的网络世界是从一排并排亮起的电脑开始的"
-date: "2025-02-03"
+date: "2026-05-06"
 theme: "winxp"
 category: "技术怀旧"
 subcategory: "上网"
 tags: ["网吧", "上网", "会员卡", "局域网", "青春"]
 mood: "兴奋"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1MQovBRE4Q"
+    title: "网吧夜生活 通宵六块"
 ---
 
 ## 💻 第一次坐在那一排电脑前
@@ -245,7 +250,6 @@ QQ 一登上去，整个网吧好像就真正接通了。
 
 - [Wikipedia：Internet cafe](https://en.wikipedia.org/wiki/Internet_caf%C3%A9)
 - [Wikipedia：LAN gaming center](https://en.wikipedia.org/wiki/LAN_gaming_center)
-- [B站：网吧夜生活通宵六块](https://www.bilibili.com/video/BV1MQovBRE4Q/)
 
 它们会把按时计费、联机开黑、整排机器同时亮着的网吧场景重新连起来，
 

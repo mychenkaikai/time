@@ -8,6 +8,12 @@ subcategory: "电子产品"
 tags: ["数码相机", "读卡器", "照片", "存储卡", "回忆"]
 mood: "亮"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/b/b4/CompactFlash_Kingston.jpg"
+    alt: "一张 Kingston 1GB CompactFlash 存储卡"
+    caption: "早年的数码相机照片，常常就安安静静躺在这种 CompactFlash 卡里，等你回家插进读卡器。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:CompactFlash_Kingston.jpg"
 ---
 
 ## 📷 以前拍照以后，快乐还没有立刻结束

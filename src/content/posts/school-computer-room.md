@@ -1,13 +1,18 @@
 ---
 title: "学校里的微机室"
 description: "绿色桌面、球形鼠标、软盘和打字练习，那是很多人第一次系统接触电脑的地方"
-date: "2025-01-30"
+date: "2026-05-08"
 theme: "winxp"
 category: "技术怀旧"
 subcategory: "校园电脑"
 tags: ["微机室", "电脑课", "校园", "Windows XP", "回忆"]
 mood: "专注"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV18a411Q7Fz"
+    title: "金山打字通 打字游戏 小收录"
 ---
 
 ## 🖥️ 推开那扇门
@@ -195,7 +200,6 @@ draft: false
 
 - [Wikipedia：Microsoft Paint](https://en.wikipedia.org/wiki/Microsoft_Paint)
 - [Wikipedia：Floppy disk](https://en.wikipedia.org/wiki/Floppy_disk)
-- [B站：金山打字通 打字游戏 小收录](https://www.bilibili.com/video/BV18a411Q7Fz/)
 
 它们会把画图、打字练习、软盘保存这些很基础却很牢的早期电脑经验重新接起来，
 

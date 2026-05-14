@@ -1,13 +1,18 @@
 ---
 title: "第一部能听歌的手机或 MP4"
 description: "耳机线、存储空间、下载进度和反复充电，很多人第一次把歌随身带着走，不是从流媒体开始，而是从手机和 MP4 里那几百兆空间开始的"
-date: "2025-02-27"
+date: "2026-05-10"
 theme: "web1"
 category: "技术怀旧"
 subcategory: "电子产品"
 tags: ["MP4", "手机", "听歌", "耳机", "回忆"]
 mood: "贴身"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1GZ421B79G"
+    title: "那些年我们一起用过的MP3播放器 80后90后怀旧"
 ---
 
 ## 🎧 从“在电脑前听”到“路上也能听”
@@ -191,7 +196,6 @@ draft: false
 
 - [Wikipedia：Portable media player](https://en.wikipedia.org/wiki/Portable_media_player)
 - [Wikipedia：MP3 player](https://en.wikipedia.org/wiki/MP3_player)
-- [B站：那些年我们一起用过的MP3播放器80后90后怀旧泪目](https://www.bilibili.com/video/BV1GZ421B79G/)
 
 它们会把 MP3、MP4、随身播放器、耳机线和存储空间这些词重新接起来，
 

@@ -1,13 +1,18 @@
 ---
 title: "我的第一台电脑"
 description: "奔腾 II 处理器，64MB 内存，那是我的整个世界"
-date: "2024-01-20"
+date: "2026-05-12"
 theme: "win98"
 category: "技术怀旧"
 subcategory: "硬件"
 tags: ["电脑", "硬件", "回忆"]
 mood: "感慨"
 draft: false
+media:
+  video:
+    platform: "bilibili"
+    id: "BV1Vt41167Y4"
+    title: "回到1998年！复活一台20年前的电脑"
 ---
 
 ## 💻 1999 年的配置单
@@ -103,7 +108,6 @@ CPU: Intel Pentium II 350MHz
 
 - [Wikipedia：Pentium II](https://en.wikipedia.org/wiki/Pentium_II)
 - [Wikipedia：Windows 98](https://en.wikipedia.org/wiki/Windows_98)
-- [B站：回到1998年！复活一台20年前的电脑](https://www.bilibili.com/video/BV1Vt41167Y4/)
 
 它们会把奔腾 II、Windows 98、CRT 显示器和那种慢慢启动的家用电脑经验重新串起来，
 
@@ -113,4 +117,4 @@ CPU: Intel Pentium II 350MHz
 
 **你的第一台电脑是什么配置？**
 
-*—— 写于 2024 年 1 月 20 日*
+ *—— 写于 2026 年 5 月 12 日*

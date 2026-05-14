@@ -9,6 +9,7 @@ import SideNav from '../components/SideNav.astro';
 import WindowFrame from '../components/WindowFrame.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
 import VideoBox from '../components/VideoBox.astro';
+import PostHeroMedia from '../components/PostHeroMedia.astro';
 import { getHomePath, getTagPath } from '../lib/routes';
 
 interface Props {
@@ -36,6 +37,12 @@ interface Props {
         platform: string;
         id: string;
         title: string;
+      };
+      image?: {
+        src: string;
+        alt: string;
+        caption?: string;
+        sourceUrl?: string;
       };
     };
     customStyles?: {
@@ -151,6 +158,16 @@ const formatDate = (date: Date) => {
               title={frontmatter.media.video.title}
             />
           </div>
+        )}
+
+        {!frontmatter.media?.video && (
+          <PostHeroMedia
+            title={frontmatter.title}
+            category={frontmatter.category}
+            theme={frontmatter.theme}
+            tags={frontmatter.tags}
+            image={frontmatter.media?.image}
+          />
         )}
 
         <hr class="divider" />

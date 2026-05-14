@@ -34,6 +34,12 @@ const postsCollection = defineCollection({
         id: z.string(),
         title: z.string(),
       }).optional(),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+        caption: z.string().optional(),
+        sourceUrl: z.string().url().optional(),
+      }).optional(),
     }).optional(),
     customStyles: z.object({
       backgroundColor: z.string().optional(),
@@ -45,4 +51,3 @@ const postsCollection = defineCollection({
 export const collections = {
   posts: postsCollection,
 };
-

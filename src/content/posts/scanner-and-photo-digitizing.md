@@ -8,6 +8,12 @@ subcategory: "电子产品"
 tags: ["扫描仪", "照片", "电脑", "导入", "回忆"]
 mood: "仔细"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/0/06/Canon_Lide_90.jpg"
+    alt: "桌面上的 Canon 平板扫描仪"
+    caption: "把照片压在盖板下面、等机器慢慢扫过去的耐心，很多年后还是会被这种平板扫描仪勾出来。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_Lide_90.jpg"
 ---
 
 ## 🖼️ 以前老照片想进电脑，不是拍一下就行

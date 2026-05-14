@@ -8,6 +8,12 @@ subcategory: "存储"
 tags: ["U盘", "软盘", "拷文件", "存储", "回忆"]
 mood: "轻快"
 draft: false
+media:
+  image:
+    src: "https://upload.wikimedia.org/wikipedia/commons/1/17/SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg"
+    alt: "白色背景上的 SanDisk Cruzer Micro 4GB U 盘"
+    caption: "那种挂在钥匙扣上也不显眼，却能一下装下很多文件的小东西，就是很多人的第一代 U 盘印象。"
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:SanDisk-Cruzer-USB-4GB-ThumbDrive.jpg"
 ---
 
 ## 🔌 U 盘出现以后，带文件这件事突然轻松了很多
