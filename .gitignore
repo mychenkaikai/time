@@ -1,6 +1,12 @@
 # 依赖
 node_modules/
-package-lock.json
+
+# 临时和下载的二进制文件
+*.tar.xz
+*.tar.gz
+*.zip
+node-v*/
+.npm-cache/
 
 # 构建输出
 dist/

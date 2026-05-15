@@ -152,6 +152,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
+"90s-chinese-mv.md": {
+	id: "90s-chinese-mv.md";
+  slug: "90s-chinese-mv";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "90s-web-design.md": {
 	id: "90s-web-design.md";
   slug: "90s-web-design";
@@ -187,6 +194,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"childhood-cartoons.md": {
+	id: "childhood-cartoons.md";
+  slug: "childhood-cartoons";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "childhood-spring-festival.mdx": {
 	id: "childhood-spring-festival.mdx";
   slug: "childhood-spring-festival";
@@ -194,6 +208,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"computer-viruses-history.md": {
+	id: "computer-viruses-history.md";
+  slug: "computer-viruses-history";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "digital-camera-card-reader.md": {
 	id: "digital-camera-card-reader.md";
   slug: "digital-camera-card-reader";
@@ -257,6 +278,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"game-consoles.md": {
+	id: "game-consoles.md";
+  slug: "game-consoles";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "hello-world.md": {
 	id: "hello-world.md";
   slug: "hello-world";
@@ -274,6 +302,13 @@ declare module 'astro:content' {
 "lan-party-red-alert-cs.md": {
 	id: "lan-party-red-alert-cs.md";
   slug: "lan-party-red-alert-cs";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"martial-arts-tv-movies.md": {
+	id: "martial-arts-tv-movies.md";
+  slug: "martial-arts-tv-movies";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -327,6 +362,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"online-games.md": {
+	id: "online-games.md";
+  slug: "online-games";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "palm-fan-well-watermelon.md": {
 	id: "palm-fan-well-watermelon.md";
   slug: "palm-fan-well-watermelon";
@@ -337,6 +379,13 @@ declare module 'astro:content' {
 "phone-booth-ic-card.md": {
 	id: "phone-booth-ic-card.md";
   slug: "phone-booth-ic-card";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"post-2000-music.md": {
+	id: "post-2000-music.md";
+  slug: "post-2000-music";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -390,6 +439,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"retro-computer-software.md": {
+	id: "retro-computer-software.md";
+  slug: "retro-computer-software";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "retro-games.md": {
 	id: "retro-games.md";
   slug: "retro-games";
@@ -414,6 +470,20 @@ declare module 'astro:content' {
 "screensavers-and-standby.md": {
 	id: "screensavers-and-standby.md";
   slug: "screensavers-and-standby";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"single-player-games.md": {
+	id: "single-player-games.md";
+  slug: "single-player-games";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"spring-festival-gala-memories.md": {
+	id: "spring-festival-gala-memories.md";
+  slug: "spring-festival-gala-memories";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -470,6 +540,13 @@ declare module 'astro:content' {
 "usb-drive-replaced-floppy.md": {
 	id: "usb-drive-replaced-floppy.md";
   slug: "usb-drive-replaced-floppy";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"vcd-era.md": {
+	id: "vcd-era.md";
+  slug: "vcd-era";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
