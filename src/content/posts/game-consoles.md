@@ -1,5 +1,5 @@
 ---
-title: "那些年我们搓过的游戏手柄"
+title: "《魂斗罗》实机通关演示"
 description: "从小霸王到各种掌机，那些陪伴我们度过无数个周末和寒暑假的游戏机"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1fN411b7A9"
+    id: "BV1DiiyBAEse"
     title: "万字盘点100款童年游戏，你还记得人生第一款游戏吗"
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "卡带与VCD：实体娱乐的黄金时代"
+title: "燕舞收录机广告"
 description: "那时候看电影要租碟，听歌要买磁带，家里的抽屉里总塞满了各种五颜六色的塑料盒子"
 date: "2026-05-16"
 theme: "win98"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1ix4y1v7CH"
+    id: "BV1cs411t7Nn"
     title: "开箱一台20多年前的库存机器，VCD影碟机，还有多少人记得"
 ---
 

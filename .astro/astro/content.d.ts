@@ -152,6 +152,20 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
+"3721-assistant.md": {
+	id: "3721-assistant.md";
+  slug: "3721-assistant";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"4399-flash-games.md": {
+	id: "4399-flash-games.md";
+  slug: "4399-flash-games";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "90s-chinese-mv.md": {
 	id: "90s-chinese-mv.md";
   slug: "90s-chinese-mv";
@@ -173,6 +187,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"age-of-empires-1-2.md": {
+	id: "age-of-empires-1-2.md";
+  slug: "age-of-empires-1-2";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "audio-video-store.mdx": {
 	id: "audio-video-store.mdx";
   slug: "audio-video-store";
@@ -187,9 +208,30 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"bie-shuo-wo-de-yanlei.md": {
+	id: "bie-shuo-wo-de-yanlei.md";
+  slug: "bie-shuo-wo-de-yanlei";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "broadband-days.md": {
 	id: "broadband-days.md";
   slug: "broadband-days";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"call-of-duty-1.md": {
+	id: "call-of-duty-1.md";
+  slug: "call-of-duty-1";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"chang-huijia-kankan.md": {
+	id: "chang-huijia-kankan.md";
+  slug: "chang-huijia-kankan";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -215,9 +257,51 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"contra.md": {
+	id: "contra.md";
+  slug: "contra";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"counter-strike-1-6.md": {
+	id: "counter-strike-1-6.md";
+  slug: "counter-strike-1-6";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"crazy-kart.md": {
+	id: "crazy-kart.md";
+  slug: "crazy-kart";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"dahua-westward-journey.md": {
+	id: "dahua-westward-journey.md";
+  slug: "dahua-westward-journey";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "digital-camera-card-reader.md": {
 	id: "digital-camera-card-reader.md";
   slug: "digital-camera-card-reader";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"ding-xiang-hua.md": {
+	id: "ding-xiang-hua.md";
+  slug: "ding-xiang-hua";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"double-dragon.md": {
+	id: "double-dragon.md";
+  slug: "double-dragon";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -232,6 +316,13 @@ declare module 'astro:content' {
 "downstairs-summer-stools.md": {
 	id: "downstairs-summer-stools.md";
   slug: "downstairs-summer-stools";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"dream-westward-journey.md": {
+	id: "dream-westward-journey.md";
+  slug: "dream-westward-journey";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -264,6 +355,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"flash-music-videos.md": {
+	id: "flash-music-videos.md";
+  slug: "flash-music-videos";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"flashget.md": {
+	id: "flashget.md";
+  slug: "flashget";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "floppy-discs-burned-cds.md": {
 	id: "floppy-discs-burned-cds.md";
   slug: "floppy-discs-burned-cds";
@@ -285,9 +390,23 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"hao123-homepage.md": {
+	id: "hao123-homepage.md";
+  slug: "hao123-homepage";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "hello-world.md": {
 	id: "hello-world.md";
   slug: "hello-world";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"heroes-of-might-and-magic.md": {
+	id: "heroes-of-might-and-magic.md";
+  slug: "heroes-of-might-and-magic";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -299,6 +418,34 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"jianxia-qingyuan.md": {
+	id: "jianxia-qingyuan.md";
+  slug: "jianxia-qingyuan";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"jin-er-ge-gaoxing.md": {
+	id: "jin-er-ge-gaoxing.md";
+  slug: "jin-er-ge-gaoxing";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"kart-rider.md": {
+	id: "kart-rider.md";
+  slug: "kart-rider";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"kingsoft-software-suite.md": {
+	id: "kingsoft-software-suite.md";
+  slug: "kingsoft-software-suite";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "lan-party-red-alert-cs.md": {
 	id: "lan-party-red-alert-cs.md";
   slug: "lan-party-red-alert-cs";
@@ -306,9 +453,37 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"lao-shu-ai-da-mi.md": {
+	id: "lao-shu-ai-da-mi.md";
+  slug: "lao-shu-ai-da-mi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"legend-of-mir.md": {
+	id: "legend-of-mir.md";
+  slug: "legend-of-mir";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "martial-arts-tv-movies.md": {
 	id: "martial-arts-tv-movies.md";
   slug: "martial-arts-tv-movies";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"medal-of-honor.md": {
+	id: "medal-of-honor.md";
+  slug: "medal-of-honor";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"miracle-mu.md": {
+	id: "miracle-mu.md";
+  slug: "miracle-mu";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -323,6 +498,20 @@ declare module 'astro:content' {
 "msn-signature-status.md": {
 	id: "msn-signature-status.md";
   slug: "msn-signature-status";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"netants.md": {
+	id: "netants.md";
+  slug: "netants";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"netscape-navigator.md": {
+	id: "netscape-navigator.md";
+  slug: "netscape-navigator";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -376,6 +565,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"pao-pao-tang.md": {
+	id: "pao-pao-tang.md";
+  slug: "pao-pao-tang";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "phone-booth-ic-card.md": {
 	id: "phone-booth-ic-card.md";
   slug: "phone-booth-ic-card";
@@ -425,6 +621,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"red-alert-1-2.md": {
+	id: "red-alert-1-2.md";
+  slug: "red-alert-1-2";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "repeater-and-english-tapes.md": {
 	id: "repeater-and-english-tapes.md";
   slug: "repeater-and-english-tapes";
@@ -453,6 +656,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"return-to-castle-wolfenstein.md": {
+	id: "return-to-castle-wolfenstein.md";
+  slug: "return-to-castle-wolfenstein";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "scanner-and-photo-digitizing.md": {
 	id: "scanner-and-photo-digitizing.md";
   slug: "scanner-and-photo-digitizing";
@@ -470,6 +680,13 @@ declare module 'astro:content' {
 "screensavers-and-standby.md": {
 	id: "screensavers-and-standby.md";
   slug: "screensavers-and-standby";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"shanda-network.md": {
+	id: "shanda-network.md";
+  slug: "shanda-network";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -495,6 +712,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"stone-age-online.md": {
+	id: "stone-age-online.md";
+  slug: "stone-age-online";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "storm-player-era.md": {
 	id: "storm-player-era.md";
   slug: "storm-player-era";
@@ -509,6 +733,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"super-star-she.md": {
+	id: "super-star-she.md";
+  slug: "super-star-she";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "symbian-themes-ringtones.md": {
 	id: "symbian-themes-ringtones.md";
   slug: "symbian-themes-ringtones";
@@ -519,6 +750,13 @@ declare module 'astro:content' {
 "system-sounds-startup-chimes.md": {
 	id: "system-sounds-startup-chimes.md";
   slug: "system-sounds-startup-chimes";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"tianjiao-online.md": {
+	id: "tianjiao-online.md";
+  slug: "tianjiao-online";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -565,6 +803,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"wei-le-shei.md": {
+	id: "wei-le-shei.md";
+  slug: "wei-le-shei";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "winrar-and-archive-files.md": {
 	id: "winrar-and-archive-files.md";
   slug: "winrar-and-archive-files";
@@ -575,6 +820,34 @@ declare module 'astro:content' {
 "xp-desktop-customization.md": {
 	id: "xp-desktop-customization.md";
   slug: "xp-desktop-customization";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"xunlei-5.md": {
+	id: "xunlei-5.md";
+  slug: "xunlei-5";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"yahoo-china.md": {
+	id: "yahoo-china.md";
+  slug: "yahoo-china";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"zheng-tu.md": {
+	id: "zheng-tu.md";
+  slug: "zheng-tu";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"zhu-ni-pingan.md": {
+	id: "zhu-ni-pingan.md";
+  slug: "zhu-ni-pingan";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

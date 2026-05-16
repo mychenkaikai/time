@@ -1,5 +1,5 @@
 ---
-title: "点卡、网吧与公会：早期的网络游戏记忆"
+title: "《热血传奇》1.76版 经典登录界面与原声"
 description: "传奇、石器时代、魔兽世界、梦幻西游……那个时候的网络游戏，不只是打怪升级，更是一个虚拟的江湖"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1ss42137rA"
+    id: "BV1qt4y127cT"
     title: "1997-2024的热门网游，有没有你玩过的现象级网游"
 ---
 

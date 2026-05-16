@@ -1,5 +1,5 @@
 ---
-title: "仙剑、红警与CS：单机时代的辉煌"
+title: "《仙剑奇侠传98柔情篇》原版游戏演示"
 description: "在没有宽带的日子里，电脑房和家里的硬盘上，装满了这些陪伴我们度过无数个日夜的单机神作"
 date: "2026-05-16"
 theme: "win98"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1Tt411N7SL"
+    id: "BV16YzDBgERA"
     title: "1981-1998年的101款经典DOS游戏"
 ---
 

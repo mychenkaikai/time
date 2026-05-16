@@ -1,5 +1,5 @@
 ---
-title: "飞檐走壁的江湖：以前的武侠电视与电影"
+title: "97版《天龙八部》主题曲《难念的经》"
 description: "金庸古龙、邵氏武侠、徐克的新龙门客栈……那是一个不用慢动作和五毛特效也能让人热血沸腾的江湖"
 date: "2026-05-16"
 theme: "win98"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1Wc5e6rEH8"
+    id: "BV17y4y1a7gK"
     title: "打戏混剪//80s感受武侠美学"
 ---
 

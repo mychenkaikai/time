@@ -1,5 +1,5 @@
 ---
-title: "KTV里那些画质模糊的华语MV"
+title: "《相约一九九八》 1998年春晚现场"
 description: "00年前的中国歌曲MV，往往有着奇妙的剧情，夸张的柔光滤镜，还有那些卡拉OK字幕"
 date: "2026-05-16"
 theme: "win98"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1noVozmEeA"
+    id: "BV1EY4y1W7uK"
     title: "【经典老歌KTV版】100首合集、分集播放、现在的歌都没有MV了"
 ---
 

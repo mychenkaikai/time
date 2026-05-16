@@ -1,5 +1,5 @@
 ---
-title: "瑞星、紫光与快车：曾经装机必备的软件"
+title: "瑞星小狮子桌面宠物"
 description: "那些年买电脑，第一件事就是让老板装上这些各种各样的国产软件，它们构成了我们最初的数字生活"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1XVdsYiEC6"
+    id: "BV1r1PqerEZh"
     title: "20多载千千静听完美复活在线歌词版教程 远古电脑本地音乐播放器软件 一代人的音乐播放器的回忆"
 ---
 

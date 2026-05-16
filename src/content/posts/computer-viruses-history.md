@@ -1,5 +1,5 @@
 ---
-title: "熊猫烧香与灰鸽子：那些年让我们瑟瑟发抖的电脑病毒"
+title: "熊猫烧香病毒真实发作演示"
 description: "以前的电脑病毒，不仅会破坏系统，还会给你放动画、变图标，那是一种充满了“黑色幽默”和技术炫技的产物"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1d4411N7Yp"
+    id: "BV1CQ4y1f7ot"
     title: "最狠毒的电脑病毒，熊猫烧香有多可怕？国内首例计算机犯罪案件！【数据说】"
 ---
 

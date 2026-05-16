@@ -1,5 +1,5 @@
 ---
-title: "千禧年后的华语乐坛神仙打架"
+title: "周杰伦《七里香》官方MV"
 description: "周杰伦、孙燕姿、林俊杰、蔡依林……那个用MP3听歌的时代，诞生了太多至今仍在KTV霸榜的经典"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1EG411h7bu"
+    id: "BV1qD4y1U7fs"
     title: "一曲串烧带你回到华语乐坛神仙打架的那年【2005上】"
 ---
 

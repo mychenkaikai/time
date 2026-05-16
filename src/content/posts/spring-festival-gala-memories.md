@@ -1,5 +1,5 @@
 ---
-title: "赵本山、冯巩与除夕夜：以前的春晚"
+title: "1996年春晚经典小品《打工奇遇》"
 description: "90年代到10年前的春晚，是一家人围坐在电视机前真正会看的节目，不仅有欢笑，还造就了无数流行语"
 date: "2026-05-16"
 theme: "win98"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1ow1SY9Ekw"
+    id: "BV1xW411Z7MS"
     title: "1990-2011赵本山春晚小品大全纯享版"
 ---
 

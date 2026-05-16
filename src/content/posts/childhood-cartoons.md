@@ -1,5 +1,5 @@
 ---
-title: "每天下午五点半的电视机前：那些被配音的动画片"
+title: "1995年6月1日《大风车》栏目开播"
 description: "曾经有那么一段时间，一到下午五点半，不管是在做作业还是在外面玩，都会准时跑回家打开电视，等《大风车》或者地方台的动画时段"
 date: "2026-05-16"
 theme: "winxp"
@@ -11,7 +11,7 @@ draft: false
 media:
   video:
     platform: "bilibili"
-    id: "BV1Jz421h7U5"
+    id: "BV1bq4y1V7eL"
     title: "“视频不到四小时，却承载着我们的整个童年”"
 ---
 
