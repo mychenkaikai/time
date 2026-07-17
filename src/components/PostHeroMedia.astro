@@ -9,7 +9,7 @@ interface ImageMedia {
 interface Props {
   title: string;
   category: string;
-  theme: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
+  theme: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1' | 'vista';
   tags?: string[];
   image?: ImageMedia;
 }
@@ -56,6 +56,14 @@ const paletteMap = {
     accentSoft: '#86efac',
     text: '#f9fafb',
     frame: '#e5e7eb',
+  },
+  vista: {
+    bg: '#0a2f67',
+    panel: '#eef5ff',
+    accent: '#3f9cf6',
+    accentSoft: '#9bd0ff',
+    text: '#0f172a',
+    frame: '#ffffff',
   },
 } as const;
 

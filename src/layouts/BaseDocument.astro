@@ -9,7 +9,7 @@ import { getFaviconPath } from '../lib/routes';
 interface Props {
   title: string;
   description?: string;
-  theme?: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1';
+  theme?: 'retro-web' | 'win98' | 'winxp' | 'macos9' | 'web1' | 'vista';
 }
 
 const {
@@ -25,12 +25,13 @@ import '../styles/themes/retro-web.css';
 import '../styles/themes/win98.css';
 import '../styles/themes/winxp.css';
 import '../styles/themes/macos9.css';
+import '../styles/themes/vista.css';
 
 const fullTitle = `${title} | 怀旧数字博物馆`;
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme={theme}>
+<html lang="zh-CN" data-theme={theme} data-default-theme={theme}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,7 +54,8 @@ const fullTitle = `${title} | 怀旧数字博物馆`;
     <link rel="icon" type="image/x-icon" href={getFaviconPath()} />
 
     <script is:inline>
-      const savedTheme = localStorage.getItem('theme') || 'retro-web';
+      const fallbackTheme = document.documentElement.dataset.defaultTheme || 'retro-web';
+      const savedTheme = localStorage.getItem('theme') || fallbackTheme;
       document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
   </head>

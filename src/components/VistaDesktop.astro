@@ -1,0 +1,886 @@
+---
+import { getAboutPath, getArchivePath, getTagIndexPath } from '../lib/routes';
+
+const desktopIcons = [
+  {
+    label: '关于',
+    caption: '个人介绍',
+    href: getAboutPath(),
+    emoji: '👤',
+  },
+  {
+    label: '归档',
+    caption: '历史入口',
+    href: getArchivePath(),
+    emoji: '🗂️',
+  },
+  {
+    label: '标签',
+    caption: '索引视图',
+    href: getTagIndexPath(),
+    emoji: '🏷️',
+  },
+];
+
+const trayApps = [
+  { id: 'welcome', label: '欢迎面板' },
+  { id: 'showcase', label: '场景展示' },
+  { id: 'system', label: '系统侧栏' },
+];
+
+const quickLinks = [
+  {
+    title: '桌面入口',
+    text: '把首页当成桌面本身，而不是普通文章列表。',
+  },
+  {
+    title: 'Aero 玻璃层',
+    text: '窗口、任务栏和侧边小工具都使用半透明和高光边框。',
+  },
+  {
+    title: '后续可扩展',
+    text: '视觉变量已经独立，后续可继续接入主题切换。',
+  },
+];
+---
+
+<div class="vista-desktop" data-vista-desktop>
+  <div class="vista-desktop__wallpaper" aria-hidden="true">
+    <div class="vista-desktop__glow vista-desktop__glow--left"></div>
+    <div class="vista-desktop__glow vista-desktop__glow--right"></div>
+    <div class="vista-desktop__flare"></div>
+  </div>
+
+  <aside class="desktop-icons" aria-label="桌面快捷方式">
+    {desktopIcons.map((icon) => (
+      <a class="desktop-icon" href={icon.href}>
+        <span class="desktop-icon__badge">{icon.emoji}</span>
+        <span class="desktop-icon__label">{icon.label}</span>
+        <span class="desktop-icon__caption">{icon.caption}</span>
+      </a>
+    ))}
+  </aside>
+
+  <main class="desktop-stage">
+    <section class="glass-window window-welcome is-active" data-window="welcome">
+      <header class="window-titlebar">
+        <div class="window-titlebar__meta">
+          <span class="window-titlebar__dot"></span>
+          <span class="window-titlebar__text">桌面欢迎中心</span>
+        </div>
+        <div class="window-titlebar__actions" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header>
+
+      <div class="window-body window-body--hero">
+        <div class="hero-copy">
+          <p class="hero-kicker">Windows Vista / Aero Scene</p>
+          <h1>把首页改造成一张可以驻足的桌面。</h1>
+          <p class="hero-description">
+            当前版本先聚焦“桌面场景”本身：壁纸、玻璃窗口、任务栏、开始面板和系统侧栏都已经重新设计，
+            不再沿用原来的内容首页结构。
+          </p>
+
+          <div class="hero-actions">
+            <button type="button" class="glass-button" data-launch-window="showcase">查看场景层次</button>
+            <button type="button" class="glass-button glass-button--secondary" data-launch-window="system">打开侧边栏</button>
+          </div>
+
+          <ul class="hero-status" aria-label="当前阶段">
+            <li>桌面壁纸与景深高光</li>
+            <li>Vista 风格玻璃窗口</li>
+            <li>任务栏、开始面板与托盘时钟</li>
+          </ul>
+        </div>
+
+        <div class="hero-preview">
+          <div class="preview-shell">
+            <div class="preview-shell__top">
+              <span class="preview-shell__dot"></span>
+              <span class="preview-shell__dot"></span>
+              <span class="preview-shell__dot"></span>
+            </div>
+            <div class="preview-shell__screen">
+              <div class="preview-card preview-card--primary"></div>
+              <div class="preview-card preview-card--secondary"></div>
+              <div class="preview-card preview-card--tertiary"></div>
+            </div>
+            <div class="preview-shell__dock"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-window window-showcase" data-window="showcase">
+      <header class="window-titlebar">
+        <div class="window-titlebar__meta">
+          <span class="window-titlebar__dot"></span>
+          <span class="window-titlebar__text">场景展示</span>
+        </div>
+        <div class="window-titlebar__actions" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header>
+
+      <div class="window-body">
+        <div class="link-grid">
+          {quickLinks.map((item) => (
+            <article class="link-card">
+              <h2>{item.title}</h2>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="glass-strip">
+          <span>桌面图标</span>
+          <span>窗口栈</span>
+          <span>侧边栏 Gadget</span>
+          <span>任务栏托盘</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-window window-system" data-window="system">
+      <header class="window-titlebar">
+        <div class="window-titlebar__meta">
+          <span class="window-titlebar__dot"></span>
+          <span class="window-titlebar__text">系统侧边栏</span>
+        </div>
+        <div class="window-titlebar__actions" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header>
+
+      <div class="window-body">
+        <div class="sidebar-widget">
+          <span class="sidebar-widget__label">状态</span>
+          <strong>Desktop Scene Ready</strong>
+          <p>主视觉已经切换到 Vista 风格桌面，后续可在此基础上扩展主题系统。</p>
+        </div>
+
+        <div class="sidebar-widget sidebar-widget--clock">
+          <span class="sidebar-widget__label">当前时间</span>
+          <strong data-clock>--:--</strong>
+          <p data-date>正在同步日期...</p>
+        </div>
+
+        <div class="sidebar-widget">
+          <span class="sidebar-widget__label">下一步接口</span>
+          <ul class="sidebar-list">
+            <li>保留主题变量层</li>
+            <li>允许未来接入风格切换</li>
+            <li>桌面模块可继续拆分为组件</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="start-panel glass-surface" data-start-panel hidden>
+    <div class="start-panel__profile">
+      <div class="start-panel__avatar">V</div>
+      <div>
+        <strong>Vista Desktop Prototype</strong>
+        <p>首页视觉重构中</p>
+      </div>
+    </div>
+
+    <div class="start-panel__content">
+      <button type="button" class="start-link" data-launch-window="welcome">打开欢迎中心</button>
+      <button type="button" class="start-link" data-launch-window="showcase">查看场景展示</button>
+      <button type="button" class="start-link" data-launch-window="system">展开系统侧边栏</button>
+    </div>
+  </div>
+
+  <footer class="taskbar glass-surface">
+    <button type="button" class="start-orb" data-start-toggle>
+      <span class="start-orb__core"></span>
+      <span>开始</span>
+    </button>
+
+    <div class="taskbar-apps" role="tablist" aria-label="任务栏窗口">
+      {trayApps.map((app) => (
+        <button type="button" class="taskbar-app" data-launch-window={app.id}>
+          {app.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="taskbar-tray">
+      <span>LAN</span>
+      <span>Aero</span>
+      <span class="taskbar-tray__clock" data-clock>--:--</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const root = document.querySelector('[data-vista-desktop]');
+
+  if (root) {
+    const windows = Array.from(root.querySelectorAll('[data-window]'));
+    const launchers = Array.from(root.querySelectorAll('[data-launch-window]'));
+    const startToggle = root.querySelector('[data-start-toggle]');
+    const startPanel = root.querySelector('[data-start-panel]');
+    const clockTargets = Array.from(root.querySelectorAll('[data-clock]'));
+    const dateTarget = root.querySelector('[data-date]');
+
+    const activateWindow = (id) => {
+      windows.forEach((windowEl) => {
+        const isActive = windowEl.getAttribute('data-window') === id;
+        windowEl.classList.toggle('is-active', isActive);
+      });
+
+      if (startPanel instanceof HTMLElement) {
+        startPanel.hidden = true;
+      }
+    };
+
+    launchers.forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-launch-window');
+        if (id) {
+          activateWindow(id);
+        }
+      });
+    });
+
+    if (startToggle instanceof HTMLButtonElement && startPanel instanceof HTMLElement) {
+      startToggle.addEventListener('click', () => {
+        startPanel.hidden = !startPanel.hidden;
+      });
+    }
+
+    const updateClock = () => {
+      const now = new Date();
+      const time = new Intl.DateTimeFormat('zh-CN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).format(now);
+      const date = new Intl.DateTimeFormat('zh-CN', {
+        month: 'long',
+        day: 'numeric',
+        weekday: 'short',
+      }).format(now);
+
+      clockTargets.forEach((target) => {
+        target.textContent = time;
+      });
+
+      if (dateTarget) {
+        dateTarget.textContent = date;
+      }
+    };
+
+    updateClock();
+    window.setInterval(updateClock, 1000 * 30);
+  }
+</script>
+
+<style>
+  .vista-desktop {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 34px 34px 96px;
+    color: #f7fbff;
+  }
+
+  .vista-desktop__wallpaper,
+  .vista-desktop__glow,
+  .vista-desktop__flare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .vista-desktop__wallpaper {
+    background:
+      radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.4), transparent 18%),
+      radial-gradient(circle at 80% 22%, rgba(117, 214, 255, 0.28), transparent 24%),
+      linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 35%);
+  }
+
+  .vista-desktop__glow {
+    filter: blur(12px);
+    opacity: 0.85;
+  }
+
+  .vista-desktop__glow--left {
+    inset: 14% auto auto 7%;
+    width: 340px;
+    height: 340px;
+    background: radial-gradient(circle, rgba(148, 233, 255, 0.6), transparent 68%);
+  }
+
+  .vista-desktop__glow--right {
+    inset: auto 9% 16% auto;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 65%);
+  }
+
+  .vista-desktop__flare {
+    background:
+      linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.12) 48%, transparent 58%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 22%);
+    opacity: 0.75;
+  }
+
+  .desktop-icons,
+  .desktop-stage,
+  .start-panel,
+  .taskbar {
+    position: relative;
+    z-index: 1;
+  }
+
+  .desktop-icons {
+    position: absolute;
+    top: 34px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .desktop-icon {
+    width: 92px;
+    text-decoration: none;
+    color: #f7fbff;
+    padding: 10px 8px;
+    border-radius: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .desktop-icon:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .desktop-icon__badge {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+
+  .desktop-icon__label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .desktop-icon__caption {
+    display: block;
+    font-size: 11px;
+    opacity: 0.82;
+  }
+
+  .desktop-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+    gap: 24px;
+    padding-left: 110px;
+    align-items: start;
+  }
+
+  .glass-window,
+  .glass-surface {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.16));
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.65),
+      0 22px 48px rgba(4, 14, 34, 0.28);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .glass-window {
+    overflow: hidden;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .glass-window.is-active {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 28px 55px rgba(4, 14, 34, 0.34);
+  }
+
+  .window-welcome {
+    grid-column: 1 / 2;
+  }
+
+  .window-showcase {
+    grid-column: 1 / 2;
+  }
+
+  .window-system {
+    grid-column: 2 / 3;
+    grid-row: 1 / span 2;
+  }
+
+  .window-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(145, 211, 255, 0.28));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    color: #072345;
+  }
+
+  .window-titlebar__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .window-titlebar__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #43a4ff);
+    box-shadow: 0 0 10px rgba(78, 170, 255, 0.7);
+  }
+
+  .window-titlebar__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .window-titlebar__actions span {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.52);
+    border: 1px solid rgba(7, 35, 69, 0.16);
+  }
+
+  .window-body {
+    padding: 20px;
+    color: #eff8ff;
+  }
+
+  .window-body--hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+    gap: 24px;
+    align-items: center;
+  }
+
+  .hero-kicker {
+    margin: 0 0 12px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.82;
+  }
+
+  .hero-copy h1 {
+    margin-bottom: 14px;
+    font-size: clamp(36px, 4vw, 60px);
+    line-height: 1.06;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.24);
+  }
+
+  .hero-description {
+    max-width: 60ch;
+    margin-bottom: 18px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(247, 251, 255, 0.92);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .glass-button {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(140, 207, 255, 0.42));
+    color: #08213e;
+    padding: 10px 18px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 12px 22px rgba(0, 0, 0, 0.14);
+  }
+
+  .glass-button--secondary {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(127, 197, 255, 0.18));
+    color: #f9fcff;
+  }
+
+  .hero-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-status li {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+  }
+
+  .hero-preview {
+    display: flex;
+    justify-content: center;
+  }
+
+  .preview-shell {
+    width: min(100%, 360px);
+    padding: 14px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.14));
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 18px 36px rgba(7, 21, 45, 0.22);
+  }
+
+  .preview-shell__top {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 12px;
+  }
+
+  .preview-shell__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+  }
+
+  .preview-shell__screen {
+    height: 240px;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 30%),
+      linear-gradient(180deg, rgba(26, 75, 141, 0.95), rgba(10, 36, 79, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-card {
+    position: absolute;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08));
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+  }
+
+  .preview-card--primary {
+    inset: 26px 26px auto;
+    height: 96px;
+  }
+
+  .preview-card--secondary {
+    inset: auto 26px 28px auto;
+    width: 42%;
+    height: 92px;
+  }
+
+  .preview-card--tertiary {
+    inset: auto auto 28px 26px;
+    width: 42%;
+    height: 64px;
+  }
+
+  .preview-shell__dock {
+    margin-top: 14px;
+    height: 18px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08));
+  }
+
+  .link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .link-card {
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .link-card h2 {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .link-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(247, 251, 255, 0.9);
+  }
+
+  .glass-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .glass-strip span {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+  }
+
+  .sidebar-widget {
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .sidebar-widget + .sidebar-widget {
+    margin-top: 14px;
+  }
+
+  .sidebar-widget__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.74;
+  }
+
+  .sidebar-widget strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 22px;
+  }
+
+  .sidebar-widget p {
+    margin: 0;
+    line-height: 1.7;
+    color: rgba(247, 251, 255, 0.88);
+  }
+
+  .sidebar-widget--clock strong {
+    font-size: clamp(34px, 5vw, 48px);
+  }
+
+  .sidebar-list {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.9;
+    color: rgba(247, 251, 255, 0.92);
+  }
+
+  .start-panel {
+    position: fixed;
+    left: 18px;
+    bottom: 82px;
+    width: min(360px, calc(100vw - 36px));
+    padding: 18px;
+    z-index: 3;
+  }
+
+  .start-panel__profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .start-panel__profile p {
+    margin: 4px 0 0;
+    opacity: 0.82;
+  }
+
+  .start-panel__avatar {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(139, 207, 255, 0.38));
+    color: #072345;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .start-panel__content {
+    display: grid;
+    gap: 10px;
+  }
+
+  .start-link {
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f7fbff;
+    padding: 12px 14px;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .taskbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 66px;
+    padding: 10px 18px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    z-index: 2;
+  }
+
+  .start-orb {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(129, 208, 255, 0.32));
+    color: #072345;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .start-orb__core {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 35% 35%, #ffffff, #91d3ff 45%, #2b78d4 70%, #194c95 100%);
+    box-shadow: 0 0 16px rgba(145, 211, 255, 0.72);
+  }
+
+  .taskbar-apps {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .taskbar-app {
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.08);
+    color: #f7fbff;
+    font: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .taskbar-tray {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+  }
+
+  .taskbar-tray__clock {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1100px) {
+    .desktop-stage {
+      grid-template-columns: 1fr;
+      padding-left: 96px;
+    }
+
+    .window-system {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .link-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .vista-desktop {
+      padding: 20px 16px 92px;
+    }
+
+    .desktop-icons {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .desktop-stage {
+      padding-left: 0;
+    }
+
+    .window-body--hero {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-copy h1 {
+      font-size: 34px;
+    }
+
+    .taskbar {
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 10px;
+      min-height: 78px;
+    }
+
+    .taskbar-apps {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .taskbar-tray {
+      margin-left: auto;
+    }
+  }
+</style>
