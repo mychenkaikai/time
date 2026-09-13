@@ -1,0 +1,277 @@
+/* Desktop-only themes: intentionally separate from article theme preferences. */
+#desktop-shell .mac-menubar, #desktop-shell .start-label { display:none; }
+#desktop-shell .skin-panel { padding:24px 25px 12px; }
+#desktop-shell .skin-panel>p { color:#627787; margin:6px 0 18px; }
+#desktop-shell .skin-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+#desktop-shell .skin-choice { position:relative; text-align:left; padding:7px; border:1px solid #c3d0d9; background:linear-gradient(#fff,#f2f6fa); border-radius:4px; color:#304555; }
+#desktop-shell .skin-choice:hover { border-color:#6c9fc5; background:#edf7ff; }
+#desktop-shell .skin-choice[aria-pressed="true"] { border-color:#2d8bd0; box-shadow:0 0 0 1px #2d8bd0,inset 0 0 0 1px white; background:#e9f5ff; }
+#desktop-shell .skin-choice strong { display:block; margin:8px 0 3px; font-weight:600; font-size:12px; }
+#desktop-shell .skin-choice small { font-size:10px; color:#6c8190; }
+#desktop-shell .skin-check { display:none; position:absolute; top:10px; right:10px; background:#2777b2; color:white; border-radius:50%; width:18px; height:18px; text-align:center; }
+#desktop-shell .skin-choice[aria-pressed="true"] .skin-check { display:block; }
+#desktop-shell .skin-preview { display:block; position:relative; height:90px; background-position:center; background-size:cover; overflow:hidden; border:1px solid #889ea9; }
+#desktop-shell .mini-window { position:absolute; width:65%; height:58px; top:16px; left:18%; padding:3px; border:1px solid #d6f3ff; background:#9dc7d8a6; border-radius:3px; }
+#desktop-shell .mini-title { display:flex; justify-content:space-between; height:13px; font-size:8px; line-height:11px; color:#15384d; }
+#desktop-shell .mini-title i { font-style:normal; background:#bd5945; color:white; padding:0 5px; }
+#desktop-shell .mini-content { display:flex; gap:7px; align-items:center; justify-content:center; height:35px; background:#fff; }
+#desktop-shell .mini-content i { display:block; width:12px; height:14px; background:linear-gradient(#f7d88b,#dba746); border:1px solid #ad893a; }
+#desktop-shell .mini-taskbar { position:absolute; bottom:0; height:7px; width:100%; background:#193442; border-top:1px solid #c0e5f755; }
+#desktop-shell .skin-preview--xp .mini-window { background:#1765eb; border-color:#1765eb; border-radius:5px 5px 0 0; }
+#desktop-shell .skin-preview--xp .mini-title { color:white; }
+#desktop-shell .skin-preview--xp .mini-taskbar { background:#2465de; }
+#desktop-shell .skin-preview--win2000 { background:#3a6ea5; }
+#desktop-shell .skin-preview--win98 { background:#008080; }
+#desktop-shell :is(.skin-preview--win98,.skin-preview--win2000) .mini-window { background:#c0c0c0; border-radius:0; border-color:white #333 #333 white; }
+#desktop-shell :is(.skin-preview--win98,.skin-preview--win2000) .mini-title { background:linear-gradient(90deg,#000080,#1084d0); color:white; }
+#desktop-shell :is(.skin-preview--win98,.skin-preview--win2000) .mini-title i { background:#c0c0c0; color:black; }
+#desktop-shell :is(.skin-preview--win98,.skin-preview--win2000) .mini-taskbar { background:#c0c0c0; border-top-color:white; }
+#desktop-shell .skin-preview--osx .mini-window { background:repeating-linear-gradient(#fff 0 1px,#e9e9e9 1px 3px); border-color:#888; }
+#desktop-shell .skin-preview--osx .mini-title { justify-content:center; }
+#desktop-shell .skin-preview--osx .mini-title i { width:7px; height:7px; border-radius:50%; background:#e9685d; font-size:0; position:absolute; left:5px; padding:0; top:6px; }
+#desktop-shell .skin-preview--osx .mini-taskbar { width:50%; left:25%; height:10px; border:1px solid #eee8; background:#ddd8; border-radius:3px 3px 0 0; }
+#desktop-shell .skin-save-status { font-size:11px; margin:15px 0 0; min-height:17px; }
+#desktop-shell [data-vista-options] { border-top:1px solid #d4e0e8; min-height:0; padding-top:15px; }
+#desktop-shell [data-vista-options]>h2 { margin:0 0 10px; }
+/* XP: Luna's cobalt chrome and green Start button. */
+#desktop-shell[data-desktop-skin="xp"] { background:#4e9de0 var(--xp-wallpaper) center/cover; }
+#desktop-shell[data-desktop-skin="xp"] .aero-window { background:#ece9d8; border:3px solid #1258db; padding:0 2px 2px; border-radius:9px 9px 0 0; box-shadow:2px 5px 14px #0005; backdrop-filter:none; }
+#desktop-shell[data-desktop-skin="xp"] .aero-titlebar { background:linear-gradient(#4599ff,#0962ed 12%,#0055e5 55%,#0755d8 88%,#0042bb); margin:-1px -2px 0; padding:0 3px 0 5px; height:30px; border-radius:6px 6px 0 0; }
+#desktop-shell[data-desktop-skin="xp"] .window-caption { color:white; font-weight:bold; font-size:13px; text-shadow:1px 1px #003788; }
+#desktop-shell[data-desktop-skin="xp"] .caption-buttons { align-self:center; gap:2px; }
+#desktop-shell[data-desktop-skin="xp"] .caption-buttons button { height:22px; width:22px; border:1px solid white; border-radius:3px; background:linear-gradient(135deg,#81b2ff,#2266df 55%,#1051c6); box-shadow:inset 1px 1px 1px #bedfff; }
+#desktop-shell[data-desktop-skin="xp"] .caption-buttons .close-button { background:linear-gradient(135deg,#eea390,#d65333 60%,#be3619); font-size:22px; }
+#desktop-shell[data-desktop-skin="xp"] .navigation-bar { padding:5px; height:38px; border-bottom:1px solid #d6d2c2; }
+#desktop-shell[data-desktop-skin="xp"] .back-button { background:linear-gradient(#b8de96,#63a243); border-color:#74945b; }
+#desktop-shell[data-desktop-skin="xp"] .window-interior { border:1px solid #aca899; box-shadow:none; }
+#desktop-shell[data-desktop-skin="xp"] .window-status { background:#ece9d8; text-shadow:none; }
+#desktop-shell[data-desktop-skin="xp"] .welcome-banner { background:linear-gradient(115deg,#edf3fe,#d2e1f8); border-color:#b1c8e7; }
+#desktop-shell[data-desktop-skin="xp"] .vista-taskbar { background:linear-gradient(#4b91f5,#2265df 12%,#245edb 88%,#1941a5); border:0; box-shadow:inset 0 2px 2px #82b5ff; gap:7px; }
+#desktop-shell[data-desktop-skin="xp"] .start-button { width:99px; height:35px; background:linear-gradient(#81b76a,#3c9438 18%,#41932b 76%,#286c22); border-radius:0 14px 14px 0; box-shadow:inset 0 2px 3px #bde2a2,inset -3px 0 5px #24591c; gap:5px; }
+#desktop-shell[data-desktop-skin="xp"] .start-orb { background:none; border:0; box-shadow:none; width:25px; height:25px; top:0; }
+#desktop-shell[data-desktop-skin="xp"] .start-orb:before { display:none; }
+#desktop-shell[data-desktop-skin="xp"] .start-label { display:inline; font-size:17px; font-weight:bold; font-style:italic; color:white; text-shadow:1px 2px #24531a; }
+#desktop-shell[data-desktop-skin="xp"] .taskbar-window { background:#387ced; border-color:#1654c0; box-shadow:inset 1px 1px #75a4f4; }
+#desktop-shell[data-desktop-skin="xp"] .taskbar-window.active { background:#1752b6; box-shadow:inset 1px 1px 2px #103c8b; }
+#desktop-shell[data-desktop-skin="xp"] .system-tray { background:linear-gradient(#24b8f6,#1594e7); border-left:1px solid #115dba; }
+#desktop-shell[data-desktop-skin="xp"] .start-menu { background:#2870d4; border:2px solid #1552ad; padding:53px 0 35px; border-radius:7px 7px 0 0; }
+#desktop-shell[data-desktop-skin="xp"] .start-menu:before { content:'时光访客'; position:absolute; top:10px; left:19px; color:white; text-shadow:1px 1px #174a85; font-size:18px; }
+#desktop-shell[data-desktop-skin="xp"] .start-programs { border:0; border-radius:0; }
+#desktop-shell[data-desktop-skin="xp"] .start-places { background:#d3e5fa; padding:10px 4px; border-left:1px solid #a6c6e6; }
+#desktop-shell[data-desktop-skin="xp"] .start-places>a,#desktop-shell[data-desktop-skin="xp"] .start-places>button { color:#173b6a; text-shadow:none; }
+#desktop-shell[data-desktop-skin="xp"] .user-tile,#desktop-shell[data-desktop-skin="xp"] .user-name { display:none; }
+/* Classic Windows: compact rectangular controls, solid desktop, bevels. */
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) { background:#008080; }
+#desktop-shell[data-desktop-skin="win2000"] { background:#3a6ea5; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) * { font-family:Tahoma,"SimSun",sans-serif !important; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .aero-window { background:#c0c0c0; border:1px solid; border-color:#fff #000 #000 #fff; padding:3px; border-radius:0; box-shadow:inset -1px -1px #808080,inset 1px 1px #dfdfdf,2px 3px 0 #0004; backdrop-filter:none; }
+#desktop-shell[data-desktop-skin="win2000"] .aero-window { background:#d4d0c8; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .aero-titlebar { height:24px; padding:0 3px; background:linear-gradient(90deg,#000080,#1084d0); }
+#desktop-shell[data-desktop-skin="win2000"] .aero-titlebar { background:linear-gradient(90deg,#0a246a,#a6caf0); }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .window-caption { color:white; text-shadow:none; font-weight:bold; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .caption-buttons { gap:2px; align-self:center; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .caption-buttons button { width:17px; height:16px; background:#c0c0c0; color:black; text-shadow:none; border:1px solid; border-color:white #000 #000 white; border-radius:0; box-shadow:inset -1px -1px #808080; font-size:19px; line-height:12px; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .minimize-mark { background:black; box-shadow:none; width:7px; height:2px; margin-top:5px; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .maximize-mark { border-color:black; box-shadow:none; width:9px; height:8px; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .navigation-bar { height:35px; padding:5px 3px; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) :is(.back-button,.forward-button,.help-button) { background:#c0c0c0; border:1px solid; border-color:white #808080 #808080 white; color:black; text-shadow:none; box-shadow:none; border-radius:0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) :is(.address-bar,.window-interior) { border:2px solid; border-color:#808080 #fff #fff #808080; box-shadow:inset 1px 1px #000; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .window-status { border:1px solid; border-color:#808080 #fff #fff #808080; margin-top:3px; height:22px; text-shadow:none; color:#222; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .welcome-banner { background:#fff; border-bottom:1px solid #808080; }
+#desktop-shell[data-desktop-skin="win98"] .welcome-banner h1 { font-family:Georgia,"SimSun",serif !important; color:#000080; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .welcome-bottom { background:#dfdfdf; color:#111; border-color:#999; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .vista-taskbar { background:#c0c0c0; height:30px; border-top:2px solid #fff; box-shadow:0 -1px #c0c0c0; padding:2px; gap:5px; backdrop-filter:none; }
+#desktop-shell[data-desktop-skin="win2000"] .vista-taskbar { background:#d4d0c8; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-button { width:65px; height:24px; gap:4px; border:1px solid; border-color:#fff #000 #000 #fff; box-shadow:inset -1px -1px #808080; border-radius:0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-orb { background:none; border:0; box-shadow:none; width:22px; height:22px; top:0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-orb:before { display:none; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .windows-flag { width:19px; height:18px; filter:drop-shadow(1px 1px black); }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-label { display:inline; color:black; font-weight:bold; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .taskbar-window { height:23px; color:black; text-shadow:none; border:1px solid; border-color:#fff #000 #000 #fff; border-radius:0; box-shadow:inset -1px -1px #808080; background:#c0c0c0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .taskbar-window.active { background:repeating-conic-gradient(#eee 0 25%,#ddd 0 50%) 0/2px 2px; border-color:#000 #fff #fff #000; box-shadow:none; font-weight:bold; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .system-tray { border:1px solid; border-color:#808080 white white #808080; color:black; box-shadow:none; height:24px; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .volume-tray { color:black; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-menu { bottom:30px; width:260px; height:auto; max-height:calc(100% - 60px); padding:3px 3px 3px 27px; background:#c0c0c0; border:2px solid; border-color:#fff #000 #000 #fff; border-radius:0; box-shadow:2px 2px #0004; display:block; backdrop-filter:none; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-menu:before { content:'Windows 98'; position:absolute; left:2px; bottom:2px; top:2px; width:22px; writing-mode:vertical-rl; transform:rotate(180deg); padding:10px 2px; font-size:17px; font-weight:bold; color:#eee; background:linear-gradient(#000080,#1084d0); }
+#desktop-shell[data-desktop-skin="win2000"] .start-menu:before { content:'Windows 2000'; background:linear-gradient(#000080,#7d99c7); }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-programs { background:transparent; border:0; border-radius:0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-program-list :is(button,a):hover { background:#000080; border-color:transparent; color:white; border-radius:0; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-places { display:none; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .start-search { background:#c0c0c0; }
+#desktop-shell:not([data-desktop-skin="vista"]) .windows-sidebar { display:none; }
+/* Aqua: pinstriped windows, traffic lights, menu bar and a bottom Dock. */
+#desktop-shell[data-desktop-skin="osx"] { background:#2b659f var(--osx-wallpaper) center/cover; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar { position:absolute; top:0; left:0; right:0; height:25px; z-index:31; display:flex; align-items:center; gap:13px; padding:0 17px; background:repeating-linear-gradient(#fffffff2 0 1px,#eeeeeeed 1px 3px); border-bottom:1px solid #626a78; box-shadow:0 1px 4px #0004; color:#161616; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar button { padding:0 3px; border-radius:0; font-size:12px; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar button:first-child { color:#2781c0; font-size:21px; text-shadow:0 1px white; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar time { margin-left:auto; font-size:11px; }
+#desktop-shell[data-desktop-skin="osx"] .desktop-shortcuts { left:auto; right:18px; top:45px; }
+#desktop-shell[data-desktop-skin="osx"] .aero-window { background:repeating-linear-gradient(#f5f5f5 0 1px,#eaeaea 1px 3px); border:1px solid #666; border-radius:7px; box-shadow:0 13px 28px #0006,0 1px 4px #0005; padding:0; backdrop-filter:none; }
+#desktop-shell[data-desktop-skin="osx"] .aero-titlebar { height:28px; position:relative; justify-content:center; border-bottom:1px solid #b2b2b2; background:linear-gradient(#fdfdfd,#d1d1d1); border-radius:7px 7px 0 0; }
+#desktop-shell[data-desktop-skin="osx"] .window-caption { text-shadow:0 1px white; color:#222; font-size:13px; }.vista-desktop[data-desktop-skin="osx"] .window-caption svg { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons { position:absolute; left:8px; top:7px; gap:7px; flex-direction:row; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons button { width:13px; height:13px; border-radius:50%; border:1px solid #a58b32; background:radial-gradient(circle at 50% 25%,#fff5c9,#f5cb4e 55%,#c98d1f); box-shadow:inset 0 1px 1px white,0 1px 1px white; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons [data-maximize] { background:radial-gradient(circle at 50% 25%,#e2ffbc,#8bd465 55%,#428a2c); border-color:#548b43; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons .close-button { order:-1; font-size:0; background:radial-gradient(circle at 50% 25%,#ffd9c9,#ec786b 55%,#b54839); border-color:#a45048; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons :is(.minimize-mark,.maximize-mark) { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .navigation-bar { background:linear-gradient(#eee,#d6d6d6); padding:4px 10px; height:38px; border-bottom:1px solid #aaa; }
+#desktop-shell[data-desktop-skin="osx"] :is(.back-button,.forward-button) { border-radius:4px; width:25px; height:22px; background:linear-gradient(#fff,#c4c4c4); border:1px solid #888; color:#555; text-shadow:0 1px white; box-shadow:inset 0 1px white; font-size:19px; line-height:19px; }
+#desktop-shell[data-desktop-skin="osx"] .address-bar { border-color:#aaa; border-radius:4px; box-shadow:inset 0 1px 2px #0002; }
+#desktop-shell[data-desktop-skin="osx"] .window-interior { border:0; box-shadow:none; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-banner { background:linear-gradient(100deg,#fff,#e5edf7); border-color:#c3cddd; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-bottom { background:repeating-linear-gradient(#f5f5f5 0 1px,#eaeaea 1px 3px); }
+#desktop-shell[data-desktop-skin="osx"] .tiny-flag { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .window-status { padding:4px 9px; color:#555; text-shadow:0 1px white; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar { left:50%; right:auto; transform:translateX(-50%); width:auto; max-width:calc(100% - 20px); bottom:4px; height:64px; padding:5px 10px; border:1px solid #ffffff9c; border-radius:10px; background:linear-gradient(#e4edf075,#c1d2df8c); box-shadow:0 2px 5px #0007,inset 0 1px white; gap:10px; }
+#desktop-shell[data-desktop-skin="osx"] .start-button { width:43px; height:48px; }
+#desktop-shell[data-desktop-skin="osx"] .start-orb { background:linear-gradient(90deg,#4b9fea 50%,#b7e3ff 50%); border:1px solid #30648e; border-radius:6px; width:38px; height:39px; top:0; box-shadow:inset 0 1px #ffffffb3; }
+#desktop-shell[data-desktop-skin="osx"] .start-orb:before { content:'⌣'; color:#16374f; font-size:29px; left:0; right:0; top:0; height:auto; background:none; }
+#desktop-shell[data-desktop-skin="osx"] .windows-flag { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .quick-launch { height:48px; gap:9px; display:flex; }
+#desktop-shell[data-desktop-skin="osx"] .quick-launch button { width:44px; height:48px; padding:0; }
+#desktop-shell[data-desktop-skin="osx"] .quick-launch svg { width:42px; height:42px; }
+#desktop-shell[data-desktop-skin="osx"] .taskbar-window { min-width:46px; width:46px; height:48px; padding:0; border:0; background:none; box-shadow:none; justify-content:center; position:relative; }
+#desktop-shell[data-desktop-skin="osx"] .taskbar-window svg { width:43px; height:43px; }
+#desktop-shell[data-desktop-skin="osx"] .taskbar-window span { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .taskbar-window.active:after { content:'▴'; position:absolute; bottom:-9px; left:19px; font-size:10px; color:#16344b; }
+#desktop-shell[data-desktop-skin="osx"] .system-tray { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .start-menu { left:50%; transform:translateX(-50%); bottom:76px; background:#e9e9e9f2; border-color:#9a9a9a; box-shadow:0 8px 20px #0006; }
+#desktop-shell[data-desktop-skin="osx"] .start-places :is(button,a),#desktop-shell[data-desktop-skin="osx"] .user-name { color:#222; text-shadow:none; }
+#desktop-shell[data-desktop-skin="osx"] .user-tile { visibility:hidden; }
+#desktop-shell[data-desktop-skin="osx"] .desktop-signature { bottom:90px; }
+#desktop-shell[data-desktop-skin="osx"] .maximized { top:25px !important; height:calc(100% - 97px); }
+#desktop-shell:not([data-desktop-skin="vista"]).alternate-wallpaper { background-blend-mode:normal; }
+@media(max-width:700px) {
+ #desktop-shell .skin-choices { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+ #desktop-shell .skin-panel { padding:18px 14px; }
+ #desktop-shell .skin-preview { height:85px; }
+ #desktop-shell[data-desktop-skin="osx"] .desktop-shortcuts { top:35px; left:8px; right:8px; }
+ #desktop-shell[data-desktop-skin="osx"] .aero-window:not(.maximized) { top:127px; }
+ #desktop-shell[data-desktop-skin="osx"] .mac-menubar { gap:7px; padding:0 7px; }
+ #desktop-shell[data-desktop-skin="osx"] .mac-menubar button { font-size:11px; }
+ #desktop-shell[data-desktop-skin="osx"] .mac-menubar time { font-size:10px; }
+ #desktop-shell[data-desktop-skin="xp"] .start-button { width:83px; }
+ #desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .taskbar-window { min-width:115px; }
+}
+
+#desktop-shell .classic-desktop-icon { display:none; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .vista-icon { display:none; }
+#desktop-shell:is([data-desktop-skin="win98"],[data-desktop-skin="win2000"]) .classic-desktop-icon { display:block; image-rendering:pixelated; }
+#desktop-shell[data-desktop-skin="osx"] .vista-icon linearGradient[id$="-folder"] stop:first-child { stop-color:#c5e9fa; }
+#desktop-shell[data-desktop-skin="osx"] .vista-icon linearGradient[id$="-folder"] stop:nth-child(2) { stop-color:#80bcdc; }
+#desktop-shell[data-desktop-skin="osx"] .vista-icon linearGradient[id$="-folder"] stop:last-child { stop-color:#4d91b8; }
+
+#desktop-shell:not([data-desktop-skin="vista"]) [data-toggle-gadgets] { display:none; }
+#desktop-shell:not([data-desktop-skin="vista"]) .personalize-links { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#desktop-shell:not([data-desktop-skin="vista"]) .aero-window { left:clamp(110px,20vw,340px); width:min(800px,calc(100vw - 250px)); }
+@media(max-width:700px) {
+ #desktop-shell:not([data-desktop-skin="vista"]) .aero-window { left:12px; width:calc(100% - 24px); }
+ #desktop-shell:not([data-desktop-skin="vista"]) .personalize-links { grid-template-columns:1fr; }
+}
+/* Keep long preference pages inside the desktop instead of behind the taskbar. */
+#desktop-shell { --desktop-window-top:clamp(62px,14vh,155px); }
+#desktop-shell .aero-window { display:flex; flex-direction:column; max-height:calc(100% - var(--desktop-window-top) - 50px); }
+#desktop-shell :is(.aero-titlebar,.navigation-bar,.window-status) { flex-shrink:0; }
+#desktop-shell .window-interior { flex:1 1 auto; min-height:0; max-height:none; }
+#desktop-shell .aero-window.maximized { max-height:none; }
+#desktop-shell[data-desktop-skin="osx"] .aero-window { max-height:calc(100% - var(--desktop-window-top) - 85px); }
+#desktop-shell[data-desktop-skin="osx"] .aero-window.maximized { max-height:none; }
+@media(min-width:1500px) { #desktop-shell { --desktop-window-top:17vh; } }
+@media(max-width:1100px) { #desktop-shell { --desktop-window-top:95px; } }
+@media(max-width:700px) {
+ #desktop-shell { --desktop-window-top:112px; }
+ #desktop-shell[data-desktop-skin="osx"] { --desktop-window-top:127px; }
+}
+/* OS X 10.5-inspired material pass: aluminium, Aqua and a reflective glass Dock. */
+#desktop-shell .mac-desktop-icon { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .vista-icon { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .mac-desktop-icon { display:block; }
+#desktop-shell[data-desktop-skin="osx"] { background-color:#191326; }
+#desktop-shell[data-desktop-skin="osx"] * { font-family:"Lucida Grande","Helvetica Neue","Microsoft YaHei",sans-serif !important; }
+#desktop-shell[data-desktop-skin="osx"] .aero-window { background:linear-gradient(#e8e8e8,#c0c0c0); border-color:#545454; border-radius:7px; box-shadow:0 20px 38px #0009,0 4px 12px #0007,inset 0 1px #ffffffd9; }
+#desktop-shell[data-desktop-skin="osx"] .aero-titlebar { height:30px; background:linear-gradient(#f2f2f2,#dbdbdb 48%,#d0d0d0); border-bottom:1px solid #aaa; box-shadow:inset 0 1px #fff; }
+#desktop-shell[data-desktop-skin="osx"] .window-caption { font-size:13px; color:#262626; font-weight:600; text-shadow:0 1px #fff; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons { top:8px; left:9px; gap:8px; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons button { width:14px; height:14px; position:relative; box-shadow:inset 0 1px 2px #fff9,0 1px #fff; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons button:before { content:''; position:absolute; left:2px; right:2px; top:1px; height:4px; border-radius:50%; background:linear-gradient(#fffc,#fff0); }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons:hover .close-button { font-size:13px; line-height:10px; color:#6e241f; text-shadow:none; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons:hover .minimize-mark { display:block; background:#79631c; width:7px; height:1px; margin:0; box-shadow:none; }
+#desktop-shell[data-desktop-skin="osx"] .caption-buttons:hover .maximize-mark { display:block; width:6px; height:6px; border:1px solid #3c6a29; box-shadow:none; }
+#desktop-shell[data-desktop-skin="osx"] .navigation-bar { height:45px; background:repeating-linear-gradient(0deg,#ffffff0a 0 1px,#00000003 1px 2px),linear-gradient(#dedede,#c2c2c2); border-bottom:1px solid #888; padding:7px 12px; box-shadow:inset 0 1px #fff5; gap:0; }
+#desktop-shell[data-desktop-skin="osx"] .back-button { height:25px; width:30px; border-radius:4px 0 0 4px; }
+#desktop-shell[data-desktop-skin="osx"] .forward-button { height:25px; width:30px; border-radius:0 4px 4px 0; opacity:.6; margin-right:7px; line-height:22px; }
+#desktop-shell[data-desktop-skin="osx"] .navigation-caret { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .address-bar { margin:0 7px; height:25px; border:1px solid #939393; background:linear-gradient(#e5e5e5,#fff 22%); border-radius:13px; padding:0 10px; box-shadow:0 1px #fff8,inset 0 1px 2px #0002; }
+#desktop-shell[data-desktop-skin="osx"] .help-button { background:linear-gradient(#fff,#d3d3d3); color:#646464; border:1px solid #8e8e8e; box-shadow:0 1px #fff; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-banner { background:radial-gradient(ellipse at 82% 40%,#fff,transparent 65%),linear-gradient(#f8f9fb,#e8ecf2); min-height:190px; padding:26px 31px; }
+#desktop-shell[data-desktop-skin="osx"] h1 { color:#303b4c; font-size:24px; font-weight:300; letter-spacing:-.5px; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-computer .mac-desktop-icon { width:145px; height:145px; }
+#desktop-shell[data-desktop-skin="osx"] .section-heading { color:#656b74; font-weight:bold; text-shadow:0 1px white; background:linear-gradient(#fdfdfd,#f1f2f4); padding-top:8px; padding-bottom:8px; border-top:1px solid #fff; border-bottom:1px solid #d5d9df; }
+#desktop-shell[data-desktop-skin="osx"] .section-heading:after { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .item-count { margin-left:auto; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-links { padding:15px 20px; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-link { padding:7px; color:#2c313a; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-link:hover { background:linear-gradient(#ebf4ff,#d9e8fb); border-color:#b6cce4; }
+#desktop-shell[data-desktop-skin="osx"] .personalize-links { padding:12px 20px 18px; }
+#desktop-shell[data-desktop-skin="osx"] .personalize-links button { color:#3b414b; }
+#desktop-shell[data-desktop-skin="osx"] .welcome-bottom { background:linear-gradient(#e8e8e8,#cfcfcf); color:#484848; border-top:1px solid #aaa; box-shadow:inset 0 1px #fff; }
+#desktop-shell[data-desktop-skin="osx"] .window-status { background:linear-gradient(#d7d7d7,#bfbfbf); border-top:1px solid #eee; border-radius:0 0 6px 6px; }
+#desktop-shell[data-desktop-skin="osx"] .explorer-sidebar { background:#dce3eb; border-right:1px solid #b1bac6; }
+#desktop-shell[data-desktop-skin="osx"] .explorer-sidebar strong { color:#6b7481; font-size:11px; font-weight:bold; }
+#desktop-shell[data-desktop-skin="osx"] .native-button { border-radius:14px; border-color:#5887b7; background:linear-gradient(#dcefff,#a0cafa 45%,#6ca9ec 49%,#bcdeff); color:#133354; box-shadow:inset 0 1px white,0 1px 2px #0003; padding:4px 20px; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar { height:25px; background:linear-gradient(#ffffffed,#e4e4e4e8); border-color:#999; box-shadow:0 2px 5px #0004; gap:14px; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar button { color:#171717; text-shadow:0 1px #ffffffb3; }
+#desktop-shell[data-desktop-skin="osx"] .mac-menubar button:hover { background:linear-gradient(#719ee8,#3368b7); color:white; }
+#desktop-shell[data-desktop-skin="osx"] .desktop-shortcut { text-shadow:0 2px 3px #000,1px 1px #000; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar { bottom:3px; height:77px; padding:0 17px 9px; background:none; border:0; border-radius:0; box-shadow:none; backdrop-filter:none; gap:14px; align-items:flex-end; isolation:isolate; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar:before { content:''; position:absolute; inset:27px -8px 2px; background:linear-gradient(#eeeeeead,#afbdcdb3 60%,#f5f9ffd9); border:1px solid #d8e6f9d9; box-shadow:inset 0 1px #fff,0 5px 9px #0008; transform:perspective(180px) rotateX(35deg); transform-origin:bottom; z-index:-1; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar:after { content:''; position:absolute; bottom:0; height:5px; left:-8px; right:-8px; background:linear-gradient(#f4f6f9,#7f8b99); border:1px solid #909baa; border-radius:0 0 3px 3px; z-index:-1; }
+#desktop-shell[data-desktop-skin="osx"] .quick-launch { height:62px; align-items:flex-end; gap:12px; }
+#desktop-shell[data-desktop-skin="osx"] .quick-launch button,#desktop-shell[data-desktop-skin="osx"] .taskbar-window { width:55px; min-width:55px; height:57px; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar .mac-desktop-icon { width:55px; height:55px; filter:drop-shadow(0 3px 2px #0005); -webkit-box-reflect:below -7px linear-gradient(transparent 65%,#ffffff36); }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar button { transition:transform .15s ease; transform-origin:bottom; }
+#desktop-shell[data-desktop-skin="osx"] .vista-taskbar button:hover { transform:translateY(-8px) scale(1.15); background:none; }
+#desktop-shell[data-desktop-skin="osx"] .quick-divider { height:40px; transform:skewY(-15deg); margin-bottom:3px; }
+#desktop-shell[data-desktop-skin="osx"] .start-button { width:51px; height:58px; }
+#desktop-shell[data-desktop-skin="osx"] .start-orb { width:46px; height:47px; border-radius:5px; background:linear-gradient(90deg,#55a7ed 0 49%,#d5ebfc 50%); border-color:#1c4f86; box-shadow:inset 0 1px #fff9,0 3px 4px #0005; -webkit-box-reflect:below 0 linear-gradient(transparent 70%,#fff3); overflow:hidden; }
+#desktop-shell[data-desktop-skin="osx"] .start-orb:before { content:''; top:13px; left:11px; right:auto; width:3px; height:6px; background:#163b67; border-radius:1px; box-shadow:21px 0 #163b67; }
+#desktop-shell[data-desktop-skin="osx"] .start-orb:after { content:''; position:absolute; top:20px; left:11px; width:27px; height:13px; border:1px solid #163b67; border-top:0; border-left-color:transparent; border-right-color:transparent; border-radius:0 0 50% 50%; }
+#desktop-shell[data-desktop-skin="osx"] .taskbar-window.active:after { content:''; bottom:-6px; left:23px; width:9px; height:4px; border-radius:50%; background:#dcf8ff; box-shadow:0 0 5px 2px #71bfff; }
+#desktop-shell[data-desktop-skin="osx"] .start-menu { bottom:90px; border:1px solid #565656; background:#252b35e8; box-shadow:0 6px 22px #0008,inset 0 1px #ffffff52; border-radius:9px; padding:12px; width:380px; height:430px; display:block; }
+#desktop-shell[data-desktop-skin="osx"] .start-places { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .start-programs { background:transparent; border:0; }
+#desktop-shell[data-desktop-skin="osx"] .start-program-list { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+#desktop-shell[data-desktop-skin="osx"] .start-program-list :is(button,a) { flex-direction:column; gap:5px; padding:6px 1px; color:white; text-align:center; font-size:11px; }
+#desktop-shell[data-desktop-skin="osx"] .start-program-list .mac-desktop-icon { width:46px; height:46px; }
+#desktop-shell[data-desktop-skin="osx"] .start-program-list :is(button,a):hover { background:#ffffff26; border-color:#ffffff52; }
+#desktop-shell[data-desktop-skin="osx"] .start-separator { display:none; }
+#desktop-shell[data-desktop-skin="osx"] .all-programs { color:white; border-color:#ffffff35; }
+#desktop-shell[data-desktop-skin="osx"] .start-search { background:none; border:0; }
+#desktop-shell[data-desktop-skin="osx"] .start-search input { border-radius:14px; }
+#desktop-shell[data-desktop-skin="osx"] .aero-window { max-height:calc(100% - var(--desktop-window-top) - 98px); }
+#desktop-shell[data-desktop-skin="osx"] .aero-window.maximized { max-height:none; height:calc(100% - 113px); }
+@media(max-width:700px) {
+ #desktop-shell[data-desktop-skin="osx"] .welcome-banner { min-height:170px; padding:20px; }
+ #desktop-shell[data-desktop-skin="osx"] .welcome-links { padding:10px; }
+ #desktop-shell[data-desktop-skin="osx"] .mac-menubar { gap:7px; }
+ #desktop-shell[data-desktop-skin="osx"] .vista-taskbar { gap:9px; padding-left:10px; padding-right:10px; }
+ #desktop-shell[data-desktop-skin="osx"] .start-menu { width:calc(100% - 20px); }
+}
+@media(prefers-reduced-motion:reduce) { #desktop-shell[data-desktop-skin="osx"] .vista-taskbar button { transition:none; } }
+/* Version-specific archive assets, at the original desktop icon scale. */
+#desktop-shell .windows-era-icon { display:none; object-fit:contain; flex-shrink:0; }
+#desktop-shell[data-desktop-skin="xp"] .vista-icon { display:none; }
+#desktop-shell[data-desktop-skin="xp"] .windows-era-icon--xp,
+#desktop-shell[data-desktop-skin="win98"] .windows-era-icon--win98,
+#desktop-shell[data-desktop-skin="win2000"] .windows-era-icon--win2000 { display:block; }
+#desktop-shell :is(.windows-era-icon--win98,.windows-era-icon--win2000) { image-rendering:pixelated; }
+#desktop-shell[data-desktop-skin="xp"] .windows-era-icon--xp { image-rendering:auto; }
+#desktop-shell .welcome-computer .windows-era-icon { filter:drop-shadow(2px 4px 3px #0002); }
+#desktop-shell .desktop-shortcut .windows-era-icon { margin:4px 0; }
+#desktop-shell .quick-launch .windows-era-icon { width:22px; height:22px; }
+#desktop-shell .taskbar-window .windows-era-icon { width:20px; height:20px; }
+#desktop-shell :is(.window-caption,.window-status,.address-bar) .windows-era-icon { width:16px; height:16px; }
+@media(max-width:700px) {
+ #desktop-shell .desktop-shortcut .windows-era-icon--xp { width:40px; height:40px; }
+ #desktop-shell .personalize-links .windows-era-icon { width:30px; height:30px; }
+}

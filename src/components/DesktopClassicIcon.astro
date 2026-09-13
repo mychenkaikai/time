@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { withBase } from '../lib/routes';
+interface Props { name: string; size: number; }
+const { name, size } = Astro.props;
+const themes = ['xp', 'win98', 'win2000'] as const;
+const iconName = ['computer','folder','documents','pictures','network','recycle','person','paint','music'].includes(name) ? name : 'documents';
+const xpIcons = import.meta.glob<ImageMetadata>('../assets/desktop/xp/*.png', { eager: true, import: 'default' });
+---
+{themes.map(theme => {
+  const dimension = size > 80 ? (theme === 'xp' ? 96 : 64) : Math.min(size, theme === 'xp' ? 48 : 32);
+  const attributes = { class: `windows-era-icon windows-era-icon--${theme}`, width: dimension, height: dimension, alt: '', 'aria-hidden': 'true' as const, draggable: false };
+  return theme === 'xp'
+    ? <Image {...attributes} src={xpIcons[`../assets/desktop/xp/${iconName}.png`]} format="png" loading="eager"/>
+    : <img {...attributes} src={withBase(`/icons/desktop/${theme}/${iconName}.ico`)} decoding="async"/>;
+})}

@@ -1,886 +1,358 @@
 ---
-import { getAboutPath, getArchivePath, getTagIndexPath } from '../lib/routes';
-
-const desktopIcons = [
-  {
-    label: '关于',
-    caption: '个人介绍',
-    href: getAboutPath(),
-    emoji: '👤',
-  },
-  {
-    label: '归档',
-    caption: '历史入口',
-    href: getArchivePath(),
-    emoji: '🗂️',
-  },
-  {
-    label: '标签',
-    caption: '索引视图',
-    href: getTagIndexPath(),
-    emoji: '🏷️',
-  },
+import VistaIcon from './VistaIcon.astro';
+import '../styles/desktop-skins.css';
+import { getAboutPath, getArchivePath, getTagIndexPath, withBase } from '../lib/routes';
+const skins = [
+  { id: 'vista', name: 'Windows Vista', detail: '2007 · Aero 玻璃', label: 'Vista', image: '/images/vista/aurora.svg' },
+  { id: 'xp', name: 'Windows XP', detail: '2001 · 蓝天与绿草', label: 'XP', image: '/images/desktop/xp.svg' },
+  { id: 'win2000', name: 'Windows 2000', detail: '2000 · 专业与简洁', label: '2000', image: '' },
+  { id: 'win98', name: 'Windows 98', detail: '1998 · 最初的桌面', label: '98', image: '' },
+  { id: 'osx', name: 'Mac OS X', detail: '10.5 · Leopard 拟物', label: 'Mac OS X', image: '/images/desktop/osx.svg' },
 ];
-
-const trayApps = [
-  { id: 'welcome', label: '欢迎面板' },
-  { id: 'showcase', label: '场景展示' },
-  { id: 'system', label: '系统侧栏' },
+const shortcuts = [
+  { icon: 'computer', label: '计算机', action: 'welcome' },
+  { icon: 'folder', label: '个人文件夹', action: 'files' },
+  { icon: 'network', label: '网络', action: 'network' },
+  { icon: 'recycle', label: '回收站', action: 'recycle' },
 ];
-
-const quickLinks = [
-  {
-    title: '桌面入口',
-    text: '把首页当成桌面本身，而不是普通文章列表。',
-  },
-  {
-    title: 'Aero 玻璃层',
-    text: '窗口、任务栏和侧边小工具都使用半透明和高光边框。',
-  },
-  {
-    title: '后续可扩展',
-    text: '视觉变量已经独立，后续可继续接入主题切换。',
-  },
+const destinations = [
+  { icon: 'documents', title: '文章归档', description: '打开收藏的文字与回忆', href: getArchivePath() },
+  { icon: 'pictures', title: '标签索引', description: '按主题浏览数字藏品', href: getTagIndexPath() },
+  { icon: 'person', title: '关于我', description: '认识这张桌面的主人', href: getAboutPath() },
 ];
 ---
-
-<div class="vista-desktop" data-vista-desktop>
-  <div class="vista-desktop__wallpaper" aria-hidden="true">
-    <div class="vista-desktop__glow vista-desktop__glow--left"></div>
-    <div class="vista-desktop__glow vista-desktop__glow--right"></div>
-    <div class="vista-desktop__flare"></div>
+<div id="desktop-shell" class="vista-desktop" data-vista-desktop data-desktop-skin="vista" style={`--wallpaper: url('${withBase('/images/vista/aurora.svg')}'); --xp-wallpaper: url('${withBase('/images/desktop/xp.svg')}'); --osx-wallpaper: url('${withBase('/images/desktop/osx.svg')}')`}>
+  <script is:inline>
+    try {
+      const saved = localStorage.getItem('museum-desktop-skin');
+      if (['vista', 'xp', 'win2000', 'win98', 'osx'].includes(saved)) document.getElementById('desktop-shell').dataset.desktopSkin = saved;
+    } catch {}
+  </script>
+  <nav class="mac-menubar" aria-label="桌面菜单"><button data-open="appearance" aria-label="系统外观"><svg width="16" height="19" viewBox="0 0 24 28" aria-hidden="true"><path fill="currentColor" d="M15 6c2-1 4-4 3-6-3 0-5 2-5 5v1h2ZM20 15c0-3 2-4 3-5-2-3-5-3-6-3-2 0-4 1-5 1S9 7 7 7C3 7 1 10 1 14c0 6 4 13 7 13 2 0 3-1 5-1s3 1 5 1c2 0 5-4 6-7-3-1-4-3-4-5Z"/></svg></button><button data-open="files"><b>Finder</b></button><button data-open="files">文件</button><button data-open="appearance">外观</button><button data-open="welcome">窗口</button><button data-open="help">帮助</button><time data-mac-time></time></nav>
+  <div class="desktop-shortcuts" aria-label="桌面图标">
+    {shortcuts.map(item => <button class="desktop-shortcut" data-open={item.action} title={`打开${item.label}`}><VistaIcon name={item.icon}/><span>{item.label}</span></button>)}
+    <button class="desktop-shortcut" data-open="appearance" title="打开个性化"><VistaIcon name="paint"/><span>个性化</span></button>
   </div>
 
-  <aside class="desktop-icons" aria-label="桌面快捷方式">
-    {desktopIcons.map((icon) => (
-      <a class="desktop-icon" href={icon.href}>
-        <span class="desktop-icon__badge">{icon.emoji}</span>
-        <span class="desktop-icon__label">{icon.label}</span>
-        <span class="desktop-icon__caption">{icon.caption}</span>
-      </a>
-    ))}
-  </aside>
-
-  <main class="desktop-stage">
-    <section class="glass-window window-welcome is-active" data-window="welcome">
-      <header class="window-titlebar">
-        <div class="window-titlebar__meta">
-          <span class="window-titlebar__dot"></span>
-          <span class="window-titlebar__text">桌面欢迎中心</span>
-        </div>
-        <div class="window-titlebar__actions" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </header>
-
-      <div class="window-body window-body--hero">
-        <div class="hero-copy">
-          <p class="hero-kicker">Windows Vista / Aero Scene</p>
-          <h1>把首页改造成一张可以驻足的桌面。</h1>
-          <p class="hero-description">
-            当前版本先聚焦“桌面场景”本身：壁纸、玻璃窗口、任务栏、开始面板和系统侧栏都已经重新设计，
-            不再沿用原来的内容首页结构。
-          </p>
-
-          <div class="hero-actions">
-            <button type="button" class="glass-button" data-launch-window="showcase">查看场景层次</button>
-            <button type="button" class="glass-button glass-button--secondary" data-launch-window="system">打开侧边栏</button>
-          </div>
-
-          <ul class="hero-status" aria-label="当前阶段">
-            <li>桌面壁纸与景深高光</li>
-            <li>Vista 风格玻璃窗口</li>
-            <li>任务栏、开始面板与托盘时钟</li>
-          </ul>
-        </div>
-
-        <div class="hero-preview">
-          <div class="preview-shell">
-            <div class="preview-shell__top">
-              <span class="preview-shell__dot"></span>
-              <span class="preview-shell__dot"></span>
-              <span class="preview-shell__dot"></span>
-            </div>
-            <div class="preview-shell__screen">
-              <div class="preview-card preview-card--primary"></div>
-              <div class="preview-card preview-card--secondary"></div>
-              <div class="preview-card preview-card--tertiary"></div>
-            </div>
-            <div class="preview-shell__dock"></div>
-          </div>
-        </div>
+  <main class="aero-window" data-aero-window aria-label="欢迎中心" tabindex="-1">
+    <header class="aero-titlebar" data-drag-handle>
+      <div class="window-caption"><VistaIcon name="computer" size={18}/><span data-caption>欢迎中心</span></div>
+      <div class="caption-buttons">
+        <button data-minimize title="最小化" aria-label="最小化"><span class="minimize-mark"></span></button>
+        <button data-maximize title="最大化" aria-label="最大化"><span class="maximize-mark"></span></button>
+        <button class="close-button" data-close title="关闭" aria-label="关闭">×</button>
       </div>
-    </section>
+    </header>
+    <div class="navigation-bar">
+      <button class="back-button" data-back aria-label="返回欢迎中心" title="返回欢迎中心">←</button>
+      <span class="forward-button" aria-hidden="true">→</span>
+      <span class="navigation-caret" aria-hidden="true">▾</span>
+      <div class="address-bar"><VistaIcon name="computer" size={16}/><span>桌面</span><span class="crumb-arrow">›</span><span data-address>欢迎中心</span><span class="address-dropdown">▾</span></div>
+      <button class="help-button" data-open="help" aria-label="帮助" title="桌面使用帮助">?</button>
+    </div>
+    <div class="window-interior">
+      <section data-view="welcome">
+        <div class="welcome-banner">
+          <div class="welcome-copy"><h1>欢迎中心</h1><p>从这里开始，找回熟悉的时光。</p><div class="system-information"><strong>怀旧数字博物馆</strong><span data-skin-description>Windows Vista 风格桌面</span><span>文字、影像，以及那些值得留下的记忆</span></div></div>
+          <div class="welcome-computer"><VistaIcon name="computer" size={132}/></div>
+        </div>
+        <div class="section-heading"><span>开始使用</span><span class="item-count">3 个项目</span></div>
+        <div class="welcome-links">{destinations.map(item => <a class="welcome-link" href={item.href}><VistaIcon name={item.icon} size={46}/><span><strong>{item.title}</strong><small>{item.description}</small></span></a>)}</div>
+        <div class="section-heading"><span>让桌面更有你的感觉</span></div>
+        <div class="personalize-links">
+          <button data-open="appearance"><VistaIcon name="paint" size={38}/><span>个性化桌面<small>调整窗口颜色与背景</small></span></button>
+          <button data-toggle-gadgets><VistaIcon name="pictures" size={38}/><span>Windows 边栏<small>显示或隐藏桌面小工具</small></span></button>
+          <button data-open="help"><VistaIcon name="network" size={38}/><span>探索这张桌面<small>一些熟悉的操作方式</small></span></button>
+        </div>
+        <div class="welcome-bottom"><span class="tiny-flag" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-skin-brand>Windows <b>Vista</b></span><span class="welcome-note">留一点时间，给过去。</span></div>
+      </section>
 
-    <section class="glass-window window-showcase" data-window="showcase">
-      <header class="window-titlebar">
-        <div class="window-titlebar__meta">
-          <span class="window-titlebar__dot"></span>
-          <span class="window-titlebar__text">场景展示</span>
+      <section data-view="files" hidden>
+        <div class="explorer-toolbar">组织 <span>▾</span><i></i>个人文件夹</div>
+        <div class="explorer-layout"><aside class="explorer-sidebar"><strong>收藏夹链接</strong><button data-open="welcome">桌面</button><a href={getArchivePath()}>文档</a><a href={getTagIndexPath()}>图片与标签</a><hr/><span>文件夹</span></aside><div class="explorer-files">{destinations.map(item => <a href={item.href}><VistaIcon name={item.icon} size={64}/><span>{item.title}</span></a>)}</div></div>
+      </section>
+      <section data-view="network" hidden><div class="simple-panel"><VistaIcon name="network" size={72}/><h1>网络和共享中心</h1><p>沿着这些入口，继续探索数字博物馆。</p><div class="network-map"><span>这台计算机</span><span>━━━━</span><span>数字博物馆</span></div><a class="native-button" href={getArchivePath()}>浏览文章归档</a></div></section>
+      <section data-view="recycle" hidden><div class="explorer-toolbar">组织 <span>▾</span><i></i>回收站</div><div class="empty-folder"><VistaIcon name="recycle" size={64}/><p>回收站是空的。</p><small>值得珍藏的回忆，都好好留着。</small></div></section>
+      <section data-view="appearance" hidden>
+        <div class="skin-panel"><h1>桌面主题</h1><p>熟悉的电脑，不同的年代。选择一套外观，立即换上。</p>
+          <div class="skin-choices" role="group" aria-label="桌面主题">{skins.map(skin => <button class="skin-choice" data-skin-choice={skin.id} aria-pressed={skin.id === 'vista'}><span class:list={['skin-preview', `skin-preview--${skin.id}`]} style={skin.image ? `background-image: url('${withBase(skin.image)}')` : undefined}><span class="mini-window"><span class="mini-title">{skin.label}<i>×</i></span><span class="mini-content"><i></i><i></i><i></i></span></span><span class="mini-taskbar"></span></span><strong>{skin.name}</strong><small>{skin.detail}</small><span class="skin-check" aria-hidden="true">✓</span></button>)}</div>
+          <p class="skin-save-status" data-skin-status role="status">当前主题：Windows Vista</p>
         </div>
-        <div class="window-titlebar__actions" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </header>
-
-      <div class="window-body">
-        <div class="link-grid">
-          {quickLinks.map((item) => (
-            <article class="link-card">
-              <h2>{item.title}</h2>
-              <p>{item.text}</p>
-            </article>
-          ))}
-        </div>
-
-        <div class="glass-strip">
-          <span>桌面图标</span>
-          <span>窗口栈</span>
-          <span>侧边栏 Gadget</span>
-          <span>任务栏托盘</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="glass-window window-system" data-window="system">
-      <header class="window-titlebar">
-        <div class="window-titlebar__meta">
-          <span class="window-titlebar__dot"></span>
-          <span class="window-titlebar__text">系统侧边栏</span>
-        </div>
-        <div class="window-titlebar__actions" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </header>
-
-      <div class="window-body">
-        <div class="sidebar-widget">
-          <span class="sidebar-widget__label">状态</span>
-          <strong>Desktop Scene Ready</strong>
-          <p>主视觉已经切换到 Vista 风格桌面，后续可在此基础上扩展主题系统。</p>
-        </div>
-
-        <div class="sidebar-widget sidebar-widget--clock">
-          <span class="sidebar-widget__label">当前时间</span>
-          <strong data-clock>--:--</strong>
-          <p data-date>正在同步日期...</p>
-        </div>
-
-        <div class="sidebar-widget">
-          <span class="sidebar-widget__label">下一步接口</span>
-          <ul class="sidebar-list">
-            <li>保留主题变量层</li>
-            <li>允许未来接入风格切换</li>
-            <li>桌面模块可继续拆分为组件</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        <div class="appearance-panel" data-vista-options><h2>Vista 窗口颜色和外观</h2><p>为这张桌面选择一种颜色。</p><div class="color-options" role="group" aria-label="窗口颜色"><button data-color="blue" class="selected" aria-pressed="true" title="冰蓝" aria-label="冰蓝" style="--swatch:#72b4d7"></button><button data-color="teal" aria-pressed="false" title="青绿" aria-label="青绿" style="--swatch:#6fbaa6"></button><button data-color="graphite" aria-pressed="false" title="石墨" aria-label="石墨" style="--swatch:#77838b"></button><button data-color="rose" aria-pressed="false" title="玫瑰" aria-label="玫瑰" style="--swatch:#c79eae"></button></div><label class="transparency-option"><input type="checkbox" data-transparency checked/> 启用透明效果</label><h2>桌面背景</h2><button class="wallpaper-choice" data-wallpaper aria-pressed="false"><img src={withBase('/images/vista/aurora.svg')} alt="蓝绿极光桌面背景" width="144" height="90"/><span>Windows Aurora</span><small>点击切换蓝色 / 绿色极光</small></button></div>
+      </section>
+      <section data-view="help" hidden><div class="simple-panel help-panel"><h1>熟悉的桌面，再次相遇。</h1><p>欢迎回来。可以从这几个地方开始：</p><ul><li>点击左侧桌面图标，打开对应窗口。</li><li>拖动标题栏，调整窗口位置。</li><li>右上角可以最小化、最大化和关闭窗口。</li><li>点击任务栏中的“欢迎中心”，重新打开窗口。</li><li>打开左下角的开始菜单，或在“个性化”里换一种颜色。</li></ul><p class="help-footnote">这是一张可以交互的网页桌面。</p></div></section>
+    </div>
+    <div class="window-status"><VistaIcon name="computer" size={17}/><span data-status>欢迎使用数字博物馆</span><span class="resize-grip" aria-hidden="true">◢</span></div>
   </main>
 
-  <div class="start-panel glass-surface" data-start-panel hidden>
-    <div class="start-panel__profile">
-      <div class="start-panel__avatar">V</div>
-      <div>
-        <strong>Vista Desktop Prototype</strong>
-        <p>首页视觉重构中</p>
-      </div>
-    </div>
+  <aside class="windows-sidebar" data-gadgets aria-label="Windows 边栏小工具">
+    <div class="sidebar-tools"><button data-toggle-gadgets aria-label="隐藏边栏" title="隐藏边栏">×</button><span>Windows 边栏</span></div>
+    <div class="clock-gadget" role="img" aria-label="时钟" data-clock-label><div class="clock-face">{Array.from({length:12}, (_, i) => <span class="clock-tick" style={`--tick:${i}`}></span>)}<span class="clock-number n12">12</span><span class="clock-number n3">3</span><span class="clock-number n6">6</span><span class="clock-number n9">9</span><span class="clock-brand">QUARTZ</span><i class="clock-hand hour-hand" data-hour-hand></i><i class="clock-hand minute-hand" data-minute-hand></i><i class="clock-hand second-hand" data-second-hand></i><i class="clock-pin"></i></div></div>
+    <figure class="photo-gadget"><div class="photo-mat"><img src={withBase('/images/vista/landscape.svg')} width="480" height="300" alt="青山间蜿蜒的小路"/></div><figcaption>远方的风景</figcaption></figure>
+    <div class="calendar-gadget"><div class="calendar-top" data-calendar-month></div><strong data-calendar-day></strong><span data-calendar-weekday></span><div class="calendar-bottom" data-calendar-year></div></div>
+    <div class="sidebar-caption">慢一点，也很好。</div>
+  </aside>
 
-    <div class="start-panel__content">
-      <button type="button" class="start-link" data-launch-window="welcome">打开欢迎中心</button>
-      <button type="button" class="start-link" data-launch-window="showcase">查看场景展示</button>
-      <button type="button" class="start-link" data-launch-window="system">展开系统侧边栏</button>
-    </div>
-  </div>
+  <div class="desktop-signature"><span data-signature-brand>Windows Vista</span><span class="signature-edition">怀旧数字博物馆</span></div>
 
-  <footer class="taskbar glass-surface">
-    <button type="button" class="start-orb" data-start-toggle>
-      <span class="start-orb__core"></span>
-      <span>开始</span>
-    </button>
+  <section class="start-menu" data-start-menu hidden aria-label="开始菜单">
+    <div class="start-programs"><div class="start-program-list">{[{icon:'computer', label:'欢迎中心', action:'welcome'}, {icon:'folder',label:'个人文件夹',action:'files'}, {icon:'paint',label:'个性化',action:'appearance'}, {icon:'network',label:'网络和共享中心',action:'network'}, {icon:'recycle',label:'回收站',action:'recycle'}].map(item => <button data-open={item.action} data-program={item.label}><VistaIcon name={item.icon} size={34}/><span>{item.label}</span></button>)}<div class="start-separator"></div>{destinations.map(item => <a href={item.href} data-program={item.title}><VistaIcon name={item.icon} size={34}/><span>{item.title}</span></a>)}<p class="start-empty" data-start-empty hidden>没有找到匹配的项目</p></div><button class="all-programs" data-all-programs><span>▸</span> 所有程序</button><div class="start-search"><input type="search" placeholder="开始搜索" aria-label="搜索开始菜单" data-start-search/><span aria-hidden="true">⌕</span></div></div>
+    <div class="start-places"><div class="user-tile"><VistaIcon name="person" size={55}/></div><strong class="user-name">时光访客</strong><button data-open="files">文档</button><a href={getTagIndexPath()}>图片</a><a href={getArchivePath()}>文章</a><div class="places-divider"></div><button data-open="welcome">计算机</button><button data-open="network">网络</button><div class="places-divider"></div><button data-open="appearance">个性化</button><button data-toggle-gadgets>Windows 边栏</button><button data-open="help">帮助和支持</button><div class="start-power"><button data-show-desktop title="显示桌面" aria-label="显示桌面">⏻</button><button data-dismiss-start title="关闭开始菜单" aria-label="关闭开始菜单">▸</button></div></div>
+  </section>
 
-    <div class="taskbar-apps" role="tablist" aria-label="任务栏窗口">
-      {trayApps.map((app) => (
-        <button type="button" class="taskbar-app" data-launch-window={app.id}>
-          {app.label}
-        </button>
-      ))}
-    </div>
-
-    <div class="taskbar-tray">
-      <span>LAN</span>
-      <span>Aero</span>
-      <span class="taskbar-tray__clock" data-clock>--:--</span>
-    </div>
+  <footer class="vista-taskbar">
+    <button class="start-button" data-start-toggle aria-label="开始" title="开始" aria-expanded="false"><span class="start-orb"><span class="windows-flag"><i></i><i></i><i></i><i></i></span></span><span class="start-label">开始</span></button>
+    <div class="quick-launch"><button data-show-desktop aria-label="显示桌面" title="显示桌面"><VistaIcon name="computer" size={22}/></button><button data-open="files" aria-label="个人文件夹" title="个人文件夹"><VistaIcon name="folder" size={23}/></button><span class="quick-divider"></span></div>
+    <button class="taskbar-window active" data-taskbar-window><VistaIcon name="computer" size={21}/><span data-taskbar-title>欢迎中心</span></button>
+    <div class="system-tray"><span class="tray-chevron" aria-hidden="true">‹</span><span class="network-tray" aria-label="网络"><i></i><i></i></span><span class="volume-tray" aria-label="音量">◖))</span><span class="tray-language">中</span><time data-time title="当前时间">--:--</time></div>
   </footer>
 </div>
 
 <script>
-  const root = document.querySelector('[data-vista-desktop]');
-
+  const root = document.querySelector<HTMLElement>('[data-vista-desktop]');
   if (root) {
-    const windows = Array.from(root.querySelectorAll('[data-window]'));
-    const launchers = Array.from(root.querySelectorAll('[data-launch-window]'));
-    const startToggle = root.querySelector('[data-start-toggle]');
-    const startPanel = root.querySelector('[data-start-panel]');
-    const clockTargets = Array.from(root.querySelectorAll('[data-clock]'));
-    const dateTarget = root.querySelector('[data-date]');
-
-    const activateWindow = (id) => {
-      windows.forEach((windowEl) => {
-        const isActive = windowEl.getAttribute('data-window') === id;
-        windowEl.classList.toggle('is-active', isActive);
-      });
-
-      if (startPanel instanceof HTMLElement) {
-        startPanel.hidden = true;
+    const win = root.querySelector<HTMLElement>('[data-aero-window]')!;
+    const start = root.querySelector<HTMLElement>('[data-start-menu]')!;
+    const startToggle = root.querySelector<HTMLButtonElement>('[data-start-toggle]')!;
+    const task = root.querySelector<HTMLButtonElement>('[data-taskbar-window]')!;
+    const search = root.querySelector<HTMLInputElement>('[data-start-search]')!;
+    const names: Record<string, string> = { welcome:'欢迎中心', files:'个人文件夹', network:'网络和共享中心', recycle:'回收站', appearance:'个性化', help:'帮助和支持' };
+    const skinNames: Record<string, string> = {vista:'Windows Vista', xp:'Windows XP', win2000:'Windows 2000', win98:'Windows 98', osx:'Mac OS X Leopard'};
+    const applySkin = (skin: string, save = true) => {
+      if (!skinNames[skin]) skin = 'vista';
+      root.dataset.desktopSkin = skin;
+      root.querySelector('.welcome-copy h1')!.textContent = skin === 'osx' ? '欢迎使用 Mac' : '欢迎中心';
+      root.querySelector('.desktop-shortcut[data-open="appearance"] > span')!.textContent = skin === 'osx' ? '系统偏好设置' : '个性化';
+      root.querySelectorAll<HTMLButtonElement>('[data-skin-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.skinChoice === skin)));
+      root.querySelector('[data-skin-description]')!.textContent = `${skinNames[skin]} 风格桌面`;
+      root.querySelector('[data-skin-brand]')!.textContent = skinNames[skin];
+      root.querySelector('[data-signature-brand]')!.textContent = skinNames[skin];
+      root.querySelector<HTMLElement>('[data-vista-options]')!.hidden = skin !== 'vista';
+      const status = root.querySelector('[data-skin-status]')!;
+      status.textContent = `当前主题：${skinNames[skin]}${save ? ' · 已保存，下次访问自动使用' : ''}`;
+      if (save) {
+        try { localStorage.setItem('museum-desktop-skin', skin); }
+        catch { status.textContent = `当前主题：${skinNames[skin]} · 当前浏览器无法保存，刷新后恢复默认`; }
       }
     };
-
-    launchers.forEach((button) => {
-      button.addEventListener('click', () => {
-        const id = button.getAttribute('data-launch-window');
-        if (id) {
-          activateWindow(id);
-        }
-      });
-    });
-
-    if (startToggle instanceof HTMLButtonElement && startPanel instanceof HTMLElement) {
-      startToggle.addEventListener('click', () => {
-        startPanel.hidden = !startPanel.hidden;
-      });
-    }
-
+    root.querySelectorAll<HTMLButtonElement>('[data-skin-choice]').forEach(button => button.addEventListener('click', () => applySkin(button.dataset.skinChoice!)));
+    applySkin(root.dataset.desktopSkin || 'vista', false);
+    window.addEventListener('storage', event => {if(event.key === 'museum-desktop-skin') applySkin(event.newValue || 'vista', false);});
+    let current = 'welcome';
+    const closeStart = () => { start.hidden = true; startToggle.setAttribute('aria-expanded', 'false'); };
+    const showWindow = () => { win.hidden = false; task.classList.add('active'); win.focus({preventScroll:true}); };
+    const hideWindow = () => { win.hidden = true; task.classList.remove('active'); task.focus({preventScroll:true}); };
+    const open = (view: string) => {
+      if (!names[view]) return;
+      current = view;
+      root.querySelectorAll<HTMLElement>('[data-view]').forEach(panel => panel.hidden = panel.dataset.view !== view);
+      ['[data-caption]', '[data-address]', '[data-taskbar-title]'].forEach(selector => { root.querySelector(selector)!.textContent = names[view]; });
+      root.querySelector('[data-status]')!.textContent = view === 'welcome' ? '欢迎使用数字博物馆' : names[view];
+      win.setAttribute('aria-label', names[view]);
+      closeStart(); showWindow();
+    };
+    root.querySelectorAll<HTMLElement>('[data-open]').forEach(button => button.addEventListener('click', () => open(button.dataset.open!)));
+    root.querySelector('[data-back]')!.addEventListener('click', () => open('welcome'));
+    root.querySelector('[data-minimize]')!.addEventListener('click', hideWindow);
+    root.querySelector('[data-close]')!.addEventListener('click', hideWindow);
+    task.addEventListener('click', () => { closeStart(); win.hidden ? open(current) : hideWindow(); });
+    const maximize = root.querySelector<HTMLButtonElement>('[data-maximize]')!;
+    const toggleMaximize = () => { const active = win.classList.toggle('maximized'); maximize.setAttribute('aria-label', active ? '还原' : '最大化'); maximize.title = active ? '还原' : '最大化'; };
+    maximize.addEventListener('click', toggleMaximize);
+    startToggle.addEventListener('click', () => { const show = start.hidden; start.hidden = !show; startToggle.setAttribute('aria-expanded', String(show)); if(show) search.focus(); });
+    root.querySelector('[data-dismiss-start]')!.addEventListener('click', () => {closeStart(); startToggle.focus();});
+    root.querySelectorAll('[data-show-desktop]').forEach(button => button.addEventListener('click', () => {closeStart(); hideWindow();}));
+    root.querySelectorAll('[data-toggle-gadgets]').forEach(button => button.addEventListener('click', () => { const gadgets = root.querySelector<HTMLElement>('[data-gadgets]')!; gadgets.hidden = !gadgets.hidden; closeStart(); if(gadgets.hidden) root.querySelector<HTMLButtonElement>('.personalize-links [data-toggle-gadgets]')?.focus(); }));
+    document.addEventListener('pointerdown', event => { if (!start.hidden && event.target instanceof Node && !start.contains(event.target) && !startToggle.contains(event.target)) closeStart(); });
+    document.addEventListener('keydown', event => { if(event.key === 'Escape' && !start.hidden) { closeStart(); startToggle.focus(); } });
+    const filterPrograms = () => { let count = 0; root.querySelectorAll<HTMLElement>('[data-program]').forEach(item => { item.hidden = !item.dataset.program!.includes(search.value.trim()); if(!item.hidden) count++; }); root.querySelector<HTMLElement>('[data-start-empty]')!.hidden = count > 0; };
+    search.addEventListener('input', filterPrograms);
+    root.querySelector('[data-all-programs]')!.addEventListener('click', () => {search.value = ''; filterPrograms(); search.focus();});
+    root.querySelectorAll<HTMLButtonElement>('[data-color]').forEach(button => button.addEventListener('click', () => {root.dataset.color = button.dataset.color; root.querySelectorAll('[data-color]').forEach(item => { item.classList.toggle('selected', item === button); item.setAttribute('aria-pressed', String(item === button)); });}));
+    root.querySelector<HTMLInputElement>('[data-transparency]')!.addEventListener('change', event => root.classList.toggle('opaque', !(event.target as HTMLInputElement).checked));
+    root.querySelector('[data-wallpaper]')!.addEventListener('click', event => { const active = root.classList.toggle('alternate-wallpaper'); (event.currentTarget as HTMLElement).setAttribute('aria-pressed', String(active)); });
+    const drag = root.querySelector<HTMLElement>('[data-drag-handle]')!;
+    drag.addEventListener('dblclick', event => { if(!(event.target as HTMLElement).closest('button')) toggleMaximize(); });
+    let dragging: { x:number; y:number; left:number; top:number; id:number } | null = null;
+    drag.addEventListener('pointerdown', event => { if(event.button !== 0 || (event.target as HTMLElement).closest('button') || win.classList.contains('maximized') || window.innerWidth <= 700) return; const rect = win.getBoundingClientRect(); dragging = { x:event.clientX, y:event.clientY, left:rect.left, top:rect.top, id:event.pointerId }; drag.setPointerCapture(event.pointerId); event.preventDefault(); });
+    drag.addEventListener('pointermove', event => { if(!dragging) return; win.style.left = `${Math.max(0, Math.min(window.innerWidth-win.offsetWidth, dragging.left+event.clientX-dragging.x))}px`; win.style.top = `${Math.max(0, Math.min(window.innerHeight-90, dragging.top+event.clientY-dragging.y))}px`; win.style.setProperty('--desktop-window-top', win.style.top); });
+    const stopDrag = () => { dragging = null; };
+    drag.addEventListener('pointerup', stopDrag); drag.addEventListener('pointercancel', stopDrag); drag.addEventListener('lostpointercapture', stopDrag);
+    window.addEventListener('resize', () => { win.style.left = ''; win.style.top = ''; win.style.removeProperty('--desktop-window-top'); });
     const updateClock = () => {
-      const now = new Date();
-      const time = new Intl.DateTimeFormat('zh-CN', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }).format(now);
-      const date = new Intl.DateTimeFormat('zh-CN', {
-        month: 'long',
-        day: 'numeric',
-        weekday: 'short',
-      }).format(now);
-
-      clockTargets.forEach((target) => {
-        target.textContent = time;
-      });
-
-      if (dateTarget) {
-        dateTarget.textContent = date;
-      }
+      const now = new Date(); const time = now.toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit', hour12:false});
+      const timeEl = root.querySelector<HTMLTimeElement>('[data-time]')!; timeEl.textContent = time; timeEl.dateTime = now.toISOString(); root.querySelector('[data-mac-time]')!.textContent = `${now.toLocaleDateString('zh-CN', {weekday:'short'})} ${time}`; timeEl.title = now.toLocaleDateString('zh-CN', {dateStyle:'full'});
+      root.querySelector('[data-clock-label]')!.setAttribute('aria-label', `当前时间 ${time}`);
+      const rotation = (selector:string, angle:number) => {root.querySelector<HTMLElement>(selector)!.style.transform = `translateX(-50%) rotate(${angle}deg)`;};
+      rotation('[data-hour-hand]', (now.getHours()%12)*30+now.getMinutes()/2); rotation('[data-minute-hand]', now.getMinutes()*6+now.getSeconds()/10); rotation('[data-second-hand]', now.getSeconds()*6);
+      root.querySelector('[data-calendar-month]')!.textContent = now.toLocaleDateString('zh-CN', {month:'long'}); root.querySelector('[data-calendar-day]')!.textContent = String(now.getDate()); root.querySelector('[data-calendar-weekday]')!.textContent = now.toLocaleDateString('zh-CN', {weekday:'long'}); root.querySelector('[data-calendar-year]')!.textContent = `${now.getFullYear()}`;
     };
-
-    updateClock();
-    window.setInterval(updateClock, 1000 * 30);
+    updateClock(); window.setInterval(updateClock, 1000);
   }
 </script>
 
 <style>
-  .vista-desktop {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-    padding: 34px 34px 96px;
-    color: #f7fbff;
-  }
-
-  .vista-desktop__wallpaper,
-  .vista-desktop__glow,
-  .vista-desktop__flare {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .vista-desktop__wallpaper {
-    background:
-      radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.4), transparent 18%),
-      radial-gradient(circle at 80% 22%, rgba(117, 214, 255, 0.28), transparent 24%),
-      linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 35%);
-  }
-
-  .vista-desktop__glow {
-    filter: blur(12px);
-    opacity: 0.85;
-  }
-
-  .vista-desktop__glow--left {
-    inset: 14% auto auto 7%;
-    width: 340px;
-    height: 340px;
-    background: radial-gradient(circle, rgba(148, 233, 255, 0.6), transparent 68%);
-  }
-
-  .vista-desktop__glow--right {
-    inset: auto 9% 16% auto;
-    width: 520px;
-    height: 520px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 65%);
-  }
-
-  .vista-desktop__flare {
-    background:
-      linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.12) 48%, transparent 58%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 22%);
-    opacity: 0.75;
-  }
-
-  .desktop-icons,
-  .desktop-stage,
-  .start-panel,
-  .taskbar {
-    position: relative;
-    z-index: 1;
-  }
-
-  .desktop-icons {
-    position: absolute;
-    top: 34px;
-    left: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .desktop-icon {
-    width: 92px;
-    text-decoration: none;
-    color: #f7fbff;
-    padding: 10px 8px;
-    border-radius: 20px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-
-  .desktop-icon:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.16);
-  }
-
-  .desktop-icon__badge {
-    display: block;
-    font-size: 30px;
-    margin-bottom: 6px;
-  }
-
-  .desktop-icon__label {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-  }
-
-  .desktop-icon__caption {
-    display: block;
-    font-size: 11px;
-    opacity: 0.82;
-  }
-
-  .desktop-stage {
-    display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
-    gap: 24px;
-    padding-left: 110px;
-    align-items: start;
-  }
-
-  .glass-window,
-  .glass-surface {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.16));
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-radius: 22px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.65),
-      0 22px 48px rgba(4, 14, 34, 0.28);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-  }
-
-  .glass-window {
-    overflow: hidden;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-  }
-
-  .glass-window.is-active {
-    transform: translateY(-4px);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      0 28px 55px rgba(4, 14, 34, 0.34);
-  }
-
-  .window-welcome {
-    grid-column: 1 / 2;
-  }
-
-  .window-showcase {
-    grid-column: 1 / 2;
-  }
-
-  .window-system {
-    grid-column: 2 / 3;
-    grid-row: 1 / span 2;
-  }
-
-  .window-titlebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(145, 211, 255, 0.28));
-    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
-    color: #072345;
-  }
-
-  .window-titlebar__meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    font-weight: 700;
-  }
-
-  .window-titlebar__dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #43a4ff);
-    box-shadow: 0 0 10px rgba(78, 170, 255, 0.7);
-  }
-
-  .window-titlebar__actions {
-    display: flex;
-    gap: 8px;
-  }
-
-  .window-titlebar__actions span {
-    width: 16px;
-    height: 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.52);
-    border: 1px solid rgba(7, 35, 69, 0.16);
-  }
-
-  .window-body {
-    padding: 20px;
-    color: #eff8ff;
-  }
-
-  .window-body--hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-    gap: 24px;
-    align-items: center;
-  }
-
-  .hero-kicker {
-    margin: 0 0 12px;
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    opacity: 0.82;
-  }
-
-  .hero-copy h1 {
-    margin-bottom: 14px;
-    font-size: clamp(36px, 4vw, 60px);
-    line-height: 1.06;
-    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.24);
-  }
-
-  .hero-description {
-    max-width: 60ch;
-    margin-bottom: 18px;
-    font-size: 16px;
-    line-height: 1.8;
-    color: rgba(247, 251, 255, 0.92);
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-
-  .glass-button {
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(140, 207, 255, 0.42));
-    color: #08213e;
-    padding: 10px 18px;
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 12px 22px rgba(0, 0, 0, 0.14);
-  }
-
-  .glass-button--secondary {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(127, 197, 255, 0.18));
-    color: #f9fcff;
-  }
-
-  .hero-status {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero-status li {
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    font-size: 13px;
-  }
-
-  .hero-preview {
-    display: flex;
-    justify-content: center;
-  }
-
-  .preview-shell {
-    width: min(100%, 360px);
-    padding: 14px;
-    border-radius: 28px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.14));
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 18px 36px rgba(7, 21, 45, 0.22);
-  }
-
-  .preview-shell__top {
-    display: flex;
-    gap: 8px;
-    padding-bottom: 12px;
-  }
-
-  .preview-shell__dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.62);
-  }
-
-  .preview-shell__screen {
-    height: 240px;
-    border-radius: 20px;
-    background:
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 30%),
-      linear-gradient(180deg, rgba(26, 75, 141, 0.95), rgba(10, 36, 79, 0.96));
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .preview-card {
-    position: absolute;
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08));
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(12px);
-  }
-
-  .preview-card--primary {
-    inset: 26px 26px auto;
-    height: 96px;
-  }
-
-  .preview-card--secondary {
-    inset: auto 26px 28px auto;
-    width: 42%;
-    height: 92px;
-  }
-
-  .preview-card--tertiary {
-    inset: auto auto 28px 26px;
-    width: 42%;
-    height: 64px;
-  }
-
-  .preview-shell__dock {
-    margin-top: 14px;
-    height: 18px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08));
-  }
-
-  .link-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .link-card {
-    padding: 16px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .link-card h2 {
-    margin-bottom: 8px;
-    font-size: 18px;
-  }
-
-  .link-card p {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.7;
-    color: rgba(247, 251, 255, 0.9);
-  }
-
-  .glass-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .glass-strip span {
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    font-size: 13px;
-  }
-
-  .sidebar-widget {
-    padding: 16px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-  }
-
-  .sidebar-widget + .sidebar-widget {
-    margin-top: 14px;
-  }
-
-  .sidebar-widget__label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0.74;
-  }
-
-  .sidebar-widget strong {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 22px;
-  }
-
-  .sidebar-widget p {
-    margin: 0;
-    line-height: 1.7;
-    color: rgba(247, 251, 255, 0.88);
-  }
-
-  .sidebar-widget--clock strong {
-    font-size: clamp(34px, 5vw, 48px);
-  }
-
-  .sidebar-list {
-    margin: 0;
-    padding-left: 18px;
-    line-height: 1.9;
-    color: rgba(247, 251, 255, 0.92);
-  }
-
-  .start-panel {
-    position: fixed;
-    left: 18px;
-    bottom: 82px;
-    width: min(360px, calc(100vw - 36px));
-    padding: 18px;
-    z-index: 3;
-  }
-
-  .start-panel__profile {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  }
-
-  .start-panel__profile p {
-    margin: 4px 0 0;
-    opacity: 0.82;
-  }
-
-  .start-panel__avatar {
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(139, 207, 255, 0.38));
-    color: #072345;
-    font-size: 24px;
-    font-weight: 700;
-  }
-
-  .start-panel__content {
-    display: grid;
-    gap: 10px;
-  }
-
-  .start-link {
-    border: 1px solid rgba(255, 255, 255, 0.32);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #f7fbff;
-    padding: 12px 14px;
-    text-align: left;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  .taskbar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-height: 66px;
-    padding: 10px 18px;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    z-index: 2;
-  }
-
-  .start-orb {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px 10px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.56);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(129, 208, 255, 0.32));
-    color: #072345;
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .start-orb__core {
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at 35% 35%, #ffffff, #91d3ff 45%, #2b78d4 70%, #194c95 100%);
-    box-shadow: 0 0 16px rgba(145, 211, 255, 0.72);
-  }
-
-  .taskbar-apps {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .taskbar-app {
-    padding: 10px 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    background: rgba(255, 255, 255, 0.08);
-    color: #f7fbff;
-    font: inherit;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
-  .taskbar-tray {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-left: 12px;
-    border-left: 1px solid rgba(255, 255, 255, 0.14);
-    font-size: 13px;
-  }
-
-  .taskbar-tray__clock {
-    font-weight: 700;
-  }
-
-  @media (max-width: 1100px) {
-    .desktop-stage {
-      grid-template-columns: 1fr;
-      padding-left: 96px;
-    }
-
-    .window-system {
-      grid-column: auto;
-      grid-row: auto;
-    }
-
-    .link-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .vista-desktop {
-      padding: 20px 16px 92px;
-    }
-
-    .desktop-icons {
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .desktop-stage {
-      padding-left: 0;
-    }
-
-    .window-body--hero {
-      grid-template-columns: 1fr;
-    }
-
-    .hero-copy h1 {
-      font-size: 34px;
-    }
-
-    .taskbar {
-      flex-wrap: wrap;
-      align-items: stretch;
-      gap: 10px;
-      min-height: 78px;
-    }
-
-    .taskbar-apps {
-      order: 3;
-      width: 100%;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
-
-    .taskbar-tray {
-      margin-left: auto;
-    }
-  }
+  :global(body:has([data-vista-desktop])) { margin:0; padding:0; background:#073646; }
+  .vista-desktop { --glass-tint:rgba(125,181,203,.57); position:relative; min-height:650px; height:100dvh; overflow:hidden; background:#073646 var(--wallpaper) center/cover no-repeat; color:#172536; font-size:12px; line-height:1.4; isolation:isolate; }
+  .vista-desktop :global(*) { font-family:"Segoe UI","Microsoft YaHei","Noto Sans CJK SC",Tahoma,sans-serif !important; box-sizing:border-box; }
+  .vista-desktop :global([hidden]) { display:none !important; }
+  .vista-desktop :global(button), .vista-desktop :global(input), .vista-desktop :global(a) { font-size:12px; }
+  .vista-desktop :global(button) { color:inherit; border-radius:3px; background:none; box-shadow:none; border:1px solid transparent; cursor:pointer; line-height:1.4; }
+  .vista-desktop :global(a) { text-decoration:none; color:#174b80; }
+  .vista-desktop :global(a:hover) { color:#174b80; background:none; }
+  .vista-desktop :global(button:focus-visible), .vista-desktop :global(a:focus-visible) { outline:2px solid #62cdfc; outline-offset:2px; }
+  .vista-desktop :global(p), .vista-desktop :global(h1), .vista-desktop :global(h2), .vista-desktop :global(figure) { margin:0; }
+  .vista-desktop :global(svg) { flex-shrink:0; }
+  .vista-desktop[data-color="teal"] { --glass-tint:rgba(106,175,148,.7); }
+  .vista-desktop[data-color="graphite"] { --glass-tint:rgba(87,105,119,.8); }
+  .vista-desktop[data-color="rose"] { --glass-tint:rgba(187,140,160,.7); }
+  .vista-desktop.opaque { --glass-tint:#89aabd; }
+  .alternate-wallpaper { background-blend-mode:luminosity; background-color:#326e56; }
+  .desktop-shortcuts { position:absolute; top:18px; left:13px; display:flex; flex-direction:column; gap:16px; }
+  .vista-desktop .desktop-shortcut { display:flex; flex-direction:column; align-items:center; justify-content:center; width:82px; min-height:77px; padding:4px 2px; color:#fff; text-shadow:1px 2px 3px #001826,0 0 3px #001826; border-radius:3px; }
+  .desktop-shortcut span { margin-top:5px; }
+  .vista-desktop .desktop-shortcut:hover { border-color:#b3e9ff70; background:linear-gradient(#e2f6ff26,#b1e6fa1c); box-shadow:inset 0 0 0 1px #ffffff20; }
+  .aero-window { position:absolute; left:clamp(118px,16vw,280px); top:clamp(62px,14vh,155px); width:min(770px,calc(100vw - 340px)); padding:0 7px 7px; border:1px solid #17313dd9; border-radius:8px; background:linear-gradient(115deg,#f2ffff65 0%,#d6ecf526 19%,#fff5 20%,#ffffff0a 25%,#e6f8ff30 54%,#dff7ff65 56%,#ffffff14 64%),var(--glass-tint); box-shadow:inset 0 0 0 1px #e6faffb8,0 9px 28px #00141b99,0 1px 4px #0009; backdrop-filter:blur(12px); z-index:5; outline:none; }
+  .aero-titlebar { height:31px; display:flex; align-items:center; justify-content:space-between; user-select:none; touch-action:none; }
+  .window-caption { display:flex; align-items:center; gap:5px; color:#071b28; text-shadow:0 0 4px #fff,0 0 9px #fff,0 0 15px #fff; }
+  .caption-buttons { display:flex; align-self:flex-start; margin-right:-1px; }
+  .vista-desktop .caption-buttons button { width:28px; height:20px; border:1px solid #3b535db3; border-top:0; border-radius:0; background:linear-gradient(#ffffff80 0%,#b0c9d96b 46%,#486b8580 50%,#a6c5d89e); box-shadow:inset 0 0 0 1px #ffffff55; display:grid; place-items:center; color:white; text-shadow:0 1px 1px #000; }
+  .vista-desktop .caption-buttons button:first-child { border-radius:0 0 0 4px; }
+  .vista-desktop .caption-buttons .close-button { width:46px; border-radius:0 0 4px 0; font-size:22px; line-height:16px; background:linear-gradient(#eda797,#c36b58 46%,#a6321c 50%,#d9876b); border-color:#643f38; }
+  .vista-desktop .caption-buttons button:hover { background:linear-gradient(#c7f7ff,#2598cf 50%,#0277b4 51%,#70d8f8); box-shadow:0 0 9px #7ee9ff,inset 0 0 0 1px #fff8; }
+  .vista-desktop .caption-buttons .close-button:hover { background:linear-gradient(#ffd1b0,#ed6642 50%,#ca2707 51%,#f59353); box-shadow:0 0 10px #ff744c; }
+  .minimize-mark { width:9px; height:3px; background:white; margin-top:7px; box-shadow:0 1px 1px #234; }
+  .maximize-mark { width:10px; height:9px; border:1px solid white; border-top-width:3px; box-shadow:0 1px 1px #234; }
+  .navigation-bar { height:35px; display:flex; align-items:center; gap:5px; padding:0 1px 6px; }
+  .vista-desktop .back-button,.forward-button { width:26px; height:26px; border:1px solid #466e89; border-radius:50%; background:linear-gradient(#eaf7ff,#73b7e1 45%,#2574b2 50%,#80c9ee); color:#fff; font-size:21px; font-family:Arial,sans-serif !important; line-height:22px; text-align:center; box-shadow:inset 0 0 0 1px #d6f7ffb3,0 0 2px #15374a; text-shadow:0 1px 2px #285b81; }
+  .forward-button { opacity:.48; width:23px; height:23px; font-size:18px; }
+  .navigation-caret { color:#224252; font-size:10px; margin:0 3px 0 0; }
+  .address-bar { display:flex; align-items:center; gap:9px; height:24px; flex:1; background:#fbfdffeb; border:1px solid #597781; box-shadow:0 0 0 1px #fff8,inset 0 1px 2px #9cbdc680; padding:0 5px; }
+  .crumb-arrow { color:#50717f; font-size:18px; }
+  .address-dropdown { margin-left:auto; color:#4b5961; }
+  .vista-desktop .help-button { background:linear-gradient(#a1d9fb,#1768b2); color:#fff; border:1px solid #30779e; border-radius:50%; width:18px; height:18px; font-weight:bold; font-family:Georgia,serif !important; line-height:15px; margin:0 4px 0 7px; }
+  .window-interior { border:1px solid #557380; background:white; box-shadow:0 0 0 1px #efffff80; min-height:370px; max-height:calc(100dvh - 225px); overflow:auto; }
+  .welcome-banner { display:flex; justify-content:space-between; position:relative; min-height:175px; padding:22px 28px 20px; background:radial-gradient(ellipse at 92% 75%,#b8d9e080,transparent 60%),linear-gradient(112deg,#f6fbfd 20%,#e9f3f7 65%,#dae9ed); border-bottom:1px solid #bad0df; overflow:hidden; }
+  .welcome-copy { position:relative; z-index:1; }
+  .vista-desktop h1 { font-size:22px; font-weight:400; color:#145288; margin:0 0 7px; line-height:1.4; }
+  .welcome-copy>p { font-size:12px; color:#516b7b; }
+  .system-information { display:flex; flex-direction:column; gap:3px; margin-top:18px; color:#526470; font-size:11px; }
+  .system-information strong { color:#334c5d; font-weight:600; font-size:12px; }
+  .welcome-computer { width:160px; display:flex; justify-content:center; align-items:center; padding-right:6px; filter:drop-shadow(0 7px 6px #7094a536); }
+  .section-heading { display:flex; gap:12px; align-items:center; color:#164f83; padding:13px 21px 8px; font-size:12px; }
+  .section-heading::after { content:''; height:1px; flex:1; background:linear-gradient(90deg,#cbdbe6,transparent); order:1; }
+  .section-heading .item-count { color:#778c98; font-size:10px; order:2; }
+  .welcome-links { display:grid; grid-template-columns:repeat(3,1fr); padding:1px 16px 12px; gap:7px; }
+  .vista-desktop .welcome-link { display:flex; gap:9px; align-items:center; border:1px solid transparent; border-radius:3px; padding:9px 4px; }
+  .welcome-link strong { font-size:12px; font-weight:400; display:block; }
+  .welcome-link small { color:#778692; font-size:10px; display:block; line-height:1.5; margin-top:4px; }
+  .vista-desktop .welcome-link:hover,.vista-desktop .personalize-links button:hover { background:linear-gradient(#f4faff,#e5f2fd); border-color:#b9d7ed; }
+  .personalize-links { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; padding:1px 16px 19px; }
+  .vista-desktop .personalize-links button { display:flex; gap:8px; align-items:center; text-align:left; padding:6px 4px; color:#235484; font-size:11px; }
+  .personalize-links small { display:block; font-size:10px; color:#778692; margin-top:4px; }
+  .welcome-bottom { min-height:42px; display:flex; align-items:center; gap:7px; padding:8px 20px; background:linear-gradient(#f6fafd,#e8f1f6); border-top:1px solid #d5e2eb; font-size:15px; color:#455f6f; }
+  .welcome-bottom b { font-weight:600; }
+  .welcome-note { margin-left:auto; font-size:11px; color:#7b8d98; }
+  .tiny-flag,.windows-flag { display:grid; grid-template-columns:1fr 1fr; gap:2px; transform:rotate(-10deg) skewY(3deg); }
+  .tiny-flag { width:21px; height:20px; }
+  .tiny-flag i:nth-child(1),.windows-flag i:nth-child(1) { background:linear-gradient(135deg,#ffaf48,#ec471f); }
+  .tiny-flag i:nth-child(2),.windows-flag i:nth-child(2) { background:linear-gradient(135deg,#9ae058,#4da62d); }
+  .tiny-flag i:nth-child(3),.windows-flag i:nth-child(3) { background:linear-gradient(135deg,#58b8ff,#166ed1); }
+  .tiny-flag i:nth-child(4),.windows-flag i:nth-child(4) { background:linear-gradient(135deg,#fff47c,#f3b62e); }
+  .window-status { height:25px; display:flex; gap:7px; align-items:center; color:#24424f; padding:4px 2px 0; font-size:11px; text-shadow:0 1px 1px #ffffff80; }
+  .resize-grip { margin-left:auto; opacity:.6; font-size:13px; }
+  .maximized { top:0 !important; left:0 !important; width:100% !important; height:calc(100% - 35px); border-radius:0; }
+  .maximized .window-interior { height:calc(100% - 92px); max-height:none; }
+  .maximized .welcome-banner { min-height:210px; }
+  .explorer-toolbar { background:linear-gradient(#f5fafd,#dce9f4); height:31px; border-bottom:1px solid #c1d0de; display:flex; align-items:center; gap:10px; padding:0 14px; }
+  .explorer-toolbar i { height:16px; width:1px; background:#a9bccb; }
+  .explorer-layout { display:grid; grid-template-columns:150px 1fr; min-height:338px; }
+  .explorer-sidebar { padding:18px 12px; background:linear-gradient(90deg,#eff5fa,#fff); border-right:1px solid #e1e8ef; display:flex; flex-direction:column; align-items:stretch; gap:12px; }
+  .explorer-sidebar strong { font-weight:400; color:#46719a; }
+  .vista-desktop .explorer-sidebar button { text-align:left; padding:0; color:#174b80; }
+  .explorer-sidebar hr { border:0; border-top:1px solid #d5e0e9; }
+  .explorer-files { display:flex; flex-wrap:wrap; align-content:flex-start; gap:20px; padding:28px; }
+  .explorer-files a { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .simple-panel { padding:35px; text-align:center; min-height:370px; }
+  .simple-panel h1 { margin-top:10px; }
+  .simple-panel p { color:#6a7d89; margin-bottom:14px; }
+  .network-map { display:flex; justify-content:center; align-items:center; gap:25px; padding:30px 0; color:#578258; }
+  .vista-desktop .native-button { display:inline-block; border:1px solid #8298a7; border-radius:3px; padding:5px 17px; background:linear-gradient(#fff,#e3eaf0); box-shadow:inset 0 0 0 1px white; }
+  .empty-folder { min-height:338px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; color:#697780; }
+  .empty-folder small { color:#929da5; }
+  .appearance-panel { padding:24px 30px; min-height:370px; }
+  .appearance-panel>p { color:#71818c; margin-bottom:20px; }
+  .color-options { display:flex; gap:14px; margin:20px 0; }
+  .vista-desktop .color-options button { width:44px; height:35px; background:linear-gradient(#fff8,#fff1 48%,#0001 50%,#fff3),var(--swatch); border:1px solid #697d87; box-shadow:inset 0 0 0 2px #ffffff70; }
+  .vista-desktop .color-options button.selected { outline:2px solid #488cb5; outline-offset:3px; }
+  .transparency-option { display:flex; align-items:center; gap:5px; }
+  .vista-desktop input[type="checkbox"] { accent-color:#378bc1; }
+  .appearance-panel h2 { font-weight:400; color:#145288; font-size:14px; margin:20px 0 12px; }
+  .vista-desktop .wallpaper-choice { display:grid; grid-template-columns:144px 1fr; grid-template-rows:1fr 1fr; text-align:left; column-gap:16px; width:100%; padding:0; }
+  .wallpaper-choice img { grid-row:span 2; border:3px solid #fff; box-shadow:0 0 0 1px #acbac2; }
+  .wallpaper-choice span { align-self:end; padding-bottom:5px; }
+  .wallpaper-choice small { color:#798b96; }
+  .help-panel { text-align:left; }
+  .help-panel ul { padding-left:19px; line-height:2.5; margin:15px 0 22px; }
+  .help-footnote { font-size:11px; }
+  .windows-sidebar { position:absolute; right:0; top:0; bottom:35px; width:185px; padding:11px 23px 20px 14px; background:linear-gradient(90deg,transparent,#00141b1a 35%,#00141b4d); display:flex; flex-direction:column; align-items:center; gap:24px; color:white; }
+  .sidebar-tools { display:flex; align-items:center; flex-direction:row-reverse; gap:9px; font-size:10px; width:100%; color:#ffffff8c; margin-bottom:-8px; }
+  .vista-desktop .sidebar-tools button { color:#d5e8e9; width:17px; height:17px; border:1px solid #bddde24d; border-radius:50%; line-height:12px; }
+  .clock-gadget { width:143px; height:143px; border:1px solid #172025; border-radius:50%; padding:7px; background:linear-gradient(130deg,#fff,#748088 32%,#29353e 65%,#a5aeb1); box-shadow:0 4px 10px #0008,inset 0 0 0 2px #bdc6c7,inset 0 0 0 4px #313c43; flex-shrink:0; }
+  .clock-face { border:1px solid #7c8281; border-radius:50%; height:100%; position:relative; background:radial-gradient(circle at 40% 30%,#fffef9,#e7e6dc); box-shadow:inset 0 1px 6px #0004; color:#3c4144; }
+  .clock-tick { position:absolute; width:2px; height:6px; background:#73766f; top:5px; left:calc(50% - 1px); transform-origin:1px 57px; transform:rotate(calc(var(--tick) * 30deg)); }
+  .clock-number { position:absolute; font-family:Georgia,serif !important; font-size:15px; line-height:1; }
+  .n12 { top:15px; left:50%; transform:translateX(-50%); }.n3 { right:14px; top:calc(50% - 7px); }.n6 { bottom:14px; left:calc(50% - 4px); }.n9 { left:14px; top:calc(50% - 7px); }
+  .clock-brand { position:absolute; top:34px; width:100%; text-align:center; font-size:6px; letter-spacing:1px; color:#aaa89e; }
+  .clock-hand { position:absolute; left:50%; bottom:50%; transform-origin:50% 100%; background:#303b40; border-radius:3px 3px 0 0; box-shadow:1px 1px 1px #0003; }
+  .hour-hand { width:5px; height:29px; }.minute-hand { width:3px; height:43px; }.second-hand { width:1px; height:47px; background:#b94d33; }.clock-pin { position:absolute; width:8px; height:8px; border-radius:50%; background:#48565d; border:2px solid #b4bdbd; left:calc(50% - 4px); top:calc(50% - 4px); }
+  .photo-gadget { width:148px; padding:6px; background:linear-gradient(145deg,#534c3f,#272b28); border:1px solid #817563; box-shadow:0 4px 8px #0008,inset 0 0 0 1px #171f1e; transform:rotate(-3deg); }
+  .photo-mat { background:#efeee2; padding:5px; border:1px solid #a4a08f; }
+  .photo-mat img { display:block; width:100%; height:86px; object-fit:cover; border:1px solid #526666; }
+  .photo-gadget figcaption { text-align:center; font-size:10px; color:#dbdacf; padding:5px 0 0; }
+  .calendar-gadget { width:131px; color:#383a34; text-align:center; background:linear-gradient(100deg,#fffffa,#eeeee7); border:1px solid #f8f4dc; border-radius:5px; overflow:hidden; box-shadow:0 4px 9px #0007; transform:rotate(2deg); flex-shrink:0; }
+  .calendar-top { background:linear-gradient(#eab568,#c97829); border-bottom:1px solid #ae6a24; color:#fff9e9; padding:5px; font-size:12px; text-shadow:0 1px #a46f3d; }
+  .calendar-gadget strong { display:block; font-family:"Segoe UI",sans-serif !important; font-size:54px; font-weight:300; line-height:1.25; padding-top:2px; }
+  .calendar-gadget>span { display:block; font-size:11px; padding-bottom:9px; color:#77796f; }
+  .calendar-bottom { border-top:1px solid #d4d4c9; background:#e8e8e0; color:#85877b; font-size:10px; padding:3px; }
+  .sidebar-caption { font-size:10px; letter-spacing:2px; color:#d3e8e19c; text-shadow:0 1px 3px #000; }
+  .desktop-signature { position:absolute; bottom:66px; right:29px; color:#ffffff8c; font-family:"Segoe UI",sans-serif !important; font-size:25px; font-weight:300; text-shadow:0 2px 5px #001e34; letter-spacing:-.7px; }
+  .desktop-signature>span:first-child { font-weight:400; }.signature-edition { display:block; text-align:right; font-size:10px; letter-spacing:2px; color:#ffffff70; padding-top:2px; }
+  .vista-taskbar { height:35px; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(#61737dbd 0%,#2b3e49ed 10%,#273b48eb 46%,#0a1724f2 50%,#102e3be6); border-top:1px solid #a5c9d39c; box-shadow:0 -1px 3px #001721a6; display:flex; align-items:center; gap:8px; z-index:30; backdrop-filter:blur(15px); }
+  .vista-desktop .start-button { width:58px; height:35px; padding:0; overflow:visible; display:flex; justify-content:center; align-items:center; border:0; flex-shrink:0; }
+  .start-orb { display:grid; place-items:center; width:43px; height:43px; border-radius:50%; position:relative; top:-4px; background:radial-gradient(ellipse at 50% 95%,#84e6fa 0%,#237dc3 28%,#103459 53%,#467e9e 74%,#b8d8e9 96%); border:1px solid #0b243c; box-shadow:inset 0 0 0 1px #b9eeff8c,0 0 3px #000; }
+  .start-orb::before { content:''; position:absolute; top:3px; left:6px; right:6px; height:16px; background:linear-gradient(#fff8,#fff0); border-radius:50%; }
+  .start-button:hover .start-orb,.start-button[aria-expanded="true"] .start-orb { box-shadow:0 0 16px #55dfff,inset 0 0 6px #dcffff; filter:brightness(1.18); }
+  .windows-flag { width:23px; height:23px; gap:2px; filter:drop-shadow(0 1px 1px #173651); }
+  .quick-launch { display:flex; align-items:center; gap:7px; height:26px; }
+  .vista-desktop .quick-launch button { height:27px; width:27px; padding:1px; border-radius:2px; }.vista-desktop .quick-launch button:hover { background:#fff3; border-color:#fff5; }
+  .quick-divider { width:2px; height:22px; border-left:1px solid #0006; border-right:1px solid #fff3; margin:0 3px; }
+  .vista-desktop .taskbar-window { display:flex; align-items:center; gap:8px; min-width:150px; height:28px; border:1px solid #09121d; border-radius:3px; color:white; text-shadow:0 1px 2px #000; padding:2px 10px; background:linear-gradient(#788f9e55,#2b3d4c66 50%,#15263777 51%); box-shadow:inset 0 0 0 1px #bed8e533; text-align:left; }
+  .vista-desktop .taskbar-window.active { background:linear-gradient(#acd0e666,#6e9ab666 46%,#426d9166 50%,#94b9cf55); box-shadow:inset 0 0 0 1px #d6f5ff6b; }
+  .vista-desktop .taskbar-window:hover { background-color:#b2e9ff44; }
+  .system-tray { margin-left:auto; height:100%; display:flex; align-items:center; gap:12px; padding:0 15px 0 8px; color:white; font-size:11px; box-shadow:inset 1px 0 #fff2; }
+  .system-tray time { min-width:39px; text-align:center; font-size:11px; }.tray-chevron { font-size:17px; color:#c6dfe9; }.tray-language { font-size:11px; }.volume-tray { font-family:Arial,sans-serif !important; font-size:11px; color:#dce8ed; }
+  .network-tray { position:relative; width:17px; height:17px; }.network-tray i { position:absolute; top:2px; left:1px; width:11px; height:9px; border:1px solid #e1e7e9; background:linear-gradient(#7dc4e6,#154a87); box-shadow:0 1px 1px #000; }.network-tray i+i { top:7px; left:7px; }
+  .start-menu { position:absolute; bottom:34px; left:0; width:390px; height:465px; z-index:25; border:1px solid #172d37; border-radius:7px 7px 0 0; padding:7px; display:grid; grid-template-columns:240px 1fr; background:linear-gradient(115deg,#e7f8ff44,#2c4e60c9 30%,#548391b3),#294553cf; box-shadow:inset 0 0 0 1px #d4ecf97d,3px -3px 18px #0006; backdrop-filter:blur(18px); }
+  .start-programs { background:#fff; border:1px solid #455964; border-radius:4px; display:flex; flex-direction:column; overflow:hidden; }
+  .start-program-list { padding:5px; flex:1; overflow-y:auto; }
+  .vista-desktop .start-program-list button,.vista-desktop .start-program-list a { display:flex; width:100%; align-items:center; gap:9px; padding:4px; border:1px solid transparent; color:#263540; text-align:left; border-radius:3px; }
+  .vista-desktop .start-program-list button:hover,.vista-desktop .start-program-list a:hover { background:linear-gradient(#edf8ff,#cde7f7); border-color:#99c6e2; }
+  .start-separator { height:1px; margin:5px 6px; background:linear-gradient(90deg,transparent,#bdc7cf,transparent); }
+  .vista-desktop .all-programs { border-top:1px solid #dce1e4; border-radius:0; padding:8px 10px; text-align:left; }.all-programs span { padding-right:7px; }
+  .start-search { background:#e8eff4; border-top:1px solid #c8d2da; padding:10px; position:relative; }
+  .vista-desktop .start-search input { width:100%; height:25px; background:white; border:1px solid #7b929f; border-radius:2px; box-shadow:inset 0 1px 2px #0002; color:#263640; padding:3px 25px 3px 7px; font-size:11px; }.start-search>span { position:absolute; right:17px; top:10px; font-size:22px; color:#5a7d8a; }
+  .start-places { display:flex; flex-direction:column; padding:3px 2px 0 8px; color:white; position:relative; }
+  .user-tile { height:61px; display:flex; justify-content:center; margin-top:-26px; margin-bottom:11px; filter:drop-shadow(0 2px 3px #0007); }
+  .user-name { font-weight:600; padding:7px 6px 11px; text-shadow:0 1px 3px #000; }
+  .vista-desktop .start-places>button,.vista-desktop .start-places>a { padding:8px 6px; color:#fff; text-align:left; border:1px solid transparent; border-radius:3px; text-shadow:0 1px 3px #000; font-size:11px; }
+  .vista-desktop .start-places>button:hover,.vista-desktop .start-places>a:hover { background:linear-gradient(#ffffff2e,#ffffff08); border-color:#e2f6ff66; }
+  .places-divider { border-top:1px solid #112a3d66; border-bottom:1px solid #dcf5ff26; margin:4px 4px; }
+  .start-power { display:flex; margin-top:auto; margin-bottom:5px; padding:5px 2px; }.vista-desktop .start-power button { color:#edd59f; background:linear-gradient(#6b87938c,#132e4477); border:1px solid #152a35; box-shadow:inset 0 0 0 1px #ffffff26; width:48px; height:26px; font-size:17px; }.vista-desktop .start-power button+button { width:24px; color:white; font-size:12px; }
+  .start-empty { padding:12px 7px; color:#7c8b94; font-size:11px; }
+  @media (min-width:1500px) { .aero-window { width:800px; top:17vh; left:19vw; }.windows-sidebar { width:210px; padding-right:35px; gap:30px; }.desktop-shortcuts { top:25px; left:20px; gap:24px; } }
+  @media (max-width:1100px) { .aero-window { left:115px; width:calc(100vw - 305px); top:95px; }.welcome-banner { padding:20px; }.welcome-computer { width:112px; }.welcome-computer :global(svg) { width:110px; }.welcome-links { gap:3px; padding-left:10px; padding-right:10px; }.welcome-link { flex-direction:column; align-items:flex-start !important; }.personalize-links { gap:2px; padding-left:10px; padding-right:10px; }.personalize-links :global(svg) { width:28px; }.personalize-links small { display:none; } }
+  @media (max-width:850px) { .windows-sidebar { width:160px; padding-left:10px; padding-right:12px; }.aero-window { width:calc(100vw - 265px); left:100px; }.welcome-computer { display:none; }.welcome-links { gap:0; }.welcome-link small { display:none; }.personalize-links { grid-template-columns:1fr; }.personalize-links button { padding:3px !important; }.personalize-links :global(svg) { height:26px; }.welcome-note { font-size:10px; } }
+  @media (max-width:700px) { .vista-desktop { min-height:690px; }.desktop-shortcuts { top:12px; left:8px; right:8px; flex-direction:row; gap:2px; }.vista-desktop .desktop-shortcut { width:66px; min-height:72px; font-size:11px; }.desktop-shortcut :global(svg) { width:40px; height:40px; }.aero-window { top:112px; left:12px; width:calc(100% - 24px); }.window-interior { max-height:calc(100dvh - 250px); min-height:350px; }.welcome-banner { min-height:154px; padding:20px; }.welcome-links { padding:8px 12px; }.welcome-link { align-items:center !important; gap:6px !important; }.personalize-links { grid-template-columns:1fr; padding:4px 15px 15px; }.personalize-links small { display:inline; margin-left:10px; }.personalize-links :global(svg) { width:30px; }.welcome-bottom { padding:8px 12px; }.windows-sidebar { display:none; }.desktop-signature { bottom:51px; font-size:20px; right:17px; }.quick-launch { display:none; }.vista-desktop .taskbar-window { min-width:125px; }.system-tray { gap:9px; padding-right:9px; }.tray-chevron,.tray-language { display:none; }.start-menu { width:min(390px,100%); grid-template-columns:minmax(0,1fr) 126px; max-height:calc(100% - 66px); }.start-program-list :global(svg) { width:29px; }.welcome-bottom>span:nth-child(2) { font-size:13px; }.explorer-layout { grid-template-columns:110px 1fr; }.explorer-files { padding:20px 10px; gap:12px; }.explorer-files :global(svg) { width:48px; }.simple-panel,.appearance-panel { padding:24px 18px; }.network-map { gap:10px; }.wallpaper-choice { grid-template-columns:120px 1fr !important; }.wallpaper-choice img { width:120px; height:75px; }.help-panel ul { line-height:2; }.maximized { top:0 !important; left:0 !important; }.maximized .window-interior { min-height:0; } }
+  @media (prefers-reduced-motion:reduce) { .vista-desktop :global(*) { scroll-behavior:auto; transition:none !important; } }
 </style>
